@@ -3,32 +3,6 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <section id="about" class="about">
-  <!-- night sky (dark theme) -->
-  <div class="stars" aria-hidden="true">
-    <span class="st" style="top:12%;left:18%"></span>
-    <span class="st" style="top:22%;left:70%"></span>
-    <span class="st" style="top:38%;left:42%"></span>
-    <span class="st" style="top:60%;left:14%"></span>
-    <span class="st" style="top:72%;left:80%"></span>
-    <span class="st" style="top:30%;left:88%"></span>
-  </div>
-  <div class="moon" aria-hidden="true"></div>
-
-  <!-- clouds (both themes; dimmed at night) -->
-  <div class="about-clouds" aria-hidden="true">
-    <img src={`${base}/images/cloud-1.png`} alt="" style="top:8%; left:-8%; width:300px;" />
-    <img src={`${base}/images/cloud-2.png`} alt="" style="bottom:10%; right:-6%; width:320px;" />
-  </div>
-
-  <!-- day sky (light theme): drifting birds -->
-  <div class="birds" aria-hidden="true">
-    <span class="bird b1"><svg viewBox="0 0 24 10"><path d="M1 8 Q6 1 12 6 Q18 1 23 8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
-    <span class="bird b2"><svg viewBox="0 0 24 10"><path d="M1 8 Q6 1 12 6 Q18 1 23 8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
-    <span class="bird b3"><svg viewBox="0 0 24 10"><path d="M1 8 Q6 1 12 6 Q18 1 23 8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
-    <span class="bird b4"><svg viewBox="0 0 24 10"><path d="M1 8 Q6 1 12 6 Q18 1 23 8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
-    <span class="bird b5"><svg viewBox="0 0 24 10"><path d="M1 8 Q6 1 12 6 Q18 1 23 8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
-  </div>
-
   <div class="about-inner wrap">
     <!-- left: product designer -->
     <figure class="fig fig-left reveal">
@@ -77,73 +51,6 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     overflow: hidden;
   }
   :global([data-theme='dark']) .about { color: #eaeefb; }
-
-  /* stars + moon only at night */
-  .stars, .moon { display: none; }
-  :global([data-theme='dark']) .stars,
-  :global([data-theme='dark']) .moon { display: block; }
-
-  .stars { position: absolute; inset: 0; pointer-events: none; }
-  .st {
-    position: absolute;
-    width: 3px; height: 3px;
-    border-radius: 50%;
-    background: #fff;
-    box-shadow: 0 0 6px 1px #fff;
-    animation: tw 3.5s ease-in-out infinite;
-  }
-  .st:nth-child(2n) { animation-delay: 1s; }
-  .st:nth-child(3n) { animation-delay: 2s; }
-  @keyframes tw {
-    0%, 100% { opacity: 0.3; transform: scale(0.8); }
-    50% { opacity: 1; transform: scale(1.2); }
-  }
-  .moon {
-    position: absolute;
-    top: 7%; left: 5%;
-    width: 110px; height: 110px;
-    border-radius: 50%;
-    background: radial-gradient(circle at 35% 30%, #f4f1e6 0%, #d8d2bf 60%, #b9b3a0 100%);
-    box-shadow: 0 0 60px 8px rgba(244, 241, 230, 0.25);
-    opacity: 0.85;
-  }
-
-  /* ---- clouds ---- */
-  .about-clouds { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
-  .about-clouds img { position: absolute; height: auto; opacity: 0.75; filter: blur(1px); }
-  :global([data-theme='dark']) .about-clouds img { opacity: 0.14; filter: blur(2px) brightness(0.7); }
-
-  /* ---- birds (day theme only) ---- */
-  .birds { position: absolute; inset: 0; pointer-events: none; }
-  :global([data-theme='dark']) .birds { display: none; }
-  .bird {
-    position: absolute;
-    color: #2b3d5a;
-    opacity: 0.7;
-    will-change: transform;
-  }
-  .bird svg {
-    display: block;
-    width: 100%;
-    height: auto;
-    animation: flap 0.5s ease-in-out infinite alternate;
-    transform-origin: center;
-  }
-  @keyframes flap {
-    from { transform: scaleY(1); }
-    to { transform: scaleY(0.55); }
-  }
-  @keyframes fly {
-    0%   { transform: translate(-12vw, 0); }
-    50%  { transform: translate(52vw, -26px); }
-    100% { transform: translate(116vw, 6px); }
-  }
-  .b1 { top: 16%; width: 26px; animation: fly 22s linear infinite; }
-  .b2 { top: 22%; width: 20px; animation: fly 28s linear infinite; animation-delay: -6s; opacity: 0.55; }
-  .b3 { top: 30%; width: 30px; animation: fly 19s linear infinite; animation-delay: -12s; }
-  .b4 { top: 12%; width: 18px; animation: fly 32s linear infinite; animation-delay: -3s; opacity: 0.5; }
-  .b5 { top: 38%; width: 22px; animation: fly 25s linear infinite; animation-delay: -18s; opacity: 0.6; }
-  .bird svg { animation-delay: inherit; }
 
   .about-inner {
     position: relative;
@@ -261,7 +168,6 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     .about-copy { text-align: center; }
     .about-p, .ps { margin-left: auto; margin-right: auto; }
     .fig img { max-width: 300px !important; }
-    .moon { width: 70px; height: 70px; top: 2%; left: auto; right: 7%; }
     .scroll-cue { display: none; }
   }
 </style>

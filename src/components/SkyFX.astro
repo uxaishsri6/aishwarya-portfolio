@@ -1,0 +1,246 @@
+---
+// Shared sky decoration layer that spans the whole .sky-world so clouds,
+// birds (day) and stars / shooting stars / moon (night) are consistent
+// across every section.
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const clouds = [
+  { img: 'cloud-1.png', top: 3, w: 360, dur: 130, delay: -20 },
+  { img: 'cloud-2.png', top: 11, w: 260, dur: 165, delay: -80 },
+  { img: 'cloud-2.png', top: 22, w: 320, dur: 110, delay: -40 },
+  { img: 'cloud-1.png', top: 33, w: 280, dur: 150, delay: -110 },
+  { img: 'cloud-1.png', top: 45, w: 380, dur: 120, delay: -60 },
+  { img: 'cloud-2.png', top: 56, w: 300, dur: 140, delay: -25 },
+  { img: 'cloud-2.png', top: 67, w: 340, dur: 100, delay: -90 },
+  { img: 'cloud-1.png', top: 78, w: 300, dur: 155, delay: -50 },
+  { img: 'cloud-1.png', top: 88, w: 400, dur: 115, delay: -130 },
+  { img: 'cloud-2.png', top: 95, w: 300, dur: 145, delay: -15 },
+];
+
+const birds = [
+  { top: 9, w: 48, dur: 26, delay: -2 },
+  { top: 19, w: 38, dur: 32, delay: -14 },
+  { top: 41, w: 54, dur: 22, delay: -8 },
+  { top: 63, w: 40, dur: 30, delay: -20 },
+  { top: 84, w: 46, dur: 27, delay: -5 },
+  { top: 73, w: 34, dur: 35, delay: -26 },
+];
+
+// deterministic scatter of twinkling stars
+const stars = Array.from({ length: 30 }, (_, i) => ({
+  top: (i * 97) % 100,
+  left: (i * 53 + 7) % 100,
+  size: 1.5 + ((i * 7) % 3),
+  delay: ((i * 13) % 40) / 10,
+}));
+
+// up to 7 shooting stars, spread down the page
+const shooting = [
+  { top: 6, left: 12, dur: 14, delay: 0 },
+  { top: 20, left: 60, dur: 17, delay: 4 },
+  { top: 35, left: 30, dur: 13, delay: 9 },
+  { top: 50, left: 72, dur: 16, delay: 6 },
+  { top: 64, left: 18, dur: 15, delay: 11 },
+  { top: 79, left: 55, dur: 18, delay: 3 },
+  { top: 92, left: 38, dur: 14, delay: 8 },
+];
+---
+
+<div class="skyfx" aria-hidden="true">
+  <!-- clouds: drift across every section (both themes; dimmed at night) -->
+  <div class="fx-clouds">
+    {clouds.map((c) => (
+      <img
+        src={`${base}/images/${c.img}`}
+        alt=""
+        loading="lazy"
+        style={`top:${c.top}%; width:${c.w}px; animation-duration:${c.dur}s; animation-delay:${c.delay}s;`}
+      />
+    ))}
+  </div>
+
+  <!-- birds: day only -->
+  <div class="fx-birds">
+    {birds.map((b) => (
+      <span
+        class="bird"
+        style={`top:${b.top}%; width:${b.w}px; animation-duration:${b.dur}s; animation-delay:${b.delay}s;`}
+      >
+        <svg viewBox="0 0 40 16">
+          <path
+            d="M2 12 C 8 4, 14 4, 20 10 C 26 4, 32 4, 38 12"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+        </svg>
+      </span>
+    ))}
+  </div>
+
+  <!-- night sky -->
+  <div class="fx-stars">
+    {stars.map((s) => (
+      <span
+        class="star"
+        style={`top:${s.top}%; left:${s.left}%; width:${s.size}px; height:${s.size}px; animation-delay:${s.delay}s;`}
+      ></span>
+    ))}
+  </div>
+
+  <div class="fx-shooting">
+    {shooting.map((s) => (
+      <span
+        class="shoot"
+        style={`top:${s.top}%; left:${s.left}%; animation-duration:${s.dur}s; animation-delay:${s.delay}s;`}
+      ></span>
+    ))}
+  </div>
+
+  <div class="fx-moon"></div>
+</div>
+
+<style>
+  .skyfx {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ---- clouds ---- */
+  .fx-clouds img {
+    position: absolute;
+    left: -30%;
+    height: auto;
+    opacity: 0.8;
+    filter: blur(1px);
+    animation-name: fx-drift;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    will-change: transform;
+  }
+  :global([data-theme='dark']) .fx-clouds img {
+    opacity: 0.13;
+    filter: blur(2px) brightness(0.7);
+  }
+  @keyframes fx-drift {
+    from { transform: translateX(0); }
+    to { transform: translateX(175vw); }
+  }
+
+  /* ---- birds (day only) ---- */
+  .fx-birds { position: absolute; inset: 0; }
+  :global([data-theme='dark']) .fx-birds { display: none; }
+  .bird {
+    position: absolute;
+    left: -12%;
+    color: #33465f;
+    opacity: 0.75;
+    animation-name: fx-fly;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    will-change: transform;
+  }
+  .bird svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    animation: fx-flap 0.45s ease-in-out infinite alternate;
+    transform-origin: center;
+  }
+  @keyframes fx-flap {
+    from { transform: scaleY(1); }
+    to { transform: scaleY(0.5); }
+  }
+  @keyframes fx-fly {
+    0% { transform: translate(0, 0); }
+    25% { transform: translate(35vw, -22px); }
+    50% { transform: translate(70vw, 10px); }
+    75% { transform: translate(105vw, -14px); }
+    100% { transform: translate(140vw, 6px); }
+  }
+
+  /* ---- twinkling stars (night only) ---- */
+  .fx-stars { position: absolute; inset: 0; display: none; }
+  :global([data-theme='dark']) .fx-stars { display: block; }
+  .star {
+    position: absolute;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 0 6px 1px rgba(255, 255, 255, 0.8);
+    animation: fx-tw 3.5s ease-in-out infinite;
+  }
+  @keyframes fx-tw {
+    0%, 100% { opacity: 0.25; transform: scale(0.7); }
+    50% { opacity: 1; transform: scale(1.2); }
+  }
+
+  /* ---- shooting stars (night only) ---- */
+  .fx-shooting { position: absolute; inset: 0; display: none; }
+  :global([data-theme='dark']) .fx-shooting { display: block; }
+  .shoot {
+    position: absolute;
+    width: 150px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.9));
+    border-radius: 2px;
+    opacity: 0;
+    transform: rotate(20deg) translateX(0);
+    animation-name: fx-shoot;
+    animation-timing-function: ease-in;
+    animation-iteration-count: infinite;
+    will-change: transform, opacity;
+  }
+  .shoot::after {
+    content: '';
+    position: absolute;
+    right: -2px;
+    top: -2px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 0 10px 3px rgba(255, 255, 255, 0.9);
+  }
+  @keyframes fx-shoot {
+    0% { opacity: 0; transform: rotate(20deg) translate(-20px, -20px); }
+    3% { opacity: 1; }
+    16% { opacity: 1; }
+    26% { opacity: 0; transform: rotate(20deg) translate(680px, 248px); }
+    100% { opacity: 0; transform: rotate(20deg) translate(680px, 248px); }
+  }
+
+  /* ---- realistic moon (night only) ---- */
+  .fx-moon {
+    position: absolute;
+    top: 70px;
+    left: 6%;
+    width: 132px;
+    height: 132px;
+    border-radius: 50%;
+    display: none;
+    background:
+      radial-gradient(circle at 30% 38%, rgba(150, 142, 120, 0.45) 0 7px, transparent 8px),
+      radial-gradient(circle at 60% 30%, rgba(150, 142, 120, 0.35) 0 5px, transparent 6px),
+      radial-gradient(circle at 66% 58%, rgba(150, 142, 120, 0.4) 0 10px, transparent 11px),
+      radial-gradient(circle at 44% 70%, rgba(150, 142, 120, 0.32) 0 6px, transparent 7px),
+      radial-gradient(circle at 26% 60%, rgba(150, 142, 120, 0.3) 0 4px, transparent 5px),
+      radial-gradient(circle at 38% 34%, #fdfcf5 0%, #efe9d6 45%, #d9d1ba 72%, #beb69d 100%);
+    box-shadow:
+      inset -20px -16px 34px rgba(90, 82, 64, 0.4),
+      inset 8px 8px 18px rgba(255, 253, 245, 0.5),
+      0 0 60px 12px rgba(244, 241, 230, 0.28);
+  }
+  :global([data-theme='dark']) .fx-moon { display: block; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fx-clouds img, .bird, .bird svg, .star, .shoot { animation: none !important; }
+    .shoot { display: none; }
+  }
+  @media (max-width: 720px) {
+    .fx-moon { width: 88px; height: 88px; top: 40px; }
+  }
+</style>

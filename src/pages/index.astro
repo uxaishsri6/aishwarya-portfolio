@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
+import SkyFX from '../components/SkyFX.astro';
 import Marquee from '../components/Marquee.astro';
 import About from '../components/About.astro';
 import Process from '../components/Process.astro';
@@ -17,6 +18,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 <BaseLayout title="Aishwarya Srivastava, Product Designer">
   <div class="sky-world">
+  <SkyFX />
   <Hero />
 
   <Marquee />
@@ -24,13 +26,6 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   <About />
 
   <section id="work" class="work">
-    <div class="work-sky" aria-hidden="true">
-      <img src={`${base}/images/cloud-1.png`} alt="" style="top:6%; left:-6%; width:340px;" />
-      <img src={`${base}/images/cloud-2.png`} alt="" style="top:2%; right:-4%; width:300px;" />
-      <img src={`${base}/images/cloud-2.png`} alt="" style="bottom:8%; left:2%; width:320px;" />
-      <img src={`${base}/images/cloud-1.png`} alt="" style="bottom:2%; right:-6%; width:360px;" />
-    </div>
-
     <div class="wrap work-wrap">
       <div class="work-head reveal">
         <h2 class="work-title">Case studies</h2>
@@ -93,10 +88,6 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     padding-block: clamp(4rem, 9vh, 7rem) clamp(6rem, 14vh, 11rem);
     /* NOTE: no overflow:hidden here — it would break the sticky card stack */
   }
-  .work-sky { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
-  .work-sky img { position: absolute; height: auto; filter: blur(1px); opacity: 0.7; }
-  :global([data-theme='dark']) .work-sky img { opacity: 0.14; filter: blur(2px) brightness(0.7); }
-
   .work-wrap { position: relative; z-index: 2; }
   .work-head {
     display: flex;
