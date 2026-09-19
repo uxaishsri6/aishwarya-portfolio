@@ -323,9 +323,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <script>
       // Runs on first load and after every View Transition navigation.
       function initTheme() {
+        // default to dark; respect the visitor's explicit choice once they toggle
         const saved = localStorage.getItem('theme');
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const theme = saved || (prefersDark ? 'dark' : 'light');
+        const theme = saved || 'dark';
         document.documentElement.setAttribute('data-theme', theme);
       }
       initTheme();
