@@ -1,67 +1,243 @@
 ---
-// About section. Drop an image at /public/images/about.jpg to show a portrait.
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const polaroids = [
+  { img: 'sticker-think.png', caption: 'mid-idea ✧', rot: '-6deg', cls: 'p-a' },
+  { img: 'sticker-desk.png', caption: 'work mode', rot: '5deg', cls: 'p-b' },
+  { img: 'sticker-point-right.png', caption: 'always shipping →', rot: '-3deg', cls: 'p-c' },
+];
 ---
 
-<section id="about" class="about reveal">
-  <p class="eyebrow">/ about</p>
-  <h2 class="prose-h">
-    I'm <em>Aishwarya.</em> By day I design products at a startup you probably haven't heard of yet, by night I overthink the tiny details that make an interface feel like it was made by a real person.
-  </h2>
-  <p class="prose-p">
-    Five years in, I've shipped work across AI-first consumer apps, enterprise dashboards, CRM, cloud tooling, and payments. What ties all of it together is the same question: how do we make this thing feel honest?
-  </p>
-  <p class="prose-meta">Bengaluru › Create › Consume</p>
+<section id="about" class="about">
+  <div class="stars" aria-hidden="true">
+    <span class="st" style="top:12%;left:18%"></span>
+    <span class="st" style="top:22%;left:70%"></span>
+    <span class="st" style="top:38%;left:42%"></span>
+    <span class="st" style="top:60%;left:14%"></span>
+    <span class="st" style="top:72%;left:80%"></span>
+    <span class="st" style="top:30%;left:88%"></span>
+  </div>
+  <div class="moon" aria-hidden="true"></div>
 
-  <ul class="strip-list">
-    <li>Tata Neu</li>
-    <li class="dot">·</li>
-    <li>Automotive OEMs</li>
-    <li class="dot">·</li>
-    <li>Cloud platforms</li>
-    <li class="dot">·</li>
-    <li>Consumer AI</li>
-    <li class="dot">·</li>
-    <li>Payments</li>
-    <li class="dot">·</li>
-    <li>Enterprise SaaS</li>
-  </ul>
+  <div class="about-inner wrap">
+    <!-- scrapbook cluster -->
+    <div class="scrapbook reveal">
+      {polaroids.map((p) => (
+        <figure class={`polaroid ${p.cls}`} style={`--rot:${p.rot}`}>
+          <span class="tape" aria-hidden="true"></span>
+          <div class="ph">
+            <img src={`${base}/images/${p.img}`} alt="" loading="lazy" />
+          </div>
+          <figcaption>{p.caption}</figcaption>
+        </figure>
+      ))}
+      <span class="doodle d-arrow" aria-hidden="true">↝</span>
+      <span class="doodle d-star1" aria-hidden="true">✦</span>
+      <span class="doodle d-star2" aria-hidden="true">✧</span>
+    </div>
+
+    <!-- copy -->
+    <div class="about-copy reveal">
+      <p class="eyebrow">/ the person behind the pixels</p>
+      <h2 class="about-h">
+        Curious, considered,<br />
+        and always <span class="hand">building.</span>
+      </h2>
+      <p class="about-p">
+        I'm Aishwarya. By day I design products at a startup you probably haven't
+        heard of yet — by night I overthink the tiny details that make an
+        interface feel like it was made by a real person.
+      </p>
+      <p class="about-p">
+        Five years in, I've shipped across AI-first consumer apps, enterprise
+        dashboards, CRM, cloud tooling, and payments. What ties it together is
+        one question: how do we make this thing feel <em>honest?</em>
+      </p>
+      <p class="ps">ps: coffee first, wireframes second, sticky notes forever.</p>
+    </div>
+  </div>
+
+  <a href={`${base}/#work`} class="scroll-cue" aria-label="Scroll to work">
+    <span>the work</span>
+    <span class="cue-arrow">↓</span>
+  </a>
 </section>
 
 <style>
   .about {
-    padding-top: 6rem;
-    max-width: 46rem;
+    position: relative;
+    /* always a night sky, independent of light/dark toggle */
+    background: radial-gradient(120% 90% at 80% 10%, #1b2650 0%, #0d1430 45%, #080d22 100%);
+    color: #eaeefb;
+    padding-block: clamp(5rem, 12vh, 9rem);
+    overflow: hidden;
   }
-  .prose-h {
-    font-size: clamp(1.6rem, 4vw, 2.7rem);
-    line-height: 1.15;
-    letter-spacing: -0.02em;
-    font-weight: 500;
+  .stars {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
   }
-  .prose-p {
-    margin-top: 1.5rem;
-    font-size: 1.15rem;
-    color: var(--ink-soft);
+  .st {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 0 6px 1px #fff;
+    animation: tw 3.5s ease-in-out infinite;
   }
-  .prose-meta {
-    margin-top: 1.5rem;
-    font-family: var(--font-mono);
-    font-size: 0.85rem;
-    color: var(--ink-faint);
+  .st:nth-child(2n) { animation-delay: 1s; }
+  .st:nth-child(3n) { animation-delay: 2s; }
+  @keyframes tw {
+    0%, 100% { opacity: 0.3; transform: scale(0.8); }
+    50% { opacity: 1; transform: scale(1.2); }
   }
-  .strip-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
+  .moon {
+    position: absolute;
+    top: 8%;
+    left: 6%;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #f4f1e6 0%, #d8d2bf 60%, #b9b3a0 100%);
+    box-shadow: 0 0 60px 8px rgba(244, 241, 230, 0.25);
+    opacity: 0.9;
+  }
+  .about-inner {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     align-items: center;
-    list-style: none;
-    margin: 2.5rem 0 0;
-    padding: 0;
-    font-family: var(--font-mono);
-    font-size: 0.85rem;
-    color: var(--ink-faint);
+    gap: clamp(2rem, 5vw, 4rem);
   }
-  .strip-list .dot {
-    color: var(--accent);
+
+  /* ---- scrapbook ---- */
+  .scrapbook {
+    position: relative;
+    min-height: 460px;
+  }
+  .polaroid {
+    position: absolute;
+    width: clamp(150px, 20vw, 210px);
+    margin: 0;
+    padding: 12px 12px 8px;
+    background: #fffdf7;
+    border-radius: 4px;
+    box-shadow: 0 22px 40px -18px rgba(0, 0, 0, 0.6);
+    transform: rotate(var(--rot));
+    transition: transform 0.35s var(--ease);
+  }
+  .polaroid:hover {
+    transform: rotate(0deg) scale(1.04);
+    z-index: 5;
+  }
+  .polaroid .ph {
+    background: linear-gradient(160deg, #dcebfb, #eef4fb);
+    border-radius: 2px;
+    aspect-ratio: 1 / 1;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+  }
+  .polaroid .ph img {
+    width: 92%;
+    height: 92%;
+    object-fit: contain;
+  }
+  .polaroid figcaption {
+    font-family: var(--font-hand);
+    font-size: 1.25rem;
+    color: #2a3350;
+    text-align: center;
+    padding-top: 6px;
+    line-height: 1.1;
+    white-space: normal;
+    overflow-wrap: break-word;
+  }
+  .p-a { top: 0; left: 4%; z-index: 3; }
+  .p-b { top: 18%; right: 2%; z-index: 2; }
+  .p-c { bottom: 0; left: 22%; z-index: 4; }
+
+  .doodle {
+    position: absolute;
+    color: #ff9a8b;
+    font-family: var(--font-hand);
+  }
+  .d-arrow { font-size: 2.5rem; top: 30%; left: 40%; transform: rotate(12deg); }
+  .d-star1 { font-size: 1.6rem; top: 6%; right: 20%; }
+  .d-star2 { font-size: 1.2rem; bottom: 14%; left: 8%; }
+
+  /* ---- copy ---- */
+  .about-copy .eyebrow {
+    color: #9fb0d8;
+  }
+  .about-h {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: clamp(2.2rem, 5.2vw, 4rem);
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+    color: #f4f7ff;
+  }
+  .about-h .hand {
+    font-family: var(--font-hand);
+    font-weight: 700;
+    color: #ff9a8b;
+    font-size: 1.15em;
+  }
+  .about-p {
+    margin-top: 1.5rem;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #c3cde6;
+    max-width: 46ch;
+  }
+  .about-p em {
+    color: #f4f7ff;
+  }
+  .ps {
+    margin-top: 1.75rem;
+    font-family: var(--font-hand);
+    font-size: 1.35rem;
+    color: #ffb3a6;
+  }
+
+  /* scroll cue */
+  .scroll-cue {
+    position: absolute;
+    z-index: 2;
+    left: 50%;
+    bottom: 1.5rem;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 1rem;
+    color: #b9c6e6;
+  }
+  .cue-arrow {
+    font-style: normal;
+    animation: nudge 1.8s ease-in-out infinite;
+  }
+  @keyframes nudge {
+    0%, 100% { transform: translateY(0); opacity: 0.6; }
+    50% { transform: translateY(6px); opacity: 1; }
+  }
+
+  @media (max-width: 860px) {
+    .about-inner {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+    .scrapbook {
+      min-height: 420px;
+      order: 2;
+    }
+    .moon { width: 70px; height: 70px; top: 2%; left: auto; right: 7%; }
+    .scroll-cue { display: none; }
   }
 </style>
