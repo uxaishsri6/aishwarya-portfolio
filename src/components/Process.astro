@@ -1,34 +1,52 @@
 ---
 const tenets = [
   {
-    n: "i.",
-    h: "Sit with the fuzzy part.",
-    p: "The first version of the problem is almost never the real one. I stay in ambiguity for longer than is comfortable, because that's where the real brief lives.",
+    n: "01",
+    h: "Start with the problem",
+    p: "The brief is rarely the whole problem. I spend time understanding the context before moving to solutions.",
+    take: "Find the real problem before designing the answer.",
   },
   {
-    n: "ii.",
-    h: "Design the system, not the screen.",
-    p: "Any single screen is easy. What's hard is a system that lets a hundred screens stay coherent while five teams ship into it every week.",
+    n: "02",
+    h: "Reframe before solving",
+    p: "I challenge the initial framing, test assumptions, and make sure we're solving the right problem for the right people.",
+    take: "Clarity comes before execution.",
   },
   {
-    n: "iii.",
-    h: "Trust is a UI problem.",
-    p: "Especially with AI. Show the reasoning. Ask before spending anything. Leave a way back out. Confidence is not the same as helpfulness.",
+    n: "03",
+    h: "Design the system",
+    p: "I think beyond individual screens, to components, states, edge cases, and how the experience scales.",
+    take: "Design for the product, not just the pixel.",
   },
   {
-    n: "iv.",
-    h: "Ship it, then keep listening.",
-    p: "Launch day is a checkpoint, not a finish line. Some of my favorite fixes have arrived weeks after the demo, from watching real people use the thing.",
+    n: "04",
+    h: "Work with constraints",
+    p: "Technical, business, and time constraints are part of the problem, not something to solve around later.",
+    take: "Constraints shape better solutions.",
+  },
+  {
+    n: "05",
+    h: "Prototype to learn",
+    p: "I use prototypes to test ideas and create alignment, keeping early work lightweight enough to change.",
+    take: "Prototype to learn, not to impress.",
+  },
+  {
+    n: "06",
+    h: "Ship and keep listening",
+    p: "Launch is a checkpoint, not the finish line. Real usage reveals what design reviews can't.",
+    take: "Ship, learn, iterate.",
   },
 ];
 ---
 
 <section id="process" class="process reveal">
   <p class="eyebrow">/ how i think</p>
-  <h2 class="manifesto">
-    My <em>process</em> isn't a checklist.<br />
-    It's more like a <em>way of paying attention.</em>
-  </h2>
+  <h2 class="manifesto">How I approach <em>product design.</em></h2>
+  <p class="process-intro">
+    I don't see design as a checklist. I see it as a way to make better decisions
+    through ambiguity, constraints, and feedback.
+  </p>
+
   <ol class="tenets">
     {tenets.map((t) => (
       <li>
@@ -36,6 +54,7 @@ const tenets = [
         <div>
           <h4>{t.h}</h4>
           <p>{t.p}</p>
+          <p class="take">{t.take}</p>
         </div>
       </li>
     ))}
@@ -47,11 +66,23 @@ const tenets = [
     padding-top: 8rem;
   }
   .manifesto {
-    font-size: clamp(1.8rem, 5vw, 3.4rem);
-    line-height: 1.1;
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: clamp(1.9rem, 5vw, 3.4rem);
+    line-height: 1.08;
     letter-spacing: -0.02em;
-    font-weight: 500;
     max-width: 20ch;
+  }
+  .manifesto em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .process-intro {
+    margin-top: 1.25rem;
+    max-width: 48ch;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--ink-soft);
   }
   .tenets {
     margin: 3.5rem 0 0;
@@ -59,28 +90,37 @@ const tenets = [
     list-style: none;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 2.5rem;
+    gap: 2.5rem 3rem;
   }
   .tenets li {
     display: flex;
-    gap: 1rem;
+    gap: 1.1rem;
     padding-top: 1.5rem;
     border-top: 1px solid var(--line);
   }
   .tl-num {
-    font-family: var(--font-serif);
-    font-size: 1.6rem;
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
     color: var(--accent);
-    line-height: 1;
+    line-height: 1.6;
     min-width: 2rem;
   }
   .tenets h4 {
     font-size: 1.2rem;
+    letter-spacing: -0.01em;
   }
   .tenets p {
     margin-top: 0.6rem;
     color: var(--ink-soft);
     font-size: 1rem;
+    line-height: 1.55;
+  }
+  .tenets .take {
+    margin-top: 0.85rem;
+    font-family: var(--font-hand);
+    font-size: 1.3rem;
+    line-height: 1.15;
+    color: var(--accent);
   }
   @media (max-width: 720px) {
     .tenets {
