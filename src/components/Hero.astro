@@ -119,6 +119,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     justify-self: center;
     width: min(100%, 470px);
     aspect-ratio: 3 / 4;
+    /* nudge down so the raised fist clears the nav links */
+    transform: translateY(3rem);
   }
   .me-sticker {
     position: absolute;
@@ -195,7 +197,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       padding-top: 2rem;
     }
     .lede-col { order: 2; }
-    .hero-figure { order: 1; width: min(80%, 340px); }
+    .hero-figure { order: 1; width: min(80%, 340px); transform: none; }
     .cover-actions { justify-content: center; }
     .scroll-cue { display: none; }
   }
