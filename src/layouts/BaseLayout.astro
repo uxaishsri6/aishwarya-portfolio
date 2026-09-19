@@ -1,0 +1,338 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const {
+  title,
+  description = "Aishwarya Srivastava is a product designer in Bengaluru, with five years of experience across AI, enterprise, and consumer products.",
+} = Astro.props;
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" href={`${base}/favicon.svg`} type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <ClientRouter />
+  </head>
+  <body>
+    <div class="cursor-blob" id="blob" aria-hidden="true"></div>
+
+    <header class="nav wrap">
+      <a class="brand" href={`${base}/`}>
+        <span class="brand-mark"></span> Aishwarya Srivastava
+      </a>
+      <nav class="nav-links">
+        <a href={`${base}/#about`}>About</a>
+        <a href={`${base}/#work`}>Work</a>
+        <a href={`${base}/#process`}>Process</a>
+        <a href={`${base}/#contact`}>Contact</a>
+      </nav>
+      <div class="nav-right">
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle day and night mode">
+          <span class="tt-sun">☀</span>
+          <span class="tt-moon">☾</span>
+        </button>
+        <div class="status-pill" title="Currently accepting new work">
+          <span class="dot-live"></span> Available
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="site-foot wrap">
+      <div class="foot-cols">
+        <div>
+          <p class="foot-name">Aishwarya Srivastava</p>
+          <p class="foot-sub">Product designer, Bengaluru, IST</p>
+        </div>
+        <ul class="foot-nav">
+          <li><a href={`${base}/#work`}>Work</a></li>
+          <li><a href={`${base}/#about`}>About</a></li>
+          <li><a href={`${base}/#contact`}>Contact</a></li>
+        </ul>
+      </div>
+      <p class="foot-meta">
+        © <span id="year"></span>, Aishwarya Srivastava. Handmade in Bengaluru.
+      </p>
+    </footer>
+
+    <style>
+      .nav {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding-block: 1.1rem;
+        backdrop-filter: saturate(1.4) blur(10px);
+        background: color-mix(in srgb, var(--bg) 78%, transparent);
+        border-bottom: 1px solid var(--line);
+      }
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+      }
+      .brand-mark {
+        width: 12px;
+        height: 12px;
+        border-radius: 4px;
+        background: var(--accent);
+        transform: rotate(12deg);
+        transition: transform 0.4s var(--ease);
+      }
+      .brand:hover .brand-mark {
+        transform: rotate(120deg) scale(1.2);
+      }
+      .nav-links {
+        display: flex;
+        gap: 1.5rem;
+        font-size: 0.95rem;
+      }
+      .nav-links a {
+        position: relative;
+        color: var(--ink-soft);
+        transition: color 0.2s var(--ease);
+      }
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -4px;
+        width: 100%;
+        height: 2px;
+        background: var(--accent);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.3s var(--ease);
+      }
+      .nav-links a:hover {
+        color: var(--ink);
+      }
+      .nav-links a:hover::after {
+        transform: scaleX(1);
+      }
+      .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 0.85rem;
+      }
+      .theme-toggle {
+        appearance: none;
+        border: 1.5px solid var(--line);
+        background: var(--card);
+        color: var(--fg);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 0.95rem;
+        display: grid;
+        place-items: center;
+        transition: transform 0.3s var(--ease), border-color 0.3s var(--ease);
+      }
+      .theme-toggle:hover {
+        transform: rotate(25deg) scale(1.08);
+        border-color: var(--accent);
+      }
+      .tt-moon {
+        display: none;
+      }
+      [data-theme="dark"] .tt-sun {
+        display: none;
+      }
+      [data-theme="dark"] .tt-moon {
+        display: inline;
+      }
+      .status-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--ink-soft);
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 0.35rem 0.75rem;
+        background: var(--card);
+      }
+      .dot-live {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--accent-3);
+        box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent-3) 60%, transparent);
+        animation: pulse 2s infinite;
+      }
+      @keyframes pulse {
+        0% {
+          box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent-3) 60%, transparent);
+        }
+        70% {
+          box-shadow: 0 0 0 8px transparent;
+        }
+        100% {
+          box-shadow: 0 0 0 0 transparent;
+        }
+      }
+      .site-foot {
+        margin-top: 8rem;
+        padding-block: 3rem 4rem;
+        border-top: 1px solid var(--line);
+      }
+      .foot-cols {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 2rem;
+      }
+      .foot-name {
+        font-family: var(--font-serif);
+        font-size: 1.6rem;
+      }
+      .foot-sub {
+        color: var(--ink-faint);
+        font-size: 0.9rem;
+      }
+      .foot-nav {
+        display: flex;
+        gap: 1.5rem;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        font-size: 0.95rem;
+      }
+      .foot-nav a:hover {
+        color: var(--accent);
+      }
+      .foot-meta {
+        margin-top: 2.5rem;
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--ink-faint);
+      }
+      @media (max-width: 720px) {
+        .nav-links,
+        .status-pill {
+          display: none;
+        }
+      }
+    </style>
+
+    <script>
+      // Runs on first load and after every View Transition navigation.
+      function initTheme() {
+        const saved = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const theme = saved || (prefersDark ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+      }
+      initTheme();
+
+      function wireUp() {
+        // year
+        const y = document.getElementById('year');
+        if (y) y.textContent = String(new Date().getFullYear());
+
+        // theme toggle
+        const toggle = document.getElementById('theme-toggle');
+        if (toggle && !toggle.dataset.wired) {
+          toggle.dataset.wired = '1';
+          toggle.addEventListener('click', () => {
+            const cur = document.documentElement.getAttribute('data-theme');
+            const next = cur === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+          });
+        }
+
+        // reveal on scroll
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((e) => {
+              if (e.isIntersecting) {
+                e.target.classList.add('in');
+                io.unobserve(e.target);
+              }
+            });
+          },
+          { threshold: 0.12, rootMargin: '0px 0px -8% 0px' }
+        );
+        document.querySelectorAll('.reveal:not(.in)').forEach((el) => io.observe(el));
+
+        // cursor blob (pointer devices only)
+        const blob = document.getElementById('blob');
+        if (blob && window.matchMedia('(hover: hover)').matches && !blob.dataset.wired) {
+          blob.dataset.wired = '1';
+          let x = window.innerWidth / 2,
+            y2 = window.innerHeight / 2,
+            tx = x,
+            ty = y2;
+          window.addEventListener('mousemove', (e) => {
+            tx = e.clientX;
+            ty = e.clientY;
+            blob.style.opacity = '0.85';
+          });
+          const loop = () => {
+            x += (tx - x) * 0.15;
+            y2 += (ty - y2) * 0.15;
+            blob.style.transform = `translate(${x}px, ${y2}px) translate(-50%, -50%)`;
+            requestAnimationFrame(loop);
+          };
+          loop();
+          document.addEventListener('mouseover', (e) => {
+            const t = e.target as HTMLElement;
+            const hot = t.closest('a, button, .project-card');
+            blob.classList.toggle('hot', !!hot);
+          });
+        }
+
+        // magnetic buttons
+        document.querySelectorAll<HTMLElement>('.magnetic').forEach((el) => {
+          if (el.dataset.wired) return;
+          el.dataset.wired = '1';
+          el.addEventListener('mousemove', (e) => {
+            const r = el.getBoundingClientRect();
+            const mx = e.clientX - r.left - r.width / 2;
+            const my = e.clientY - r.top - r.height / 2;
+            el.style.transform = `translate(${mx * 0.25}px, ${my * 0.35}px)`;
+          });
+          el.addEventListener('mouseleave', () => {
+            el.style.transform = '';
+          });
+        });
+      }
+
+      wireUp();
+      document.addEventListener('astro:after-swap', () => {
+        initTheme();
+        wireUp();
+      });
+      document.addEventListener('astro:page-load', wireUp);
+    </script>
+  </body>
+</html>

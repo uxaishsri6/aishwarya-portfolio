@@ -1,0 +1,90 @@
+---
+const tenets = [
+  {
+    n: "i.",
+    h: "Sit with the fuzzy part.",
+    p: "The first version of the problem is almost never the real one. I stay in ambiguity for longer than is comfortable, because that's where the real brief lives.",
+  },
+  {
+    n: "ii.",
+    h: "Design the system, not the screen.",
+    p: "Any single screen is easy. What's hard is a system that lets a hundred screens stay coherent while five teams ship into it every week.",
+  },
+  {
+    n: "iii.",
+    h: "Trust is a UI problem.",
+    p: "Especially with AI. Show the reasoning. Ask before spending anything. Leave a way back out. Confidence is not the same as helpfulness.",
+  },
+  {
+    n: "iv.",
+    h: "Ship it, then keep listening.",
+    p: "Launch day is a checkpoint, not a finish line. Some of my favorite fixes have arrived weeks after the demo, from watching real people use the thing.",
+  },
+];
+---
+
+<section id="process" class="process reveal">
+  <p class="eyebrow">/ how i think</p>
+  <h2 class="manifesto">
+    My <em>process</em> isn't a checklist.<br />
+    It's more like a <em>way of paying attention.</em>
+  </h2>
+  <ol class="tenets">
+    {tenets.map((t) => (
+      <li>
+        <p class="tl-num">{t.n}</p>
+        <div>
+          <h4>{t.h}</h4>
+          <p>{t.p}</p>
+        </div>
+      </li>
+    ))}
+  </ol>
+</section>
+
+<style>
+  .process {
+    padding-top: 8rem;
+  }
+  .manifesto {
+    font-size: clamp(1.8rem, 5vw, 3.4rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    font-weight: 500;
+    max-width: 20ch;
+  }
+  .tenets {
+    margin: 3.5rem 0 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.5rem;
+  }
+  .tenets li {
+    display: flex;
+    gap: 1rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line);
+  }
+  .tl-num {
+    font-family: var(--font-serif);
+    font-size: 1.6rem;
+    color: var(--accent);
+    line-height: 1;
+    min-width: 2rem;
+  }
+  .tenets h4 {
+    font-size: 1.2rem;
+  }
+  .tenets p {
+    margin-top: 0.6rem;
+    color: var(--ink-soft);
+    font-size: 1rem;
+  }
+  @media (max-width: 720px) {
+    .tenets {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

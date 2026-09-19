@@ -1,0 +1,175 @@
+---
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<section class="hero reveal" id="top">
+  <span class="shape sh-1" aria-hidden="true"></span>
+  <span class="shape sh-2" aria-hidden="true"></span>
+  <span class="shape sh-3" aria-hidden="true"></span>
+  <span class="shape sh-4" aria-hidden="true"></span>
+
+  <p class="caption"><span class="warn-tick"></span> designer at work, please pet the pixels</p>
+
+  <h1 class="hero-h">
+    Hi! I am
+    <span class="underlined">
+      <em>Aishwarya.</em>
+      <svg class="squiggle" viewBox="0 0 320 24" fill="none" preserveAspectRatio="none" aria-hidden="true">
+        <path
+          d="M4 14 C 40 4, 80 22, 120 10 S 200 22, 240 8 S 300 22, 316 10"
+          stroke="currentColor"
+          stroke-width="4"
+          stroke-linecap="round"
+          fill="none"></path>
+      </svg>
+    </span>
+  </h1>
+
+  <p class="tagline">
+    A UX designer with almost 5 years of industry experience. Scroll down to check out some of my work.
+  </p>
+
+  <p class="whisper">ps: coffee first, wireframes second, sticky notes forever.</p>
+
+  <div class="hero-actions">
+    <a href={`${base}/#work`} class="btn primary magnetic">See selected work</a>
+    <a href={`${base}/#contact`} class="btn ghost">Say hello</a>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    padding-top: clamp(4rem, 12vh, 9rem);
+    padding-bottom: clamp(3rem, 8vh, 6rem);
+    text-align: center;
+  }
+  .caption {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--ink-faint);
+    margin-bottom: 1.75rem;
+  }
+  .warn-tick {
+    width: 10px;
+    height: 10px;
+    background: repeating-linear-gradient(
+      45deg,
+      var(--accent-2),
+      var(--accent-2) 3px,
+      transparent 3px,
+      transparent 6px
+    );
+    border-radius: 2px;
+  }
+  .hero-h {
+    font-size: clamp(3rem, 11vw, 8.5rem);
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+  }
+  .underlined {
+    position: relative;
+    display: inline-block;
+  }
+  .underlined em {
+    font-size: 1.05em;
+  }
+  .squiggle {
+    position: absolute;
+    left: -2%;
+    bottom: -0.15em;
+    width: 104%;
+    height: 0.35em;
+    color: var(--accent);
+    animation: draw 1.4s var(--ease) 0.4s both;
+  }
+  @keyframes draw {
+    from {
+      stroke-dasharray: 400;
+      stroke-dashoffset: 400;
+    }
+    to {
+      stroke-dasharray: 400;
+      stroke-dashoffset: 0;
+    }
+  }
+  .tagline {
+    max-width: 34ch;
+    margin: 2rem auto 0;
+    font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+    color: var(--ink-soft);
+  }
+  .whisper {
+    margin-top: 0.75rem;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--ink-faint);
+  }
+  .hero-actions {
+    margin-top: 2.5rem;
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  /* floating confetti */
+  .shape {
+    position: absolute;
+    border-radius: 6px;
+    opacity: 0.85;
+    animation: float 7s ease-in-out infinite;
+  }
+  .sh-1 {
+    width: 26px;
+    height: 26px;
+    background: var(--accent);
+    top: 18%;
+    left: 12%;
+    transform: rotate(18deg);
+  }
+  .sh-2 {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--accent-2);
+    top: 30%;
+    right: 14%;
+    animation-delay: 1.2s;
+  }
+  .sh-3 {
+    width: 22px;
+    height: 22px;
+    background: var(--accent-3);
+    bottom: 24%;
+    left: 18%;
+    transform: rotate(-12deg);
+    animation-delay: 0.6s;
+  }
+  .sh-4 {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--accent);
+    bottom: 30%;
+    right: 20%;
+    animation-delay: 1.8s;
+  }
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0) rotate(0deg);
+    }
+    50% {
+      transform: translateY(-16px) rotate(8deg);
+    }
+  }
+  @media (max-width: 720px) {
+    .shape {
+      display: none;
+    }
+  }
+</style>

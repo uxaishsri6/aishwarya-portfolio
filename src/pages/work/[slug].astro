@@ -1,0 +1,223 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const studies = (await getCollection('case-studies')).sort(
+    (a, b) => a.data.order - b.data.order
+  );
+  return studies.map((entry, i) => ({
+    params: { slug: entry.slug },
+    props: {
+      entry,
+      prev: studies[(i - 1 + studies.length) % studies.length],
+      next: studies[(i + 1) % studies.length],
+    },
+  }));
+}
+
+const { entry, prev, next } = Astro.props;
+const { Content } = await entry.render();
+const d = entry.data;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const coverSrc = d.cover ? `${base}/images/${d.cover}` : undefined;
+---
+
+<BaseLayout title={`${d.title} — Aishwarya Srivastava`} description={d.lede}>
+  <article class="study" style={`--accent:${d.accent}`}>
+    <div class="wrap">
+      <a href={`${base}/#work`} class="back">← All work</a>
+
+      <header class="study-head reveal">
+        <p class="s-tag">{d.tag}</p>
+        <h1 class="s-title">{d.title}</h1>
+        <p class="s-lede">{d.lede}</p>
+      </header>
+
+      <div class="s-cover" transition:name={`cover-${entry.slug}`}>
+        {coverSrc ? (
+          <img src={coverSrc} alt={d.title} />
+        ) : (
+          <div class="s-pattern" aria-hidden="true"></div>
+        )}
+      </div>
+
+      <dl class="s-meta reveal">
+        <div><dt>Role</dt><dd>{d.role}</dd></div>
+        <div><dt>Timeline</dt><dd>{d.timeline}</dd></div>
+        <div><dt>Year</dt><dd>{d.year}</dd></div>
+        <div><dt>Tools</dt><dd>{d.tools.join(', ')}</dd></div>
+      </dl>
+
+      <div class="s-body reveal">
+        <Content />
+      </div>
+
+      <nav class="s-nav">
+        <a href={`${base}/work/${prev.slug}`} class="s-navlink prev">
+          <span class="nl-dir">← Previous</span>
+          <span class="nl-title">{prev.data.cardTitle}</span>
+        </a>
+        <a href={`${base}/work/${next.slug}`} class="s-navlink next">
+          <span class="nl-dir">Next →</span>
+          <span class="nl-title">{next.data.cardTitle}</span>
+        </a>
+      </nav>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .study {
+    padding-top: 2.5rem;
+  }
+  .back {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+    margin-bottom: 3rem;
+    transition: color 0.2s var(--ease), transform 0.2s var(--ease);
+  }
+  .back:hover {
+    color: var(--accent);
+    transform: translateX(-4px);
+  }
+  .study-head {
+    max-width: 40rem;
+  }
+  .s-tag {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--accent);
+    letter-spacing: 0.04em;
+  }
+  .s-title {
+    margin-top: 1rem;
+    font-size: clamp(2.2rem, 6vw, 4.5rem);
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+  }
+  .s-lede {
+    margin-top: 1.5rem;
+    font-size: clamp(1.15rem, 2.4vw, 1.5rem);
+    color: var(--ink-soft);
+  }
+  .s-cover {
+    margin-top: 3rem;
+    aspect-ratio: 16 / 8;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--line);
+  }
+  .s-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .s-pattern {
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
+        120% 120% at 15% 20%,
+        color-mix(in srgb, var(--accent) 55%, transparent),
+        transparent 55%
+      ),
+      radial-gradient(
+        120% 120% at 90% 85%,
+        color-mix(in srgb, var(--accent) 35%, transparent),
+        transparent 55%
+      ),
+      color-mix(in srgb, var(--accent) 14%, var(--card));
+  }
+  .s-meta {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin: 3rem 0;
+    padding: 1.75rem 0;
+    border-block: 1px solid var(--line);
+  }
+  .s-meta dt {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-faint);
+  }
+  .s-meta dd {
+    margin: 0.4rem 0 0;
+    font-size: 0.98rem;
+  }
+  /* rendered markdown */
+  .s-body {
+    max-width: 42rem;
+    margin-inline: auto;
+    font-size: 1.15rem;
+    line-height: 1.75;
+    color: var(--ink-soft);
+  }
+  .s-body :global(h2) {
+    margin: 3rem 0 1rem;
+    font-size: clamp(1.5rem, 3.5vw, 2.1rem);
+    color: var(--ink);
+    letter-spacing: -0.02em;
+  }
+  .s-body :global(h3) {
+    margin: 2rem 0 0.75rem;
+    font-size: 1.3rem;
+    color: var(--ink);
+  }
+  .s-body :global(p) {
+    margin: 1.1rem 0;
+  }
+  .s-body :global(ul) {
+    margin: 1.1rem 0;
+    padding-left: 1.25rem;
+  }
+  .s-body :global(li) {
+    margin: 0.5rem 0;
+  }
+  .s-body :global(strong) {
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .s-nav {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 5rem;
+  }
+  .s-navlink {
+    padding: 1.75rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--card);
+    transition: transform 0.3s var(--ease), border-color 0.3s var(--ease);
+  }
+  .s-navlink:hover {
+    transform: translateY(-4px);
+    border-color: color-mix(in srgb, var(--accent) 50%, var(--line));
+  }
+  .s-navlink.next {
+    text-align: right;
+  }
+  .nl-dir {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--ink-faint);
+  }
+  .nl-title {
+    display: block;
+    margin-top: 0.5rem;
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    color: var(--ink);
+  }
+  @media (max-width: 720px) {
+    .s-meta {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>
