@@ -102,10 +102,12 @@ const shooting = [
     ))}
   </div>
 
-  <!-- celestial body: sun (day) cross-fades to moon (night) -->
+  <!-- celestial body: arcs left(moon)<->right(sun) and morphs on theme toggle -->
   <div class="celestial">
-    <div class="fx-sun"></div>
-    <div class="fx-moon"></div>
+    <div class="orb">
+      <div class="fx-sun"></div>
+      <div class="fx-moon"></div>
+    </div>
   </div>
 </div>
 
@@ -244,21 +246,37 @@ const shooting = [
     100% { opacity: 0; transform: rotate(-20deg) translate(-680px, 248px); }
   }
 
-  /* ---- celestial body: sun (day) <-> moon (night) ---- */
+  /* ---- celestial body: arcs across the sky on theme toggle ---- */
   .celestial {
     position: absolute;
-    top: 64px;
-    right: 6%;
-    width: 128px;
-    height: 128px;
+    top: 44px;
+    left: 50%;
+    width: 640px;
+    height: 210px;
+    transform: translateX(-50%);
+  }
+  .orb {
+    position: absolute;
+    width: 118px;
+    height: 118px;
+    /* semicircle: left-low -> up-over -> right-low */
+    offset-path: path('M 40 178 A 280 150 0 0 1 600 178');
+    offset-anchor: 50% 50%;
+    offset-rotate: 0deg;
+    offset-distance: 100%;           /* light: sun rests on the right */
+    transition: offset-distance 1.5s cubic-bezier(0.5, 0, 0.3, 1);
+    will-change: offset-distance;
+  }
+  :global([data-theme='dark']) .orb {
+    offset-distance: 0%;             /* dark: moon rests on the left */
   }
   .fx-sun,
   .fx-moon {
     position: absolute;
     inset: 0;
     border-radius: 50%;
-    transition: opacity 0.8s ease, transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
-    will-change: opacity, transform;
+    transition: opacity 1.4s ease;
+    will-change: opacity;
   }
 
   /* sun */
@@ -268,7 +286,6 @@ const shooting = [
       0 0 40px 10px rgba(255, 198, 84, 0.6),
       0 0 90px 34px rgba(255, 186, 70, 0.28);
     opacity: 1;
-    transform: none;
   }
   .fx-sun::before {
     content: '';
@@ -291,7 +308,6 @@ const shooting = [
   /* realistic moon */
   .fx-moon {
     opacity: 0;
-    transform: rotate(45deg) scale(0.5);
     background:
       radial-gradient(circle at 30% 38%, rgba(150, 142, 120, 0.45) 0 7px, transparent 8px),
       radial-gradient(circle at 60% 30%, rgba(150, 142, 120, 0.35) 0 5px, transparent 6px),
@@ -305,23 +321,19 @@ const shooting = [
       0 0 60px 12px rgba(244, 241, 230, 0.28);
   }
 
-  /* dark theme: fade out sun, fade in moon */
-  :global([data-theme='dark']) .fx-sun {
-    opacity: 0;
-    transform: rotate(-45deg) scale(0.5);
-  }
-  :global([data-theme='dark']) .fx-moon {
-    opacity: 1;
-    transform: none;
-  }
+  /* dark theme: fade out sun, fade in moon (orb travels the arc) */
+  :global([data-theme='dark']) .fx-sun { opacity: 0; }
+  :global([data-theme='dark']) .fx-moon { opacity: 1; }
 
   @media (prefers-reduced-motion: reduce) {
     .fx-clouds img, .bird, .bird .dv-wing, .star, .shoot, .shoot::after, .fx-sun::before {
       animation: none !important;
     }
+    .orb { transition: none; }
     .fx-shooting { display: none; }
   }
-  @media (max-width: 720px) {
-    .celestial { width: 88px; height: 88px; top: 40px; }
+  @media (max-width: 760px) {
+    /* scale the whole arc down on small screens */
+    .celestial { transform: translateX(-50%) scale(0.62); transform-origin: top center; top: 30px; }
   }
 </style>
