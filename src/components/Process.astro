@@ -43,7 +43,7 @@ const tenets = [
 <section id="process" class="process reveal">
   <div class="process-body">
     <p class="eyebrow">/ how i think</p>
-    <h2 class="manifesto">How I approach <em>product design.</em></h2>
+    <h2 class="manifesto">How I approach <em>Design.</em></h2>
     <p class="process-intro">
       I don't see design as a checklist. I see it as a way to make better decisions
       through ambiguity, constraints, and feedback.
@@ -76,28 +76,19 @@ const tenets = [
     position: relative;
     padding-top: 8rem;
   }
+  /* pointing sticker sits at the bottom-right of the section */
   .process-figure {
-    display: none;
+    display: block;
+    width: clamp(280px, 40vw, 480px);
+    height: auto;
+    margin: 2.5rem 0 0 auto;
+    filter: drop-shadow(0 22px 32px rgba(20, 40, 70, 0.22));
+    animation: float-pt 7s ease-in-out infinite;
+    pointer-events: none;
   }
-  /* on desktop: sticker sits on the right, pointing at the content */
-  @media (min-width: 1000px) {
-    .process-body { padding-right: 340px; }
-    .process-figure {
-      display: block;
-      position: absolute;
-      right: 0;
-      top: 54%;
-      transform: translateY(-50%);
-      width: clamp(260px, 24vw, 320px);
-      height: auto;
-      filter: drop-shadow(0 20px 30px rgba(20, 40, 70, 0.22));
-      animation: float-pt 7s ease-in-out infinite;
-      pointer-events: none;
-    }
-    @keyframes float-pt {
-      0%, 100% { transform: translateY(-50%); }
-      50% { transform: translateY(calc(-50% - 12px)); }
-    }
+  @keyframes float-pt {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
   }
   .manifesto {
     font-family: var(--font-serif);
