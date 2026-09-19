@@ -249,18 +249,19 @@ const shooting = [
   /* ---- celestial body: arcs across the sky on theme toggle ---- */
   .celestial {
     position: absolute;
-    top: 44px;
+    top: 30px;
     left: 50%;
-    width: 640px;
-    height: 210px;
+    width: 1300px;
+    height: 190px;
     transform: translateX(-50%);
+    transform-origin: top center;
   }
   .orb {
     position: absolute;
-    width: 118px;
-    height: 118px;
-    /* semicircle: left-low -> up-over -> right-low */
-    offset-path: path('M 40 178 A 280 150 0 0 1 600 178');
+    width: 104px;
+    height: 104px;
+    /* wide, shallow arc: far-left(moon) -> up-over -> far-right(sun) */
+    offset-path: path('M 20 96 A 630 74 0 0 1 1280 96');
     offset-anchor: 50% 50%;
     offset-rotate: 0deg;
     offset-distance: 100%;           /* light: sun rests on the right */
@@ -332,8 +333,14 @@ const shooting = [
     .orb { transition: none; }
     .fx-shooting { display: none; }
   }
+  /* scale the wide arc to fit narrower viewports (stays centered) */
+  @media (max-width: 1360px) {
+    .celestial { transform: translateX(-50%) scale(0.85); }
+  }
+  @media (max-width: 1100px) {
+    .celestial { transform: translateX(-50%) scale(0.66); }
+  }
   @media (max-width: 760px) {
-    /* scale the whole arc down on small screens */
-    .celestial { transform: translateX(-50%) scale(0.62); transform-origin: top center; top: 30px; }
+    .celestial { transform: translateX(-50%) scale(0.5); top: 22px; }
   }
 </style>
