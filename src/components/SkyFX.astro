@@ -102,7 +102,11 @@ const shooting = [
     ))}
   </div>
 
-  <div class="fx-moon"></div>
+  <!-- celestial body: sun (day) cross-fades to moon (night) -->
+  <div class="celestial">
+    <div class="fx-sun"></div>
+    <div class="fx-moon"></div>
+  </div>
 </div>
 
 <style>
@@ -240,15 +244,54 @@ const shooting = [
     100% { opacity: 0; transform: rotate(-20deg) translate(-680px, 248px); }
   }
 
-  /* ---- realistic moon (night only) ---- */
+  /* ---- celestial body: sun (day) <-> moon (night) ---- */
+  .celestial {
+    position: absolute;
+    top: 64px;
+    right: 6%;
+    width: 128px;
+    height: 128px;
+  }
+  .fx-sun,
   .fx-moon {
     position: absolute;
-    top: 70px;
-    left: 6%;
-    width: 132px;
-    height: 132px;
+    inset: 0;
     border-radius: 50%;
-    display: none;
+    transition: opacity 0.8s ease, transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, transform;
+  }
+
+  /* sun */
+  .fx-sun {
+    background: radial-gradient(circle at 42% 38%, #fff6c4 0%, #ffd54a 52%, #ffb020 100%);
+    box-shadow:
+      0 0 40px 10px rgba(255, 198, 84, 0.6),
+      0 0 90px 34px rgba(255, 186, 70, 0.28);
+    opacity: 1;
+    transform: none;
+  }
+  .fx-sun::before {
+    content: '';
+    position: absolute;
+    inset: -42%;
+    border-radius: 50%;
+    background: repeating-conic-gradient(
+      from 0deg,
+      rgba(255, 200, 84, 0.6) 0deg 5deg,
+      transparent 5deg 17deg
+    );
+    -webkit-mask: radial-gradient(circle, transparent 50%, #000 53%, #000 66%, transparent 71%);
+    mask: radial-gradient(circle, transparent 50%, #000 53%, #000 66%, transparent 71%);
+    animation: fx-spin 44s linear infinite;
+  }
+  @keyframes fx-spin {
+    to { transform: rotate(360deg); }
+  }
+
+  /* realistic moon */
+  .fx-moon {
+    opacity: 0;
+    transform: rotate(45deg) scale(0.5);
     background:
       radial-gradient(circle at 30% 38%, rgba(150, 142, 120, 0.45) 0 7px, transparent 8px),
       radial-gradient(circle at 60% 30%, rgba(150, 142, 120, 0.35) 0 5px, transparent 6px),
@@ -261,15 +304,24 @@ const shooting = [
       inset 8px 8px 18px rgba(255, 253, 245, 0.5),
       0 0 60px 12px rgba(244, 241, 230, 0.28);
   }
-  :global([data-theme='dark']) .fx-moon { display: block; }
+
+  /* dark theme: fade out sun, fade in moon */
+  :global([data-theme='dark']) .fx-sun {
+    opacity: 0;
+    transform: rotate(-45deg) scale(0.5);
+  }
+  :global([data-theme='dark']) .fx-moon {
+    opacity: 1;
+    transform: none;
+  }
 
   @media (prefers-reduced-motion: reduce) {
-    .fx-clouds img, .bird, .bird .dv-wing, .star, .shoot, .shoot::after {
+    .fx-clouds img, .bird, .bird .dv-wing, .star, .shoot, .shoot::after, .fx-sun::before {
       animation: none !important;
     }
     .fx-shooting { display: none; }
   }
   @media (max-width: 720px) {
-    .fx-moon { width: 88px; height: 88px; top: 40px; }
+    .celestial { width: 88px; height: 88px; top: 40px; }
   }
 </style>
