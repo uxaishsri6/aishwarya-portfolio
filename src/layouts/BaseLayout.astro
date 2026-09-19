@@ -162,10 +162,10 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       .tt-moon {
         display: none;
       }
-      [data-theme="dark"] .tt-sun {
+      :global([data-theme="dark"]) .tt-sun {
         display: none;
       }
-      [data-theme="dark"] .tt-moon {
+      :global([data-theme="dark"]) .tt-moon {
         display: inline;
       }
       .status-pill {
@@ -270,7 +270,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
           });
         }
 
-        // reveal on scroll
+        // reveal on scroll — IntersectionObserver is progressive enhancement.
         const io = new IntersectionObserver(
           (entries) => {
             entries.forEach((e) => {
@@ -282,7 +282,24 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
           },
           { threshold: 0.12, rootMargin: '0px 0px -8% 0px' }
         );
+        // Fallback: reveal anything already within the viewport using layout
+        // geometry. IntersectionObserver does not fire while a document is
+        // hidden (e.g. opened in a background tab), so this guarantees
+        // above-the-fold content is never stuck invisible.
+        const revealInView = () => {
+          const vh = window.innerHeight || document.documentElement.clientHeight;
+          document.querySelectorAll('.reveal:not(.in)').forEach((el) => {
+            const r = el.getBoundingClientRect();
+            if (r.top < vh * 0.92 && r.bottom > 0) el.classList.add('in');
+          });
+        };
         document.querySelectorAll('.reveal:not(.in)').forEach((el) => io.observe(el));
+        revealInView();
+        // Re-check when the tab becomes visible (IO may have been dormant).
+        document.addEventListener('visibilitychange', () => {
+          if (!document.hidden) revealInView();
+        });
+        window.addEventListener('load', revealInView, { once: true });
 
         // cursor blob (pointer devices only)
         const blob = document.getElementById('blob');
