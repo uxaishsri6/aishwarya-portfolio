@@ -1,5 +1,14 @@
 ---
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const journey = [
+  { year: '2026', title: 'Senior UX Designer · Tech Mahindra', text: 'Leading end-to-end UX for British Telecom’s PNI platform, from research to developer handoff.' },
+  { year: '2025', title: 'Independent Designer · UXwithAish', text: 'AI-assisted UX workflows and high-converting sites for small businesses, alongside a PG at IIT Madras in Gen AI & Agentic AI.' },
+  { year: '2022', title: 'UX Designer II · Ollion', text: 'Tata Neu Connect, cloud Landing Zone dashboards, healthcare and logistics platforms, plus a design system that cut delivery time by 40%.' },
+  { year: '2021', title: 'Associate UX/UI Designer · mVerve', text: 'Enterprise CRM platforms for industrial and manufacturing teams.' },
+  { year: '2021', title: 'UX/UI Bootcamp · DesignBoat', text: 'Made the leap into product design.' },
+  { year: '2018', title: 'B.Arch · BIT Mesra', text: 'An architecture degree that taught me structure, flow, and systems thinking.' },
+];
 ---
 
 <section id="about" class="about">
@@ -34,6 +43,23 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         exploring somewhere new for a little fresh inspiration.
       </p>
     </div>
+  </div>
+
+  <div class="journey wrap reveal">
+    <p class="eyebrow">/ my journey</p>
+    <h3 class="journey-h">My <span class="hand">journey</span> so far.</h3>
+    <ol class="timeline">
+      {journey.map((j) => (
+        <li>
+          <span class="tl-dot"></span>
+          <span class="tl-year">{j.year}</span>
+          <div class="tl-body">
+            <h4>{j.title}</h4>
+            <p>{j.text}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
   </div>
 
   <a href={`${base}/#work`} class="scroll-cue" aria-label="Scroll to work">
@@ -158,6 +184,73 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   @media (min-width: 861px) {
     .about-copy { padding-right: 90px; }
   }
+
+  /* ---- my journey ---- */
+  .journey {
+    position: relative;
+    z-index: 2;
+    margin-top: clamp(3.5rem, 7vh, 6rem);
+  }
+  .journey-h {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    letter-spacing: -0.02em;
+    color: #12233c;
+    margin-bottom: 2rem;
+  }
+  :global([data-theme='dark']) .journey-h { color: #f4f7ff; }
+  .journey-h .hand {
+    font-family: var(--font-hand);
+    font-weight: 700;
+    color: #e26a54;
+    font-size: 1.15em;
+  }
+  :global([data-theme='dark']) .journey-h .hand { color: #ff9a8b; }
+  .timeline {
+    list-style: none;
+    margin: 0;
+    padding: 0 0 0 1.75rem;
+    border-left: 2px solid color-mix(in srgb, #1e2c4f 22%, transparent);
+    display: grid;
+    gap: 1.9rem;
+    max-width: 640px;
+  }
+  :global([data-theme='dark']) .timeline {
+    border-left-color: color-mix(in srgb, #ffffff 22%, transparent);
+  }
+  .timeline li { position: relative; }
+  .tl-dot {
+    position: absolute;
+    left: calc(-1.75rem - 6px);
+    top: 5px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 22%, transparent);
+  }
+  .tl-year {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    color: var(--accent);
+  }
+  .tl-body h4 {
+    margin-top: 0.25rem;
+    font-size: 1.12rem;
+    letter-spacing: -0.01em;
+    color: #1e2c4f;
+  }
+  :global([data-theme='dark']) .tl-body h4 { color: #eef1f7; }
+  .tl-body p {
+    margin-top: 0.4rem;
+    font-size: 0.98rem;
+    line-height: 1.55;
+    color: #3a4a63;
+    max-width: 52ch;
+  }
+  :global([data-theme='dark']) .tl-body p { color: #c3cde6; }
 
   @media (max-width: 860px) {
     .about-inner {
