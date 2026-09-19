@@ -59,7 +59,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 <style>
   .cover {
     position: relative;
-    min-height: calc(100svh - 66px);
+    /* pull the sky up behind the transparent topbar */
+    margin-top: calc(-1 * var(--nav-h));
+    min-height: 100svh;
     display: flex;
     align-items: center;
     overflow: hidden;

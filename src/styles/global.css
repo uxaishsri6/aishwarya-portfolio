@@ -22,6 +22,7 @@
   --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", monospace;
 
   /* --- scale / rhythm --- */
+  --nav-h: 68px;
   --maxw: 1160px;
   --gutter: clamp(1.25rem, 5vw, 4rem);
   --radius: 18px;

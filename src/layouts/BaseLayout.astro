@@ -85,9 +85,18 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         align-items: center;
         justify-content: space-between;
         gap: 1rem;
+        min-height: var(--nav-h);
         padding-block: 1.1rem;
+        /* transparent by default so it floats over the banner sky */
+        background: transparent;
+        border-bottom: 1px solid transparent;
+        transition: background 0.35s var(--ease), border-color 0.35s var(--ease),
+          backdrop-filter 0.35s var(--ease);
+      }
+      /* solid, blurred backdrop once scrolled past the banner */
+      .nav.scrolled {
         backdrop-filter: saturate(1.4) blur(10px);
-        background: color-mix(in srgb, var(--bg) 78%, transparent);
+        background: color-mix(in srgb, var(--bg) 82%, transparent);
         border-bottom: 1px solid var(--line);
       }
       .brand {
@@ -268,6 +277,15 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
             document.documentElement.setAttribute('data-theme', next);
             localStorage.setItem('theme', next);
           });
+        }
+
+        // topbar: transparent over the banner, solid backdrop once scrolled
+        const nav = document.querySelector<HTMLElement>('.nav');
+        if (nav && !nav.dataset.wired) {
+          nav.dataset.wired = '1';
+          const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 40);
+          window.addEventListener('scroll', onScroll, { passive: true });
+          onScroll();
         }
 
         // reveal on scroll — IntersectionObserver is progressive enhancement.
