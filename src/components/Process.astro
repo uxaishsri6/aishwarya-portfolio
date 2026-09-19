@@ -1,4 +1,5 @@
 ---
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const tenets = [
   {
     n: "01",
@@ -40,30 +41,63 @@ const tenets = [
 ---
 
 <section id="process" class="process reveal">
-  <p class="eyebrow">/ how i think</p>
-  <h2 class="manifesto">How I approach <em>product design.</em></h2>
-  <p class="process-intro">
-    I don't see design as a checklist. I see it as a way to make better decisions
-    through ambiguity, constraints, and feedback.
-  </p>
+  <div class="process-body">
+    <p class="eyebrow">/ how i think</p>
+    <h2 class="manifesto">How I approach <em>product design.</em></h2>
+    <p class="process-intro">
+      I don't see design as a checklist. I see it as a way to make better decisions
+      through ambiguity, constraints, and feedback.
+    </p>
 
-  <ol class="tenets">
-    {tenets.map((t) => (
-      <li>
-        <p class="tl-num">{t.n}</p>
-        <div>
-          <h4>{t.h}</h4>
-          <p>{t.p}</p>
-          <p class="take">{t.take}</p>
-        </div>
-      </li>
-    ))}
-  </ol>
+    <ol class="tenets">
+      {tenets.map((t) => (
+        <li>
+          <p class="tl-num">{t.n}</p>
+          <div>
+            <h4>{t.h}</h4>
+            <p>{t.p}</p>
+            <p class="take">{t.take}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+
+  <img
+    class="process-figure"
+    src={`${base}/images/sticker-point-left.png`}
+    alt="Illustration of Aishwarya pointing toward the design principles"
+    loading="lazy"
+  />
 </section>
 
 <style>
   .process {
+    position: relative;
     padding-top: 8rem;
+  }
+  .process-figure {
+    display: none;
+  }
+  /* on desktop: sticker sits on the right, pointing at the content */
+  @media (min-width: 1000px) {
+    .process-body { padding-right: 340px; }
+    .process-figure {
+      display: block;
+      position: absolute;
+      right: 0;
+      top: 54%;
+      transform: translateY(-50%);
+      width: clamp(260px, 24vw, 320px);
+      height: auto;
+      filter: drop-shadow(0 20px 30px rgba(20, 40, 70, 0.22));
+      animation: float-pt 7s ease-in-out infinite;
+      pointer-events: none;
+    }
+    @keyframes float-pt {
+      0%, 100% { transform: translateY(-50%); }
+      50% { transform: translateY(calc(-50% - 12px)); }
+    }
   }
   .manifesto {
     font-family: var(--font-serif);
