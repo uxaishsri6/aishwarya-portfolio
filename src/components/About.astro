@@ -47,20 +47,28 @@ const journey = [
   </div>
 
   <div class="journey wrap reveal">
-    <p class="eyebrow">/ my journey</p>
-    <h3 class="journey-h">My <span class="hand">journey</span> so far.</h3>
-    <ol class="timeline">
-      {journey.map((j) => (
-        <li>
-          <span class="tl-dot"></span>
-          <span class="tl-year">{j.year}</span>
-          <div class="tl-body">
-            <h4>{j.title}</h4>
-            <p>{j.text}</p>
-          </div>
-        </li>
-      ))}
-    </ol>
+    <div class="journey-body">
+      <p class="eyebrow">/ my journey</p>
+      <h3 class="journey-h">My <span class="hand">journey</span> so far.</h3>
+      <ol class="timeline">
+        {journey.map((j) => (
+          <li>
+            <span class="tl-dot"></span>
+            <span class="tl-year">{j.year}</span>
+            <div class="tl-body">
+              <h4>{j.title}</h4>
+              <p>{j.text}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+    <img
+      class="journey-figure"
+      src={`${base}/images/sticker-point-left.png`}
+      alt="Illustration of Aishwarya pointing at her journey"
+      loading="lazy"
+    />
   </div>
 
   <a href={`${base}/#work`} class="scroll-cue" aria-label="Scroll to work">
@@ -252,6 +260,29 @@ const journey = [
     max-width: 52ch;
   }
   :global([data-theme='dark']) .tl-body p { color: #c3cde6; }
+
+  /* pointing sticker beside the journey */
+  .journey-figure { display: none; }
+  @media (min-width: 1000px) {
+    .journey { position: relative; }
+    .journey-body { padding-right: 380px; }
+    .journey-figure {
+      display: block;
+      position: absolute;
+      right: 0;
+      top: 56%;
+      transform: translateY(-50%);
+      width: clamp(280px, 26vw, 360px);
+      height: auto;
+      filter: drop-shadow(0 20px 30px rgba(20, 40, 70, 0.25));
+      animation: float-jr 7s ease-in-out infinite;
+      pointer-events: none;
+    }
+    @keyframes float-jr {
+      0%, 100% { transform: translateY(-50%); }
+      50% { transform: translateY(calc(-50% - 12px)); }
+    }
+  }
 
   @media (max-width: 860px) {
     .about-inner {

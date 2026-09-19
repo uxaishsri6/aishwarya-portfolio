@@ -1,5 +1,4 @@
 ---
-const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const tenets = [
   {
     n: "01",
@@ -62,44 +61,12 @@ const tenets = [
       ))}
     </ol>
   </div>
-
-  <img
-    class="process-figure"
-    src={`${base}/images/sticker-point-left.png`}
-    alt="Illustration of Aishwarya pointing toward the design principles"
-    loading="lazy"
-  />
 </section>
 
 <style>
   .process {
     position: relative;
     padding-top: 8rem;
-  }
-  /* pointing sticker: centered on the right of the six principles */
-  .process-figure {
-    display: block;
-    width: min(80%, 380px);
-    height: auto;
-    margin: 2rem auto 0;
-    filter: drop-shadow(0 22px 32px rgba(20, 40, 70, 0.22));
-    pointer-events: none;
-  }
-  @media (min-width: 1000px) {
-    .process-body { padding-right: 400px; }
-    .process-figure {
-      position: absolute;
-      right: 0;
-      top: 60%;
-      margin: 0;
-      width: clamp(300px, 28vw, 400px);
-      transform: translateY(-50%);
-      animation: float-pt 7s ease-in-out infinite;
-    }
-    @keyframes float-pt {
-      0%, 100% { transform: translateY(-50%); }
-      50% { transform: translateY(calc(-50% - 12px)); }
-    }
   }
   .manifesto {
     font-family: var(--font-serif);
