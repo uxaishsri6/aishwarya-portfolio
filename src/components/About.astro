@@ -14,6 +14,12 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   </div>
   <div class="moon" aria-hidden="true"></div>
 
+  <!-- clouds (both themes; dimmed at night) -->
+  <div class="about-clouds" aria-hidden="true">
+    <img src={`${base}/images/cloud-1.png`} alt="" style="top:8%; left:-8%; width:300px;" />
+    <img src={`${base}/images/cloud-2.png`} alt="" style="bottom:10%; right:-6%; width:320px;" />
+  </div>
+
   <!-- day sky (light theme): drifting birds -->
   <div class="birds" aria-hidden="true">
     <span class="bird b1"><svg viewBox="0 0 24 10"><path d="M1 8 Q6 1 12 6 Q18 1 23 8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
@@ -65,17 +71,12 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 <style>
   .about {
     position: relative;
-    /* light theme: day sky */
-    background: linear-gradient(180deg, #8fc4f5 0%, #bfe0fb 45%, #e9f4ff 100%);
+    /* background is provided by the shared .sky-world wrapper */
     color: #1e2c4f;
     padding-block: clamp(5rem, 12vh, 9rem);
     overflow: hidden;
   }
-  :global([data-theme='dark']) .about {
-    /* dark theme: night sky */
-    background: radial-gradient(120% 90% at 80% 10%, #1b2650 0%, #0d1430 45%, #080d22 100%);
-    color: #eaeefb;
-  }
+  :global([data-theme='dark']) .about { color: #eaeefb; }
 
   /* stars + moon only at night */
   .stars, .moon { display: none; }
@@ -106,6 +107,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     box-shadow: 0 0 60px 8px rgba(244, 241, 230, 0.25);
     opacity: 0.85;
   }
+
+  /* ---- clouds ---- */
+  .about-clouds { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+  .about-clouds img { position: absolute; height: auto; opacity: 0.75; filter: blur(1px); }
+  :global([data-theme='dark']) .about-clouds img { opacity: 0.14; filter: blur(2px) brightness(0.7); }
 
   /* ---- birds (day theme only) ---- */
   .birds { position: absolute; inset: 0; pointer-events: none; }

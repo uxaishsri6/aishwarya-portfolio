@@ -16,6 +16,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <BaseLayout title="Aishwarya Srivastava, Product Designer">
+  <div class="sky-world">
   <Hero />
 
   <Marquee />
@@ -24,10 +25,10 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
   <section id="work" class="work">
     <div class="work-sky" aria-hidden="true">
-      <img src={`${base}/images/cloud-1.png`} alt="" style="top:6%; left:-6%; width:340px; opacity:.7" />
-      <img src={`${base}/images/cloud-2.png`} alt="" style="top:2%; right:-4%; width:300px; opacity:.6" />
-      <img src={`${base}/images/cloud-2.png`} alt="" style="bottom:8%; left:2%; width:320px; opacity:.5" />
-      <img src={`${base}/images/cloud-1.png`} alt="" style="bottom:2%; right:-6%; width:360px; opacity:.6" />
+      <img src={`${base}/images/cloud-1.png`} alt="" style="top:6%; left:-6%; width:340px;" />
+      <img src={`${base}/images/cloud-2.png`} alt="" style="top:2%; right:-4%; width:300px;" />
+      <img src={`${base}/images/cloud-2.png`} alt="" style="bottom:8%; left:2%; width:320px;" />
+      <img src={`${base}/images/cloud-1.png`} alt="" style="bottom:2%; right:-6%; width:360px;" />
     </div>
 
     <div class="wrap work-wrap">
@@ -52,6 +53,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       </ul>
     </div>
   </section>
+  </div>
 
   <div class="wrap">
     <Process />
@@ -60,21 +62,40 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 </BaseLayout>
 
 <style>
+  /* one continuous sky behind cover → marquee → about → work,
+     fading into the ground (paper) at the bottom for a smooth handoff */
+  .sky-world {
+    position: relative;
+    background: linear-gradient(
+      180deg,
+      #7cc0f5 0%,
+      #a9d6fb 12%,
+      #cfe9ff 34%,
+      #dceeff 62%,
+      #e9f4ff 88%,
+      var(--paper) 100%
+    );
+  }
+  :global([data-theme='dark']) .sky-world {
+    background: linear-gradient(
+      180deg,
+      #0a1430 0%,
+      #101c3e 22%,
+      #0d1836 52%,
+      #0b1228 84%,
+      var(--paper) 100%
+    );
+  }
+
   .work {
     position: relative;
-    /* always a light cloud sky, matching the cover world */
-    background: linear-gradient(180deg, #a9d6fb 0%, #cfe9ff 40%, #e8f4ff 100%);
+    /* background provided by the shared .sky-world wrapper */
     padding-block: clamp(4rem, 9vh, 7rem) clamp(6rem, 14vh, 11rem);
     /* NOTE: no overflow:hidden here — it would break the sticky card stack */
-    /* force a light palette on the cards regardless of theme toggle */
-    --card: #fbf8f0;
-    --ink: #1e2c4f;
-    --ink-soft: #465270;
-    --ink-faint: #8b91a3;
-    --line: #e0dccd;
   }
   .work-sky { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
-  .work-sky img { position: absolute; height: auto; filter: blur(1px); }
+  .work-sky img { position: absolute; height: auto; filter: blur(1px); opacity: 0.7; }
+  :global([data-theme='dark']) .work-sky img { opacity: 0.14; filter: blur(2px) brightness(0.7); }
 
   .work-wrap { position: relative; z-index: 2; }
   .work-head {
@@ -87,6 +108,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     margin-bottom: 2.5rem;
     border-bottom: 1px solid color-mix(in srgb, #1e2c4f 18%, transparent);
   }
+  :global([data-theme='dark']) .work-head {
+    border-bottom-color: color-mix(in srgb, #ffffff 18%, transparent);
+  }
   .work-title {
     font-family: var(--font-serif);
     font-weight: 400;
@@ -94,6 +118,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     letter-spacing: -0.02em;
     color: #12233c;
   }
+  :global([data-theme='dark']) .work-title { color: #f4f7ff; }
   .work-count {
     font-family: var(--font-mono);
     font-size: 0.78rem;
@@ -101,6 +126,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     text-transform: uppercase;
     color: #3a5573;
   }
+  :global([data-theme='dark']) .work-count { color: #9fb0d8; }
   .cards {
     margin: 0;
     padding: 0;

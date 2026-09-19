@@ -65,17 +65,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     display: flex;
     align-items: center;
     overflow: hidden;
-    /* daytime sky */
-    background: linear-gradient(
-      180deg,
-      #7cc0f5 0%,
-      #a9d6fb 26%,
-      #d3ecff 52%,
-      color-mix(in srgb, var(--paper) 88%, #d3ecff) 100%
-    );
-  }
-  :global([data-theme='dark']) .cover {
-    background: linear-gradient(180deg, #0a1430 0%, #142850 42%, #1c2440 74%, var(--paper) 100%);
+    /* background comes from the shared .sky-world wrapper */
+    background: transparent;
   }
 
   /* ---- sky layer ---- */
