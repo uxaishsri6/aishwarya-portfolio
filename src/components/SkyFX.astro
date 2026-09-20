@@ -5,25 +5,32 @@
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 const clouds = [
-  { img: 'cloud-1.png', top: 3, w: 360, dur: 130, delay: -20 },
-  { img: 'cloud-2.png', top: 11, w: 260, dur: 165, delay: -80 },
-  { img: 'cloud-2.png', top: 22, w: 320, dur: 110, delay: -40 },
-  { img: 'cloud-1.png', top: 33, w: 280, dur: 150, delay: -110 },
-  { img: 'cloud-1.png', top: 45, w: 380, dur: 120, delay: -60 },
-  { img: 'cloud-2.png', top: 56, w: 300, dur: 140, delay: -25 },
-  { img: 'cloud-2.png', top: 67, w: 340, dur: 100, delay: -90 },
-  { img: 'cloud-1.png', top: 78, w: 300, dur: 155, delay: -50 },
-  { img: 'cloud-1.png', top: 88, w: 400, dur: 115, delay: -130 },
-  { img: 'cloud-2.png', top: 95, w: 300, dur: 145, delay: -15 },
+  { img: 'cloud-1.png', top: 2, w: 360, dur: 130, delay: -20 },
+  { img: 'cloud-2.png', top: 8, w: 240, dur: 175, delay: -80 },
+  { img: 'cloud-2.png', top: 14, w: 320, dur: 110, delay: -40 },
+  { img: 'cloud-1.png', top: 21, w: 280, dur: 150, delay: -110 },
+  { img: 'cloud-1.png', top: 28, w: 400, dur: 120, delay: -60 },
+  { img: 'cloud-2.png', top: 35, w: 300, dur: 140, delay: -25 },
+  { img: 'cloud-2.png', top: 42, w: 260, dur: 160, delay: -95 },
+  { img: 'cloud-1.png', top: 49, w: 360, dur: 100, delay: -90 },
+  { img: 'cloud-1.png', top: 56, w: 300, dur: 150, delay: -50 },
+  { img: 'cloud-2.png', top: 63, w: 340, dur: 118, delay: -130 },
+  { img: 'cloud-2.png', top: 70, w: 260, dur: 168, delay: -15 },
+  { img: 'cloud-1.png', top: 77, w: 380, dur: 108, delay: -70 },
+  { img: 'cloud-1.png', top: 84, w: 300, dur: 152, delay: -35 },
+  { img: 'cloud-2.png', top: 90, w: 420, dur: 122, delay: -105 },
+  { img: 'cloud-2.png', top: 96, w: 280, dur: 145, delay: -55 },
+  { img: 'cloud-1.png', top: 99, w: 340, dur: 135, delay: -10 },
 ];
 
 const birds = [
-  { top: 9, w: 48, dur: 26, delay: -2 },
-  { top: 19, w: 38, dur: 32, delay: -14 },
-  { top: 41, w: 54, dur: 22, delay: -8 },
-  { top: 63, w: 40, dur: 30, delay: -20 },
-  { top: 84, w: 46, dur: 27, delay: -5 },
-  { top: 73, w: 34, dur: 35, delay: -26 },
+  { top: 8, w: 54, dur: 26, delay: -2 },
+  { top: 17, w: 42, dur: 32, delay: -14 },
+  { top: 30, w: 60, dur: 22, delay: -8 },
+  { top: 45, w: 46, dur: 30, delay: -20 },
+  { top: 58, w: 52, dur: 25, delay: -5 },
+  { top: 72, w: 40, dur: 34, delay: -26 },
+  { top: 86, w: 56, dur: 24, delay: -12 },
 ];
 
 // deterministic scatter of twinkling stars
@@ -67,17 +74,19 @@ const shooting = [
         class="bird"
         style={`top:${b.top}%; width:${b.w}px; animation-duration:${b.dur}s; animation-delay:${b.delay}s;`}
       >
-        <svg viewBox="0 0 60 48">
+        <svg viewBox="0 0 64 46">
+          <!-- far (back) wing, sweeping down for depth -->
+          <path class="dv-wing-back" d="M30 27 C 26 33, 18 39, 8 42 C 16 35, 20 30, 24 26 Z" />
           <!-- forked tail -->
-          <path class="dv-body" d="M6 30 L17 25 L16 34 Z" />
-          <!-- body -->
-          <path class="dv-body" d="M14 30 C 24 24, 36 24, 45 27 C 49 28, 52 27, 54 24 C 53.5 28.5, 50 31, 46 31.5 C 38 34, 24 35, 14 30 Z" />
+          <path class="dv-body" d="M8 27 L20 23 L19 28 L22 30 L10 32 Z" />
+          <!-- body + neck to head -->
+          <path class="dv-body" d="M16 28 C 27 22, 39 21, 48 23 C 52 24, 55 23, 57 20 C 56.2 25, 52 28, 47 29 C 39 32, 26 33, 16 28 Z" />
           <!-- head -->
-          <circle class="dv-body" cx="49" cy="25" r="3.7" />
+          <circle class="dv-body" cx="52" cy="21" r="3.4" />
           <!-- beak -->
-          <path class="dv-beak" d="M52.5 24 l4.5 -1 -3.3 2.7 z" />
-          <!-- raised wing (flaps) -->
-          <path class="dv-wing" d="M22 29 C 24 15, 32 8, 45 6 C 37.5 13, 34 22, 36.5 30 C 31 31, 26.5 31, 22 29 Z" />
+          <path class="dv-beak" d="M55 20 l5 -1.2 -3.6 3 z" />
+          <!-- raised (front) wing, graceful sweep (flaps) -->
+          <path class="dv-wing" d="M26 26 C 27 13, 35 4, 49 3 C 41 10, 37 19, 40 28 C 34 30, 30 29, 26 26 Z" />
         </svg>
       </span>
     ))}
@@ -156,6 +165,7 @@ const shooting = [
   }
   .bird svg { display: block; width: 100%; height: auto; overflow: visible; }
   .bird .dv-body { fill: currentColor; }
+  .bird .dv-wing-back { fill: currentColor; opacity: 0.72; }
   .bird .dv-beak { fill: #e8735c; }
   .bird .dv-wing {
     fill: currentColor;
