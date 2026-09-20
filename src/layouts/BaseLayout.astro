@@ -43,16 +43,13 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         <a href={`${base}/#work`}>Work</a>
         <a href={`${base}/#process`}>Process</a>
         <a href={`${base}/#contact`}>Contact</a>
-        <a href={`${base}/Aishwarya-Srivastava-Resume.pdf`} target="_blank" rel="noopener" class="nav-resume">Résumé ↗</a>
       </nav>
       <div class="nav-right">
         <button class="theme-toggle" id="theme-toggle" aria-label="Toggle day and night mode">
           <span class="tt-sun">☀</span>
           <span class="tt-moon">☾</span>
         </button>
-        <div class="status-pill" title="Currently accepting new work">
-          <span class="dot-live"></span> Available
-        </div>
+        <a class="resume-pill" href={`${base}/Aishwarya-Srivastava-Resume.pdf`} target="_blank" rel="noopener">Résumé ↗</a>
       </div>
     </header>
 
@@ -186,17 +183,24 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       :global([data-theme="dark"]) .tt-moon {
         display: inline;
       }
-      .status-pill {
+      .resume-pill {
         display: inline-flex;
         align-items: center;
-        gap: 0.5rem;
-        font-family: var(--font-mono);
-        font-size: 0.75rem;
-        color: var(--ink-soft);
-        border: 1px solid var(--line);
+        gap: 0.4rem;
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: var(--paper);
+        background: var(--accent);
+        border: 1px solid var(--accent);
         border-radius: 999px;
-        padding: 0.35rem 0.75rem;
-        background: var(--card);
+        padding: 0.5rem 1rem;
+        transition: transform 0.25s var(--ease), background 0.25s var(--ease),
+          box-shadow 0.25s var(--ease);
+      }
+      .resume-pill:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 24px -12px var(--accent);
+        background: color-mix(in srgb, var(--accent) 88%, #000);
       }
       .dot-live {
         width: 8px;
@@ -314,10 +318,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         color: var(--ink-faint);
       }
       @media (max-width: 720px) {
-        .nav-links,
-        .status-pill {
-          display: none;
-        }
+        .nav-links { display: none; }
+        .resume-pill { padding: 0.4rem 0.8rem; font-size: 0.8rem; }
       }
     </style>
 
