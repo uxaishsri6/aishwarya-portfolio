@@ -1,141 +1,62 @@
 ---
-// Wayfare — bespoke, section-by-section case study.
-// Faithful rebuild of the Figma case study, native + responsive + day/night.
-// Order follows the Figma page top-to-bottom.
-import Cover from './Cover.astro';
-import Problem from './Problem.astro';
-import Process from './Process.astro';
-import Research from './Research.astro';
-import Travellers from './Travellers.astro';
-import Insights from './Insights.astro';
-import Competitive from './Competitive.astro';
-import IA from './IA.astro';
-import Wireframes from './Wireframes.astro';
-import Decisions from './Decisions.astro';
-import DesignSystem from './DesignSystem.astro';
-import HiFi from './HiFi.astro';
-import OtherScreens from './OtherScreens.astro';
-import Prototype from './Prototype.astro';
-import Validation from './Validation.astro';
-import Reflection from './Reflection.astro';
+// Wayfare — presented as the original case-study deck (static images).
+// The 16 exported section frames are shown as one continuous, responsive page.
+// (A dynamic, natively-rebuilt version is preserved on the `wayfare-dynamic` branch.)
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const labels: Record<string, string> = {
+  '01': 'Cover',
+  '02': 'Problem & Background',
+  '03': 'My design process',
+  '04': 'Research & method',
+  '05': 'Meet the travellers',
+  '06': 'Key insights',
+  '07': 'Competitive landscape',
+  '08': 'IA & user journey',
+  '09': 'Wireframes',
+  '10': 'Design decisions',
+  '11': 'Design system',
+  '12': 'Hi-fidelity designs',
+  '13': 'Hi-fi other screens',
+  '14': 'Prototype',
+  '15': 'Validation & iteration',
+  '16': 'Reflection',
+};
+const slides = Object.keys(labels).sort();
 ---
 
-<div class="wf">
-  <Cover />
-  <Problem />
-  <Process />
-  <Research />
-  <Travellers />
-  <Insights />
-  <Competitive />
-  <IA />
-  <Wireframes />
-  <Decisions />
-  <DesignSystem />
-  <HiFi />
-  <OtherScreens />
-  <Prototype />
-  <Validation />
-  <Reflection />
+<div class="wf-deck">
+  {slides.map((n, i) => (
+    <figure class="wf-slide">
+      <img
+        src={`${base}/images/wayfare/slide-${n}.png`}
+        alt={`Wayfare, ${labels[n]}`}
+        loading={i === 0 ? 'eager' : 'lazy'}
+        decoding="async"
+      />
+    </figure>
+  ))}
 </div>
 
-<style is:global>
-  /* ---- Wayfare case-study design tokens (mapped from the Figma DS) ----
-     Light = the Figma default; Dark = the app's dark palette. Every section
-     inherits these so the whole study re-themes with the site toggle. */
-  .wf {
-    --wf-bg: #ffffff;
-    --wf-surface: #ffffff;
-    --wf-surface-muted: #f5f7f9;
-    --wf-border: #e7eaef;
-    --wf-text: #0e121b;
-    --wf-text-muted: #6b7280;
-    --wf-text-faint: #7e848e;
-    --wf-primary: #0970cd;
-    --wf-primary-text: #0970cd;
-    --wf-primary-tint: #eaf3fd;
-    --wf-success: #0f7a3d;
-    --wf-success-tint: #e7f6ec;
-    --wf-warn: #c2410c;
-    --wf-warn-tint: #fef3c7;
-    --wf-danger: #d92d20;
-    --wf-danger-tint: #feeceb;
-    --wf-indigo: #4338ca;
-    --wf-on-primary: #ffffff;
-
-    /* study canvas + rhythm */
-    --wf-maxw: 1200px;
-    --wf-gutter: clamp(1.25rem, 5vw, 4rem);
-    --wf-section-pad: clamp(3.5rem, 8vh, 6.5rem);
-    --wf-font: var(--font-sans);
-
-    font-family: var(--wf-font);
-    color: var(--wf-text);
-    background: var(--wf-bg);
-  }
-
-  :global([data-theme='dark']) .wf {
-    --wf-bg: #0b0b0d;
-    --wf-surface: #161719;
-    --wf-surface-muted: #202227;
-    --wf-border: #2c2f36;
-    --wf-text: #ffffff;
-    --wf-text-muted: #9aa0aa;
-    --wf-text-faint: #6b7280;
-    --wf-primary: #2e90fa;
-    --wf-primary-text: #6bb6ff;
-    --wf-primary-tint: #10243a;
-    --wf-success: #34d399;
-    --wf-success-tint: #0e2a1e;
-    --wf-warn: #fbbf24;
-    --wf-warn-tint: #33280a;
-    --wf-danger: #f87171;
-    --wf-danger-tint: #3a1b1b;
-    --wf-indigo: #a5b4fc;
-    --wf-on-primary: #ffffff;
-  }
-
-  /* shared building blocks used across sections */
-  .wf-section {
-    padding-block: var(--wf-section-pad);
-  }
-  .wf-wrap {
+<style>
+  .wf-deck {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
     width: 100%;
-    max-width: var(--wf-maxw);
+    max-width: 1200px;
     margin-inline: auto;
-    padding-inline: var(--wf-gutter);
   }
-  .wf-eyebrow {
-    font-size: 0.82rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--wf-primary-text);
+  .wf-slide {
     margin: 0;
+    width: 100%;
   }
-  .wf-h2 {
-    font-family: var(--wf-font);
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    line-height: 1.05;
-    font-size: clamp(1.9rem, 4.6vw, 3.1rem);
-    color: var(--wf-text);
-    margin: 1rem 0 0;
-    max-width: 20ch;
-  }
-  .wf-intro {
-    margin: 1.4rem 0 0;
-    font-size: clamp(1.05rem, 1.6vw, 1.25rem);
-    line-height: 1.6;
-    color: var(--wf-text-muted);
-    max-width: 62ch;
-  }
-  .wf-kicker {
-    font-size: 0.8rem;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--wf-primary-text);
-    margin: 0 0 1.25rem;
+  .wf-slide img {
+    width: 100%;
+    height: auto;
+    display: block;
+    /* butt slides together so it reads as one continuous page */
+    margin: 0 0 -1px;
   }
 </style>
