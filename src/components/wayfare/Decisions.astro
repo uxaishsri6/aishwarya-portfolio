@@ -1,0 +1,150 @@
+---
+// Decisions — Section 09 of the Wayfare case study
+const decisions = [
+  {
+    num: '01',
+    q: 'How do we capture the traveller’s priorities?',
+    rejected: ['Long form', 'Simple filters'],
+    chosen: 'Conversational AI intake',
+    body: 'Users fear an AI that doesn’t “understand my details and needs.” A conversation can probe time vs. cost vs. comfort that a static form can’t, and AI is welcomed for exactly this heavy lifting (67%).',
+  },
+  {
+    num: '02',
+    q: 'How much should the AI automate?',
+    rejected: ['Auto-book the best deal', 'Suggest only'],
+    chosen: 'Assemble + explain, human confirms',
+    body: '0% would let AI complete a purchase on its own; 83% want confirmation before any card charge. The assistant does the thinking; the human keeps the final yes.',
+  },
+  {
+    num: '03',
+    q: 'How do we handle self-transfer risk?',
+    rejected: ['Hide it', 'Soften / downplay it'],
+    chosen: 'Honest risk + a safety-net plan',
+    body: 'The barrier is fear, not price, 50% fear missing the second flight. People self-rescue and expect a “what if I miss it” plan, so we always pair risk with one.',
+  },
+  {
+    num: '04',
+    q: 'How do we present the recommendation?',
+    rejected: ['Just the result', 'A single trust score'],
+    chosen: 'Reasoning + checkable sources',
+    body: 'Trust in AI means “show your work”: sources 67%, reasoning 50%. The assistant explains, in one clear comparison, why this route beats the standard option.',
+  },
+];
+---
+
+<section class="wf-section decisions">
+  <div class="wf-wrap">
+    <p class="wf-eyebrow">09 · Design Decisions &amp; Trade-offs</p>
+    <h2 class="wf-h2">Every choice traced back to the research.</h2>
+    <p class="wf-intro">The decisions that shaped the product, the options we explored, what we chose, and the user insight that justified it.</p>
+
+    <div class="dec-grid">
+      {decisions.map((d) => (
+        <article class="dec-card">
+          <p class="dec-label">Decision {d.num}</p>
+          <h3 class="dec-q">{d.q}</h3>
+          <div class="dec-options">
+            {d.rejected.map((opt) => (
+              <span class="opt opt-rejected">{opt}</span>
+            ))}
+            <span class="opt opt-chosen"><span class="opt-check" aria-hidden="true">✓</span> {d.chosen}</span>
+          </div>
+          <div class="dec-just">
+            <p class="dec-just-label">Justified by the research</p>
+            <p class="dec-just-body">{d.body}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .dec-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(1rem, 2.2vw, 1.75rem);
+    margin-top: clamp(2.5rem, 5vw, 3.75rem);
+  }
+  .dec-card {
+    border: 1px solid var(--wf-border);
+    border-radius: 16px;
+    background: var(--wf-surface-muted);
+    padding: clamp(1.4rem, 2.2vw, 1.9rem);
+  }
+  .dec-label {
+    margin: 0;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--wf-primary-text);
+  }
+  .dec-q {
+    margin: 0.9rem 0 0;
+    font-size: clamp(1.2rem, 2vw, 1.5rem);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+    color: var(--wf-text);
+  }
+  .dec-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 1.25rem;
+  }
+  .opt {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.55rem 0.95rem;
+    border-radius: 999px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    line-height: 1.2;
+  }
+  .opt-rejected {
+    background: var(--wf-surface);
+    border: 1px solid var(--wf-border);
+    color: var(--wf-text-muted);
+    text-decoration: line-through;
+    text-decoration-color: var(--wf-text-faint);
+  }
+  .opt-chosen {
+    background: var(--wf-primary);
+    color: var(--wf-on-primary);
+    font-weight: 700;
+    border: 1px solid var(--wf-primary);
+  }
+  .opt-check {
+    font-size: 0.85rem;
+    font-weight: 700;
+  }
+  .dec-just {
+    margin-top: 1.5rem;
+    background: var(--wf-primary-tint);
+    border-radius: 12px;
+    padding: 1.1rem 1.25rem;
+  }
+  .dec-just-label {
+    margin: 0;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--wf-primary-text);
+  }
+  .dec-just-body {
+    margin: 0.6rem 0 0;
+    font-size: 0.98rem;
+    line-height: 1.55;
+    color: var(--wf-text);
+  }
+
+  @media (max-width: 900px) {
+    .dec-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

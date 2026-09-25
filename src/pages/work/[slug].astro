@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import WayfareCaseStudy from '../../components/wayfare/CaseStudy.astro';
 
 export async function getStaticPaths() {
   const studies = (await getCollection('case-studies')).sort(
@@ -21,39 +22,48 @@ const { Content } = await entry.render();
 const d = entry.data;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const coverSrc = d.cover ? `${base}/images/${d.cover}` : undefined;
+const isWayfare = entry.slug === 'wayfare';
 ---
 
 <BaseLayout title={`${d.title} — Aishwarya Srivastava`} description={d.lede}>
-  <article class="study" style={`--accent:${d.accent}`}>
+  <article class="study" class:list={{ 'study-full': isWayfare }} style={`--accent:${d.accent}`}>
     <div class="wrap">
       <a href={`${base}/#work`} class="back">← All work</a>
+    </div>
 
-      <header class="study-head reveal">
-        <p class="s-tag">{d.tag}</p>
-        <h1 class="s-title">{d.title}</h1>
-        <p class="s-lede">{d.lede}</p>
-      </header>
+    {isWayfare ? (
+      <WayfareCaseStudy />
+    ) : (
+      <div class="wrap">
+        <header class="study-head reveal">
+          <p class="s-tag">{d.tag}</p>
+          <h1 class="s-title">{d.title}</h1>
+          <p class="s-lede">{d.lede}</p>
+        </header>
 
-      <div class="s-cover" transition:name={`cover-${entry.slug}`}>
-        {coverSrc ? (
-          <img src={coverSrc} alt={d.title} />
-        ) : (
-          <div class="s-pattern" aria-hidden="true"></div>
-        )}
+        <div class="s-cover" transition:name={`cover-${entry.slug}`}>
+          {coverSrc ? (
+            <img src={coverSrc} alt={d.title} />
+          ) : (
+            <div class="s-pattern" aria-hidden="true"></div>
+          )}
+        </div>
+
+        <dl class="s-meta reveal">
+          <div><dt>Role</dt><dd>{d.role}</dd></div>
+          <div><dt>Timeline</dt><dd>{d.timeline}</dd></div>
+          <div><dt>Year</dt><dd>{d.year}</dd></div>
+          <div><dt>Tools</dt><dd>{d.tools.join(', ')}</dd></div>
+        </dl>
+
+        <div class="s-body reveal">
+          <Content />
+        </div>
       </div>
+    )}
 
-      <dl class="s-meta reveal">
-        <div><dt>Role</dt><dd>{d.role}</dd></div>
-        <div><dt>Timeline</dt><dd>{d.timeline}</dd></div>
-        <div><dt>Year</dt><dd>{d.year}</dd></div>
-        <div><dt>Tools</dt><dd>{d.tools.join(', ')}</dd></div>
-      </dl>
-
-      <div class="s-body reveal">
-        <Content />
-      </div>
-
-      <nav class="s-nav">
+    <div class="wrap">
+    <nav class="s-nav">
         <a href={`${base}/work/${prev.slug}`} class="s-navlink prev">
           <span class="nl-dir">← Previous</span>
           <span class="nl-title">{prev.data.cardTitle}</span>

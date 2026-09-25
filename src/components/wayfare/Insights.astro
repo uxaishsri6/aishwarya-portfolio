@@ -1,0 +1,149 @@
+---
+// Insights — Section 05 of the Wayfare case study.
+// "Key Insights": six findings, each read through the single lens of trust.
+const insights = [
+  {
+    lens: 'TRUST LENS · TRUST',
+    stat: '50%',
+    claim: 'The self-transfer barrier is fear, not price.',
+    caption: 'feared missing the second flight',
+    why: 'The core problem is emotional risk, not savings. Design must de-risk the moment, not just prove the deal.',
+    kind: 'danger',
+  },
+  {
+    lens: 'TRUST LENS · CONTROL',
+    stat: '0%',
+    claim: 'Travellers want a co-pilot, not an autopilot.',
+    caption: 'would let AI complete a purchase alone',
+    why: 'The assistant does the thinking; the human keeps the final yes. Automation stops at the booking button.',
+    kind: 'indigo',
+  },
+  {
+    lens: 'TRUST LENS · TRANSPARENCY',
+    stat: '67%',
+    claim: `Trust in AI means “show your work”.`,
+    caption: 'trust AI that shows its sources',
+    why: 'The assistant must reason out loud and cite checkable sources, or its recommendation is ignored.',
+    kind: 'primary',
+  },
+  {
+    lens: 'TRUST LENS · LEGIBILITY',
+    stat: 'Top 2',
+    claim: 'Price and timing win, but never alone.',
+    caption: 'priorities: price & timing',
+    why: 'Trade-offs must stay visible side by side, not collapse into a single cheapest number.',
+    kind: 'indigo',
+  },
+  {
+    lens: 'TRUST LENS · CONTROL',
+    stat: '0%',
+    claim: 'AI is welcome for the heavy lifting, not the transaction.',
+    caption: 'want AI to rebook or buy on its own',
+    why: 'Draw the automation line clearly: the assistant assembles and explains; the person commits.',
+    kind: 'primary',
+  },
+  {
+    lens: 'TRUST LENS · SAFETY NET',
+    stat: '50%',
+    claim: 'When trips go wrong, people self-rescue.',
+    caption: 'self-rescue by calling the airline',
+    why: `A visible “what if I miss it” plan is expected. It is the price of entry for self-transfer.`,
+    kind: 'success',
+  },
+];
+---
+<section class="wf-section insights">
+  <div class="wf-wrap">
+    <p class="wf-eyebrow">05 · KEY INSIGHTS</p>
+    <h2 class="wf-h2">Six findings, one lens: trust.</h2>
+    <p class="wf-intro">Every insight is written as a claim and read through a single question, what breaks or builds trust in an unconventional route.</p>
+
+    <div class="grid">
+      {insights.map((it) => (
+        <article class={`card i-${it.kind}`}>
+          <p class="lens">{it.lens}</p>
+          <p class="stat">{it.stat}</p>
+          <h3 class="claim">{it.claim}</h3>
+          <p class="caption">{it.caption}</p>
+          <hr class="divider" />
+          <p class="why-label">WHY IT MATTERS</p>
+          <p class="why">{it.why}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .grid {
+    margin-top: clamp(2rem, 4vw, 3rem);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(1rem, 2vw, 1.5rem);
+  }
+  .card {
+    border: 1px solid var(--wf-border);
+    border-top: 3px solid var(--accent);
+    border-radius: 14px;
+    background: var(--wf-surface-muted);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+  }
+  .i-danger { --accent: var(--wf-danger); }
+  .i-indigo { --accent: var(--wf-indigo); }
+  .i-primary { --accent: var(--wf-primary-text); }
+  .i-success { --accent: var(--wf-success); }
+  .lens {
+    margin: 0;
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .stat {
+    margin: 1rem 0 0;
+    font-size: clamp(2.4rem, 4vw, 3rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    color: var(--accent);
+  }
+  .claim {
+    margin: 1rem 0 0;
+    font-size: 1.2rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+    color: var(--wf-text);
+  }
+  .caption {
+    margin: 0.75rem 0 0;
+    font-size: 0.95rem;
+    color: var(--wf-text-muted);
+  }
+  .divider {
+    margin: 1.25rem 0;
+    border: 0;
+    border-top: 1px solid var(--wf-border);
+  }
+  .why-label {
+    margin: 0;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--wf-text-muted);
+  }
+  .why {
+    margin: 0.5rem 0 0;
+    font-size: 0.98rem;
+    line-height: 1.55;
+    color: var(--wf-text);
+  }
+
+  @media (max-width: 900px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+</style>

@@ -1,0 +1,86 @@
+---
+// Prototype — Section 11 of the Wayfare case study
+const highlights = [
+  '26 screens, fully wired, with zero dead-ends.',
+  'Three intake paths, voice, document and manual, converge on one Reveal.',
+  'Light and dark flip in place from Settings, so you can re-run the flow in either theme.',
+];
+---
+
+<section class="wf-section prototype">
+  <div class="wf-wrap">
+    <p class="wf-eyebrow">11 · Prototype</p>
+    <h2 class="wf-h2">See it in motion.</h2>
+    <p class="wf-intro">The full journey is wired and clickable, from onboarding to boarding pass, including the in-place light and dark toggle in Settings.</p>
+
+    <ul class="proto-list">
+      {highlights.map((h) => (
+        <li class="proto-item">
+          <span class="proto-spark" aria-hidden="true">◆</span>
+          <span>{h}</span>
+        </li>
+      ))}
+    </ul>
+
+    <a class="proto-cta" href="#" data-proto-link>
+      <span class="proto-play" aria-hidden="true">▶</span>
+      Open the live prototype
+      <span class="proto-arrow" aria-hidden="true">↗</span>
+    </a>
+    <p class="proto-note">The link will point to the Figma prototype.</p>
+  </div>
+</section>
+
+<style>
+  .proto-list {
+    list-style: none;
+    margin: clamp(2rem, 4vw, 3rem) 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 62ch;
+  }
+  .proto-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    font-size: clamp(1.02rem, 1.5vw, 1.15rem);
+    line-height: 1.5;
+    color: var(--wf-text);
+  }
+  .proto-spark {
+    color: var(--wf-primary-text);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    flex: none;
+  }
+  .proto-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: clamp(2rem, 4vw, 2.75rem);
+    padding: 0.95rem 1.6rem;
+    border-radius: 999px;
+    background: var(--wf-primary);
+    color: var(--wf-on-primary);
+    font-size: 1.05rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: filter 0.15s ease;
+  }
+  .proto-cta:hover {
+    filter: brightness(1.05);
+  }
+  .proto-play {
+    font-size: 0.85rem;
+  }
+  .proto-arrow {
+    font-size: 1.05rem;
+  }
+  .proto-note {
+    margin: 1rem 0 0;
+    font-size: 0.85rem;
+    color: var(--wf-text-faint);
+  }
+</style>

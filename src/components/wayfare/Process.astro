@@ -1,0 +1,124 @@
+---
+// Process — Section 03 of the Wayfare case study
+const steps = [
+  ['01', 'Discover', 'Understand the traveller, the market, and why the big sites hide smarter routes.', 'Problem framing · Competitive teardown', 'primary'],
+  ['02', 'Define', 'Turn survey + interview signal into personas, priorities and the core trust problem.', 'Personas · JTBD · Insights', 'indigo'],
+  ['03', 'Ideate', 'Map the AI-assistant-first journey and sketch the core flows.', 'IA · Journey map · Wireframes', 'primary'],
+  ['04', 'Design', 'Build hi-fi screens on Material 3 with AI interaction & micro-interaction patterns.', 'Design system · Hi-fi UI · Prototype', 'warn'],
+  ['05', 'Validate', 'Test the risky, trust-critical moments with real users and iterate on what breaks.', 'Usability findings · 1+ change made', 'success'],
+];
+---
+
+<section class="wf-section process">
+  <div class="wf-wrap">
+    <p class="wf-eyebrow">03 · My Design Process</p>
+    <h2 class="wf-h2">A custom five-step method</h2>
+    <p class="wf-intro">
+      Mapped 1:1 to the submission phases. Each step feeds the next, research feeds IA, IA feeds design,
+      design is validated and iterated.
+    </p>
+
+    <ol class="steps">
+      {steps.map(([num, title, body, output], i) => (
+        <li class={`step step-${steps[i][4]}`}>
+          <span class="step-num">{num}</span>
+          <h3 class="step-title">{title}</h3>
+          <p class="step-body">{body}</p>
+          <div class="step-out">
+            <p class="step-out-label">Output</p>
+            <p class="step-out-text">{output}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .steps {
+    margin: clamp(2rem, 4vw, 3rem) 0 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: clamp(0.9rem, 1.6vw, 1.25rem);
+    align-items: stretch;
+  }
+  .step {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--wf-border);
+    border-top: 3px solid var(--wf-border);
+    border-radius: 14px;
+    background: var(--wf-surface);
+    padding: clamp(1.25rem, 1.6vw, 1.6rem);
+  }
+  /* connective arrows between cards */
+  .step + .step::before {
+    content: "→";
+    position: absolute;
+    left: -0.95rem;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--wf-text-muted);
+    font-weight: 700;
+    font-size: 1.1rem;
+  }
+  .step-primary { border-top-color: var(--wf-primary); }
+  .step-indigo  { border-top-color: var(--wf-indigo); }
+  .step-warn    { border-top-color: var(--wf-warn); }
+  .step-success { border-top-color: var(--wf-success); }
+
+  .step-num {
+    font-size: 1.05rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+  }
+  .step-primary .step-num { color: var(--wf-primary-text); }
+  .step-indigo  .step-num { color: var(--wf-indigo); }
+  .step-warn    .step-num { color: var(--wf-warn); }
+  .step-success .step-num { color: var(--wf-success); }
+
+  .step-title {
+    margin: 0.5rem 0 0.7rem;
+    font-size: clamp(1.15rem, 1.5vw, 1.4rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--wf-text);
+  }
+  .step-body {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: var(--wf-text-muted);
+  }
+  .step-out {
+    margin-top: auto;
+    padding-top: 1.1rem;
+    border-top: 1px solid var(--wf-border);
+  }
+  .step-out-label {
+    margin: 0 0 0.35rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--wf-text-faint);
+  }
+  .step-out-text {
+    margin: 0;
+    font-size: 0.92rem;
+    font-weight: 600;
+    line-height: 1.45;
+    color: var(--wf-text);
+  }
+
+  @media (max-width: 1024px) {
+    .steps { grid-template-columns: repeat(2, 1fr); }
+    .step + .step::before { display: none; }
+  }
+  @media (max-width: 640px) {
+    .steps { grid-template-columns: 1fr; }
+  }
+</style>

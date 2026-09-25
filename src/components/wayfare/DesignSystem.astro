@@ -1,0 +1,483 @@
+---
+// DesignSystem — Section 09b of the Wayfare case study
+const swatches = [
+  ['Ink', 'var(--wf-text)'],
+  ['Primary', 'var(--wf-primary)'],
+  ['Indigo', 'var(--wf-indigo)'],
+  ['Success', 'var(--wf-success)'],
+  ['Warn', 'var(--wf-warn)'],
+  ['Danger', 'var(--wf-danger)'],
+  ['Muted', 'var(--wf-text-muted)'],
+  ['Border', 'var(--wf-border)'],
+  ['Primary tint', 'var(--wf-primary-tint)'],
+  ['Success tint', 'var(--wf-success-tint)'],
+  ['Warn tint', 'var(--wf-warn-tint)'],
+  ['Danger tint', 'var(--wf-danger-tint)'],
+];
+---
+
+<section class="wf-section design-system">
+  <div class="wf-wrap">
+    <p class="wf-eyebrow">09b · Design System</p>
+    <h2 class="wf-h2">A Material 3 foundation.</h2>
+    <p class="wf-intro">The tokens and components every screen is built from, colour, type and core components, themed on Material 3.</p>
+
+    <div class="ds-grid">
+      <!-- COLOUR -->
+      <article class="ds-card ds-colour">
+        <p class="ds-card-label">Colour</p>
+        <div class="sw-grid">
+          {swatches.map(([name, token]) => (
+            <div class="sw">
+              <span class="sw-chip" style={`background:${token}`}></span>
+              <span class="sw-name">{name}</span>
+            </div>
+          ))}
+        </div>
+        <p class="ds-caption">Blue = AI / primary · green = savings &amp; safety · amber = self-transfer · red = destructive.</p>
+      </article>
+
+      <!-- TYPE -->
+      <article class="ds-card ds-type">
+        <p class="ds-card-label">Type · Inter</p>
+        <div class="ty-row">
+          <p class="ty-display">Display</p>
+          <p class="ty-meta">Bold · 44/52 headings</p>
+        </div>
+        <div class="ty-row">
+          <p class="ty-title">Title</p>
+          <p class="ty-meta">Semi Bold · 24/30 card titles</p>
+        </div>
+        <div class="ty-row">
+          <p class="ty-body">Body text</p>
+          <p class="ty-meta">Regular · 16–20 / 27 body</p>
+        </div>
+        <div class="ty-row">
+          <p class="ty-label">LABEL</p>
+          <p class="ty-meta">Bold caps · 12–13 · +1 tracking</p>
+        </div>
+        <div class="ty-weights">
+          <p class="ty-weight-line"><span class="w-bold">Bold</span> · <span class="w-semi">Semi Bold</span> · <span class="w-med">Medium</span> · <span class="w-reg">Regular</span></p>
+          <p class="ty-meta">One family, four weights</p>
+        </div>
+      </article>
+
+      <!-- COMPONENTS -->
+      <article class="ds-card ds-components">
+        <p class="ds-card-label">Components</p>
+        <div class="cmp-stack">
+          <button type="button" class="cmp-btn cmp-btn-primary">Primary button</button>
+          <button type="button" class="cmp-btn cmp-btn-secondary">Secondary button</button>
+          <button type="button" class="cmp-btn cmp-btn-primary cmp-btn-wide">Confirm &amp; book · ₹31,400</button>
+          <div class="cmp-seg">
+            <span class="seg seg-on"><span class="seg-spark" aria-hidden="true">✦</span> Assistant</span>
+            <span class="seg seg-off">Manual</span>
+          </div>
+          <div class="cmp-chips">
+            <span class="chip chip-selected"><span aria-hidden="true">✓</span> Selected</span>
+            <span class="chip chip-plain">Chip</span>
+          </div>
+          <div class="cmp-toggles">
+            <span class="toggle" aria-hidden="true"><span class="toggle-knob"></span></span>
+            <span class="radio" aria-hidden="true"><span class="radio-dot"></span></span>
+            <span class="cmp-toggle-label">Toggle · Radio</span>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <!-- INPUTS & MESSAGING -->
+    <article class="ds-card ds-inputs">
+      <p class="ds-card-label">Inputs &amp; Messaging</p>
+      <div class="im-grid">
+        <div class="im-col">
+          <p class="im-title">Composer · Normal</p>
+          <div class="composer">
+            <span class="cp-plus" aria-hidden="true">+</span>
+            <span class="cp-text cp-placeholder">Describe your trip…</span>
+            <span class="cp-mic" aria-hidden="true">🎙</span>
+            <span class="cp-send cp-send-on" aria-hidden="true">↑</span>
+          </div>
+          <p class="im-fine">AI-generated responses. Check before you book.</p>
+          <p class="im-note">“Describe your trip…” · attach, mic, send</p>
+
+          <p class="im-title">Composer · Transcribing</p>
+          <div class="composer">
+            <span class="cp-plus" aria-hidden="true">+</span>
+            <span class="cp-text">Delhi to London, cheapest, self-transfer's fine</span>
+            <span class="cp-mic cp-mic-live" aria-hidden="true">🎙</span>
+            <span class="cp-send cp-send-on" aria-hidden="true">↑</span>
+          </div>
+          <p class="im-note">Live words, send active (primary)</p>
+
+          <p class="im-title">Chat bubble · AI</p>
+          <div class="bubble bubble-ai">Here's your trip: Delhi → London, cheapest, self-transfer OK. Want to change anything?</div>
+          <p class="im-note">surfaceMuted · left aligned</p>
+
+          <p class="im-title">Quick-reply chip</p>
+          <span class="qr-chip"><span class="seg-spark" aria-hidden="true">✦</span> “Cheapest way to London in March”</span>
+          <p class="im-note">✦ suggestion · tap to ask</p>
+        </div>
+
+        <div class="im-col">
+          <p class="im-title">Composer · Listening</p>
+          <div class="composer">
+            <span class="cp-plus" aria-hidden="true">+</span>
+            <span class="cp-text cp-listening">Listening…</span>
+            <span class="cp-mic cp-mic-live" aria-hidden="true">🎙</span>
+            <span class="cp-send cp-send-off" aria-hidden="true">↑</span>
+          </div>
+          <p class="im-note">Mic active (green), send disabled</p>
+
+          <p class="im-title">Composer · Deliberating</p>
+          <div class="composer">
+            <span class="cp-plus" aria-hidden="true">+</span>
+            <span class="cp-text cp-listening">Fetching flights across airlines…</span>
+            <span class="cp-mic" aria-hidden="true">🎙</span>
+            <span class="cp-send cp-send-stop" aria-hidden="true">■</span>
+          </div>
+          <p class="im-note">“Fetching flights…” + Stop (ink)</p>
+
+          <p class="im-title">Chat bubble · User</p>
+          <div class="bubble-row bubble-row-user">
+            <div class="bubble bubble-user">Keep the Dubai layover under 4 hours.</div>
+          </div>
+          <p class="im-note im-note-right">primary · onPrimary · right aligned</p>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<style>
+  .ds-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(1rem, 2vw, 1.5rem);
+    margin-top: clamp(2.5rem, 5vw, 3.75rem);
+    align-items: start;
+  }
+  .ds-card {
+    border: 1px solid var(--wf-border);
+    border-radius: 16px;
+    background: var(--wf-surface-muted);
+    padding: clamp(1.4rem, 2.2vw, 1.9rem);
+  }
+  .ds-card-label {
+    margin: 0 0 1.4rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--wf-text-muted);
+  }
+
+  /* COLOUR */
+  .sw-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.9rem 0.75rem;
+  }
+  .sw {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+  .sw-chip {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 12px;
+    border: 1px solid var(--wf-border);
+  }
+  .sw-name {
+    font-size: 0.72rem;
+    color: var(--wf-text-muted);
+    line-height: 1.2;
+  }
+  .ds-caption {
+    margin: 1.4rem 0 0;
+    font-size: 0.82rem;
+    line-height: 1.5;
+    color: var(--wf-text-muted);
+  }
+
+  /* TYPE */
+  .ty-row {
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--wf-border);
+  }
+  .ty-row p { margin: 0; }
+  .ty-display {
+    font-size: 2.4rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--wf-text);
+  }
+  .ty-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--wf-text);
+  }
+  .ty-body {
+    font-size: 1.15rem;
+    font-weight: 400;
+    color: var(--wf-text);
+  }
+  .ty-label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--wf-text);
+  }
+  .ty-meta {
+    margin: 0.3rem 0 0 !important;
+    font-size: 0.82rem;
+    color: var(--wf-text-muted);
+  }
+  .ty-weights p { margin: 0; }
+  .ty-weight-line {
+    font-size: 1.15rem;
+    color: var(--wf-text);
+  }
+  .w-bold { font-weight: 800; }
+  .w-semi { font-weight: 600; }
+  .w-med { font-weight: 500; }
+  .w-reg { font-weight: 400; }
+
+  /* COMPONENTS */
+  .cmp-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  .cmp-btn {
+    font: inherit;
+    font-weight: 700;
+    border-radius: 999px;
+    padding: 0.7rem 1.3rem;
+    cursor: default;
+    border: 1px solid transparent;
+    font-size: 0.95rem;
+  }
+  .cmp-btn-primary {
+    background: var(--wf-primary);
+    color: var(--wf-on-primary);
+  }
+  .cmp-btn-secondary {
+    background: var(--wf-surface);
+    color: var(--wf-primary-text);
+    border-color: var(--wf-border);
+  }
+  .cmp-btn-wide { align-self: stretch; }
+  .cmp-seg {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    background: var(--wf-surface-muted);
+    border: 1px solid var(--wf-border);
+    border-radius: 999px;
+    padding: 0.25rem;
+  }
+  .seg {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.45rem 0.95rem;
+    border-radius: 999px;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+  .seg-on {
+    background: var(--wf-surface);
+    color: var(--wf-text);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  }
+  .seg-off { color: var(--wf-text-muted); }
+  .seg-spark { color: var(--wf-primary-text); }
+  .cmp-chips {
+    display: inline-flex;
+    gap: 0.6rem;
+  }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.45rem 0.9rem;
+    border-radius: 999px;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+  .chip-selected {
+    background: var(--wf-primary);
+    color: var(--wf-on-primary);
+  }
+  .chip-plain {
+    background: var(--wf-surface);
+    border: 1px solid var(--wf-border);
+    color: var(--wf-text);
+  }
+  .cmp-toggles {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+  }
+  .toggle {
+    display: inline-flex;
+    align-items: center;
+    width: 2.6rem;
+    height: 1.5rem;
+    border-radius: 999px;
+    background: var(--wf-primary);
+    padding: 0.15rem;
+    justify-content: flex-end;
+  }
+  .toggle-knob {
+    width: 1.2rem;
+    height: 1.2rem;
+    border-radius: 50%;
+    background: #ffffff;
+  }
+  .radio {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.4rem;
+    height: 1.4rem;
+    border-radius: 50%;
+    border: 2px solid var(--wf-primary);
+  }
+  .radio-dot {
+    width: 0.7rem;
+    height: 0.7rem;
+    border-radius: 50%;
+    background: var(--wf-primary);
+  }
+  .cmp-toggle-label {
+    font-size: 0.9rem;
+    color: var(--wf-text);
+  }
+
+  /* INPUTS & MESSAGING */
+  .ds-inputs {
+    margin-top: clamp(1rem, 2vw, 1.5rem);
+  }
+  .im-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(1.5rem, 4vw, 3rem);
+  }
+  .im-title {
+    margin: 1.6rem 0 0.7rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--wf-text);
+  }
+  .im-col > .im-title:first-child { margin-top: 0; }
+  .composer {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    background: var(--wf-surface);
+    border: 1px solid var(--wf-border);
+    border-radius: 999px;
+    padding: 0.6rem 0.7rem 0.6rem 1rem;
+  }
+  .cp-plus {
+    color: var(--wf-text-muted);
+    font-size: 1.2rem;
+    flex: none;
+  }
+  .cp-text {
+    flex: 1 1 auto;
+    font-size: 0.92rem;
+    color: var(--wf-text);
+    min-width: 0;
+  }
+  .cp-placeholder { color: var(--wf-text-muted); }
+  .cp-listening { color: var(--wf-success); }
+  .cp-mic {
+    color: var(--wf-text-muted);
+    font-size: 0.95rem;
+    flex: none;
+  }
+  .cp-mic-live { color: var(--wf-success); }
+  .cp-send {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    font-size: 0.9rem;
+    flex: none;
+  }
+  .cp-send-on {
+    background: var(--wf-primary);
+    color: var(--wf-on-primary);
+  }
+  .cp-send-off {
+    background: var(--wf-surface-muted);
+    color: var(--wf-text-faint);
+    border: 1px solid var(--wf-border);
+  }
+  .cp-send-stop {
+    background: var(--wf-text);
+    color: var(--wf-bg);
+    font-size: 0.7rem;
+  }
+  .im-fine {
+    margin: 0.6rem 0 0;
+    font-size: 0.8rem;
+    color: var(--wf-text-muted);
+  }
+  .im-note {
+    margin: 0.5rem 0 0;
+    font-size: 0.82rem;
+    color: var(--wf-text-muted);
+  }
+  .im-note-right { text-align: right; }
+  .bubble {
+    max-width: 34ch;
+    padding: 0.8rem 1rem;
+    border-radius: 16px;
+    font-size: 0.92rem;
+    line-height: 1.5;
+  }
+  .bubble-ai {
+    background: var(--wf-surface-muted);
+    border: 1px solid var(--wf-border);
+    color: var(--wf-text);
+    border-top-left-radius: 4px;
+  }
+  .bubble-row {
+    display: flex;
+  }
+  .bubble-row-user { justify-content: flex-end; }
+  .bubble-user {
+    background: var(--wf-primary);
+    color: var(--wf-on-primary);
+    border-top-right-radius: 4px;
+  }
+  .qr-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.55rem 1rem;
+    border-radius: 999px;
+    background: var(--wf-surface);
+    border: 1px solid var(--wf-border);
+    font-size: 0.9rem;
+    color: var(--wf-text);
+  }
+
+  @media (max-width: 900px) {
+    .ds-grid { grid-template-columns: 1fr; }
+    .im-grid { grid-template-columns: 1fr; }
+    .im-note-right { text-align: left; }
+    .bubble-row-user { justify-content: flex-start; }
+  }
+</style>

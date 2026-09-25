@@ -1,0 +1,280 @@
+---
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const meta = [
+  ['Role', 'End-to-end UX / Product Designer'],
+  ['Duration', '4-week design sprint'],
+  ['Platform', 'iOS + Android · Material 3'],
+  ['Deliverables', 'Research · Prototype · Case study'],
+];
+const tldr = [
+  ['01', 'The problem', 'Booking sites only show direct or single-airline routes. The smartest path is often one you must assemble yourself, and separate tickets feel too risky to book.', 'p'],
+  ['02', 'The solution', 'An AI-assistant-first planner that assembles creative multi-leg routes, explains every trade-off and risk in plain language, and keeps the traveller in control of the booking.', 's'],
+  ['03', 'The outcome', 'A validated concept and clickable prototype for the AI Assistant flow and its supporting screens, shaped by a 15-person survey and 5 interviews, with a documented change made after testing.', 'o'],
+];
+---
+
+<section class="cover" aria-label="Wayfare cover">
+  <div class="hero">
+    <div class="hero-glow glow-a" aria-hidden="true"></div>
+    <div class="hero-glow glow-b" aria-hidden="true"></div>
+
+    <div class="hero-inner wf-wrap">
+      <div class="hero-copy">
+        <span class="brand-pill"><span class="spark">✦</span> Wayfare</span>
+        <p class="hero-eyebrow">AI-Assistant-First · Travel &amp; Decision-Making · Mobile</p>
+        <h1 class="hero-title">Wayfare</h1>
+        <p class="hero-sub">The Intelligent Flight Planner</p>
+        <p class="hero-tag">Book the smart, multi-airline routes the big sites hide.</p>
+
+        <div class="byline">
+          <p class="byline-label">Case study by</p>
+          <p class="byline-name">Aishwarya Srivastava</p>
+          <p class="byline-role">Product creator &amp; owner</p>
+        </div>
+
+        <dl class="hero-meta">
+          {meta.map(([k, v]) => (
+            <div>
+              <dt>{k}</dt>
+              <dd>{v}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+
+      <div class="hero-art" aria-hidden="true">
+        <img class="phone phone-dark" src={`${base}/images/wayfare/cover-phone-dark.png`} alt="" width="333" height="608" loading="eager" />
+        <img class="phone phone-light" src={`${base}/images/wayfare/cover-phone-light.png`} alt="" width="333" height="608" loading="eager" />
+      </div>
+    </div>
+  </div>
+
+  <div class="tldr wf-wrap">
+    <p class="wf-kicker">TL;DR</p>
+    <div class="tldr-grid">
+      {tldr.map(([num, label, body, kind]) => (
+        <article class={`tl-card tl-${kind}`}>
+          <p class="tl-head"><span class="tl-num">{num}</span> <span class="tl-label">{label}</span></p>
+          <p class="tl-body">{body}</p>
+        </article>
+      ))}
+    </div>
+    <p class="watermark">© 2026 Aishwarya Srivastava · Product creator &amp; owner · Do not copy or distribute</p>
+  </div>
+</section>
+
+<style>
+  /* ---- HERO (always dark navy, per the Figma cover) ---- */
+  .hero {
+    position: relative;
+    overflow: hidden;
+    background:
+      radial-gradient(120% 90% at 78% 8%, #16325e 0%, transparent 55%),
+      linear-gradient(160deg, #0b1730 0%, #0a1226 60%, #080d1c 100%);
+    isolation: isolate;
+  }
+  .hero-glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(10px);
+    z-index: 0;
+    pointer-events: none;
+  }
+  .glow-a {
+    right: 6%;
+    top: 30%;
+    width: 34vw;
+    max-width: 460px;
+    aspect-ratio: 1;
+    background: radial-gradient(circle, rgba(46, 144, 250, 0.28), transparent 62%);
+  }
+  .glow-b {
+    right: 26%;
+    top: -12%;
+    width: 46vw;
+    max-width: 620px;
+    aspect-ratio: 1;
+    background: radial-gradient(circle, rgba(67, 56, 202, 0.22), transparent 64%);
+  }
+  .hero-inner {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+    padding-block: clamp(3.5rem, 8vh, 6rem);
+    min-height: min(80vh, 720px);
+  }
+  .hero-copy { color: #eaf0fb; }
+  .brand-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    background: #fff;
+    color: #0e121b;
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding: 0.5rem 0.95rem;
+    border-radius: 999px;
+  }
+  .brand-pill .spark { color: var(--wf-primary); }
+  .hero-eyebrow {
+    margin: 1.6rem 0 0;
+    font-size: clamp(0.72rem, 1.1vw, 0.85rem);
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: #6ea8ec;
+  }
+  .hero-title {
+    margin: 0.7rem 0 0;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 0.95;
+    font-size: clamp(3.4rem, 9vw, 6rem);
+    color: #fff;
+  }
+  .hero-sub {
+    margin: 0.4rem 0 0;
+    font-size: clamp(1.3rem, 2.6vw, 2rem);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: #dbe6f7;
+  }
+  .hero-tag {
+    margin: 1.3rem 0 0;
+    font-size: clamp(1rem, 1.6vw, 1.25rem);
+    color: #9fb2ce;
+    max-width: 34ch;
+  }
+  .byline { margin-top: 2.2rem; }
+  .byline-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #6ea8ec;
+    margin: 0;
+  }
+  .byline-name {
+    margin: 0.35rem 0 0;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #fff;
+  }
+  .byline-role {
+    margin: 0.1rem 0 0;
+    font-size: 0.95rem;
+    color: #9fb2ce;
+  }
+  .hero-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.4rem 2rem;
+    margin: 2.2rem 0 0;
+    max-width: 560px;
+  }
+  .hero-meta dt {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #6ea8ec;
+  }
+  .hero-meta dd {
+    margin: 0.4rem 0 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #e7eefb;
+  }
+
+  /* phones */
+  .hero-art {
+    position: relative;
+    height: 100%;
+    min-height: 560px;
+  }
+  .phone {
+    position: absolute;
+    width: clamp(180px, 20vw, 250px);
+    height: auto;
+    border-radius: 26px;
+    box-shadow: 0 40px 80px -30px rgba(0, 0, 0, 0.65);
+  }
+  .phone-dark {
+    right: 0;
+    top: 4%;
+    z-index: 1;
+  }
+  .phone-light {
+    right: clamp(120px, 14vw, 190px);
+    top: 16%;
+    z-index: 2;
+  }
+
+  /* ---- TL;DR band ---- */
+  .tldr {
+    padding-block: clamp(3rem, 7vh, 5rem) clamp(3.5rem, 8vh, 6rem);
+  }
+  .tldr-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(1rem, 2vw, 1.5rem);
+  }
+  .tl-card {
+    border: 1px solid var(--wf-border);
+    border-radius: 16px;
+    background: var(--wf-surface-muted);
+    padding: 1.6rem 1.5rem;
+  }
+  .tl-head {
+    display: flex;
+    align-items: baseline;
+    gap: 0.7rem;
+    margin: 0 0 0.9rem;
+  }
+  .tl-num {
+    font-size: 1.35rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+  .tl-p .tl-num { color: var(--wf-warn); }
+  .tl-s .tl-num { color: var(--wf-primary-text); }
+  .tl-o .tl-num { color: var(--wf-success); }
+  .tl-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--wf-text-muted);
+  }
+  .tl-body {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--wf-text);
+  }
+  .watermark {
+    margin: 2.5rem 0 0;
+    font-size: 0.8rem;
+    color: var(--wf-text-faint);
+  }
+
+  @media (max-width: 900px) {
+    .hero-inner {
+      grid-template-columns: 1fr;
+      min-height: 0;
+    }
+    .hero-art {
+      order: -1;
+      min-height: 420px;
+      margin-bottom: 1rem;
+    }
+    .phone { width: clamp(160px, 42vw, 220px); }
+    .phone-dark { right: 6%; }
+    .phone-light { right: 40%; }
+    .tldr-grid { grid-template-columns: 1fr; }
+    .hero-meta { max-width: none; }
+  }
+</style>

@@ -1,0 +1,177 @@
+---
+// 10 — Hi-Fidelity Designs. Native narrative + real phone screens (2x crops).
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const img = (n: string) => `${base}/images/wayfare/s10-${n}.png`;
+
+const principles = [
+  ['✦', 'primary', 'Shows its reasoning', 'Every route links to checkable sources, so you can see why it was chosen.'],
+  ['⇄', 'indigo', 'You choose the provider', 'Pick the airline or agent per leg. No hidden defaults, no lock-in.'],
+  ['!', 'warn', 'Honest risk, real safety net', 'Self-transfer risk is shown up front, with a what-if-I-miss-it plan.'],
+  ['✓', 'success', 'You hold the controls', 'Mic and stop stay in reach; you confirm every charge. AI never buys on its own.'],
+];
+
+const workflows = [
+  {
+    kicker: 'Workflow 01 · Plan with AI',
+    desc: 'The hero flow: describe a trip, watch the assistant reason, then reveal a smarter self-transfer route with its trade-offs.',
+    phones: [
+      ['home-ai', 'Home · AI intake'],
+      ['chat-refine', 'Chat refinement'],
+      ['deliberating', 'Deliberating'],
+      ['reveal', 'Reveal & trade-offs'],
+      ['safety', 'Self-transfer safety'],
+      ['why-route', 'Why this route'],
+    ],
+  },
+  {
+    kicker: 'Workflow 02 · Book & boarding',
+    desc: 'Confirm, seat, pay and fly. A boarding pass with real perforation, notches and a scannable code closes the loop.',
+    phones: [
+      ['seat', 'Choose seat'],
+      ['payment', 'Payment'],
+      ['confirmed', 'Booking confirmed'],
+      ['boarding', 'Boarding pass'],
+    ],
+  },
+  {
+    kicker: 'Workflow 03 · Document upload',
+    desc: '',
+    phones: [
+      ['upload', 'Upload itinerary'],
+      ['ai-reads', 'AI reads document'],
+      ['trip-details', 'Trip details'],
+      ['confirm', 'Confirm'],
+    ],
+  },
+  {
+    kicker: 'Workflow 04 · Manual booking',
+    desc: '',
+    phones: [
+      ['manual-search', 'Search + self-transfer'],
+      ['manual-results', 'Results, smart first'],
+    ],
+  },
+];
+---
+
+<section class="wf-section hifi">
+  <div class="wf-wrap">
+    <p class="wf-eyebrow">10 · Hi-Fidelity Designs</p>
+    <h2 class="wf-h2">Hi-fidelity designs.</h2>
+    <p class="wf-intro">The core workflows in polished Material 3, shown in light and dark. Every screen is a real frame from the interactive prototype.</p>
+
+    <p class="wf-kicker principles-kicker">AI Interaction Principles</p>
+    <div class="principles">
+      {principles.map(([icon, kind, title, body]) => (
+        <article class="pr-card">
+          <span class={`pr-icon pr-${kind}`}>{icon}</span>
+          <h3 class="pr-title">{title}</h3>
+          <p class="pr-body">{body}</p>
+        </article>
+      ))}
+    </div>
+
+    {workflows.map((wf) => (
+      <div class="wf-band">
+        <p class="wf-kicker">{wf.kicker}</p>
+        {wf.desc && <p class="band-desc">{wf.desc}</p>}
+        <div class="phones" data-count={wf.phones.length}>
+          {wf.phones.map(([n, cap]) => (
+            <figure class="phone-fig">
+              <img src={img(n)} alt={`Wayfare screen: ${cap}`} width="188" height="406" loading="lazy" />
+              <figcaption>{cap}</figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  /* AI interaction principles */
+  .principles-kicker { margin-top: 2.5rem; }
+  .principles {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+  .pr-card {
+    border: 1px solid var(--wf-border);
+    border-radius: 16px;
+    background: var(--wf-surface-muted);
+    padding: 1.4rem 1.3rem;
+  }
+  .pr-icon {
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 11px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+  .pr-primary { background: var(--wf-primary-tint); color: var(--wf-primary-text); }
+  .pr-indigo { background: color-mix(in srgb, var(--wf-indigo) 16%, transparent); color: var(--wf-indigo); }
+  .pr-warn { background: var(--wf-warn-tint); color: var(--wf-warn); }
+  .pr-success { background: var(--wf-success-tint); color: var(--wf-success); }
+  .pr-title { font-size: 1.02rem; font-weight: 700; color: var(--wf-text); margin: 0 0 0.5rem; }
+  .pr-body { font-size: 0.92rem; line-height: 1.55; color: var(--wf-text-muted); margin: 0; }
+
+  /* workflow bands */
+  .wf-band { margin-top: 3.5rem; }
+  .band-desc {
+    margin: 0 0 1.75rem;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--wf-text-muted);
+    max-width: 60ch;
+  }
+  .wf-band .wf-kicker { margin-bottom: 0.6rem; }
+  .phones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(0.75rem, 1.6vw, 1.5rem);
+  }
+  .phone-fig {
+    flex: 1 1 150px;
+    max-width: 200px;
+    margin: 0;
+  }
+  .phone-fig img {
+    width: 100%;
+    height: auto;
+    border-radius: 1.4rem;
+    box-shadow: 0 18px 40px -22px rgba(15, 30, 60, 0.4);
+    background: var(--wf-surface);
+  }
+  :global([data-theme='dark']) .phone-fig img {
+    box-shadow: 0 18px 44px -20px rgba(0, 0, 0, 0.7);
+  }
+  .phone-fig figcaption {
+    margin-top: 0.7rem;
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--wf-text-muted);
+  }
+  /* keep the 2-phone manual row from stretching full width */
+  .phones[data-count='2'] .phone-fig { flex: 0 1 200px; }
+
+  @media (max-width: 900px) {
+    .principles { grid-template-columns: repeat(2, 1fr); }
+    .phones {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 0.75rem;
+      -webkit-overflow-scrolling: touch;
+    }
+    .phone-fig { flex: 0 0 46%; scroll-snap-align: start; max-width: 46%; }
+    .phones[data-count='2'] .phone-fig { flex: 0 0 46%; }
+  }
+  @media (max-width: 560px) {
+    .principles { grid-template-columns: 1fr; }
+    .phone-fig { flex-basis: 62%; max-width: 62%; }
+  }
+</style>

@@ -1,0 +1,217 @@
+---
+// Reflection — Section 13 of the Wayfare case study
+const worked = [
+  {
+    title: 'Assistant-first, not a bolt-on',
+    body: 'The assistant is the product. The whole flow is built around it staying in the lead, not a chatbot stapled onto a search form.',
+  },
+  {
+    title: 'Grounded in the research',
+    body: 'Every trade-off traces back to the survey, so the decisions were defensible, not just aesthetic.',
+  },
+  {
+    title: 'The safety net was the unlock',
+    body: 'The what-if-I-miss-it plan shifted the mood from risky to honest faster than the savings ever did.',
+  },
+];
+const taught = [
+  {
+    num: '01',
+    kind: 'p',
+    title: 'Trust is a UI problem',
+    body: 'Not just a model problem. Reasoning, sources and control are all interface decisions the designer owns.',
+  },
+  {
+    num: '02',
+    kind: 'i',
+    title: 'Show the work, not the answer',
+    body: 'People believed the route only once they could see why it was chosen, and check it for themselves.',
+  },
+  {
+    num: '03',
+    kind: 's',
+    title: 'Safety beats savings',
+    body: 'The what-if-I-miss-it net moved the emotion far more than the ₹18,400 in savings ever did.',
+  },
+];
+---
+
+<section class="wf-section reflection">
+  <div class="wf-wrap">
+    <p class="wf-eyebrow">13 · Reflection</p>
+    <h2 class="wf-h2">What worked, and what it taught me.</h2>
+
+    <p class="wf-kicker rf-kicker">What worked</p>
+    <div class="rf-worked">
+      {worked.map((w) => (
+        <article class="rf-worked-item">
+          <span class="rf-tick" aria-hidden="true">✓</span>
+          <h3 class="rf-worked-title">{w.title}</h3>
+          <p class="rf-worked-body">{w.body}</p>
+        </article>
+      ))}
+    </div>
+
+    <p class="wf-kicker rf-kicker">What it taught me</p>
+    <div class="rf-taught">
+      {taught.map((t) => (
+        <article class="rf-taught-card">
+          <span class={`rf-num rf-num-${t.kind}`}>{t.num}</span>
+          <h3 class="rf-taught-title">{t.title}</h3>
+          <p class="rf-taught-body">{t.body}</p>
+        </article>
+      ))}
+    </div>
+
+    <div class="rf-hero">
+      <span class="rf-hero-spark" aria-hidden="true">◆</span>
+      <p class="rf-hero-quote">The smartest route is the one the big sites hide. So we assemble it, explain it, and let the traveller stay in control.</p>
+      <p class="rf-hero-thanks">Thanks for reading. Happy to walk through the live prototype and the research behind every decision.</p>
+      <p class="rf-hero-sign">
+        <span class="rf-hero-name">Aishwarya Srivastava</span>
+        <span class="rf-hero-role">Product creator &amp; owner · Wayfare</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .rf-kicker {
+    margin-top: clamp(2.5rem, 5vw, 3.5rem);
+  }
+  .rf-worked {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+    border: 1px solid var(--wf-border);
+    border-radius: 16px;
+    background: var(--wf-surface-muted);
+    padding: clamp(1.5rem, 3vw, 2.25rem);
+  }
+  .rf-tick {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.9rem;
+    height: 1.9rem;
+    border-radius: 50%;
+    background: var(--wf-success-tint);
+    color: var(--wf-success);
+    font-size: 0.95rem;
+    font-weight: 700;
+  }
+  .rf-worked-title {
+    margin: 1rem 0 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--wf-text);
+  }
+  .rf-worked-body {
+    margin: 0.6rem 0 0;
+    font-size: 0.98rem;
+    line-height: 1.55;
+    color: var(--wf-text-muted);
+  }
+
+  .rf-taught {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(1rem, 2vw, 1.5rem);
+  }
+  .rf-taught-card {
+    border: 1px solid var(--wf-border);
+    border-radius: 16px;
+    background: var(--wf-surface);
+    padding: clamp(1.4rem, 2.4vw, 1.9rem);
+  }
+  .rf-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.5rem;
+    height: 2.5rem;
+    padding: 0 0.5rem;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 700;
+  }
+  .rf-num-p {
+    background: var(--wf-primary-tint);
+    color: var(--wf-primary-text);
+  }
+  .rf-num-i {
+    background: var(--wf-primary-tint);
+    color: var(--wf-indigo);
+  }
+  .rf-num-s {
+    background: var(--wf-success-tint);
+    color: var(--wf-success);
+  }
+  .rf-taught-title {
+    margin: 1.25rem 0 0;
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--wf-text);
+  }
+  .rf-taught-body {
+    margin: 0.7rem 0 0;
+    font-size: 0.98rem;
+    line-height: 1.55;
+    color: var(--wf-text-muted);
+  }
+
+  .rf-hero {
+    margin-top: clamp(2rem, 4vw, 3rem);
+    border-radius: 24px;
+    padding: clamp(2.5rem, 6vw, 4.5rem) clamp(1.5rem, 6vw, 5rem);
+    text-align: center;
+    background:
+      radial-gradient(120% 120% at 8% 0%, #1657a8 0%, transparent 52%),
+      linear-gradient(120deg, #0b1730 0%, #12143a 55%, #2a1f6b 100%);
+    color: #eaf0fb;
+  }
+  .rf-hero-spark {
+    display: inline-block;
+    font-size: 1.6rem;
+    color: #6bb6ff;
+  }
+  .rf-hero-quote {
+    margin: 1.5rem auto 0;
+    max-width: 26ch;
+    font-size: clamp(1.5rem, 3.5vw, 2.4rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    color: #ffffff;
+  }
+  .rf-hero-thanks {
+    margin: 1.4rem auto 0;
+    max-width: 52ch;
+    font-size: clamp(1rem, 1.6vw, 1.1rem);
+    line-height: 1.55;
+    color: #9fb2ce;
+  }
+  .rf-hero-sign {
+    margin: 1.8rem 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  .rf-hero-name {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .rf-hero-role {
+    font-size: 0.9rem;
+    color: #9fb2ce;
+  }
+
+  @media (max-width: 900px) {
+    .rf-worked,
+    .rf-taught {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

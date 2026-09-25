@@ -1,0 +1,234 @@
+---
+// Research — Section 04 of the Wayfare case study
+const stats = [
+  ['20', 'respondents & interviewees, combined'],
+  ['4–6', 'trips a year · most active third'],
+  ['66%', 'plan most trips entirely themselves'],
+  ['50%', 'have seen a self-transfer but hesitated'],
+];
+const methods = [
+  ['Survey · 15 respondents', 'Booking habits & AI trust', 'A Google Form on priorities, self-transfer barriers and how much control people hand to AI. Frequent and occasional flyers, domestic + international.'],
+  ['Interviews · 5 travellers', 'The emotional moments', 'Moderated 1:1s probing near-missed connections, refund battles, and the specific fear of booking separate tickets.'],
+  ['Secondary · Competitive', 'Where big sites stop', 'Teardown of Google Flights, Skyscanner, Kiwi.com and MakeMyTrip, pinpointing where each stops short of a self-assembled route.'],
+];
+const quotes = [
+  ['I keep picturing the first flight landing late and me running through Dubai.', 'The anxious international', 'Fear of missing the 2nd flight, not price, is the real barrier.', false],
+  ['If it shows me the sources, I’ll trust it. Otherwise it’s just guessing.', 'The power optimizer', '67% trust the AI when it can show checkable sources.', true],
+  ['Just tell me and let me decide. Never book without asking.', 'The family planner', '0% want auto-booking; 83% want confirm-before-charge.', false],
+];
+const findings = [
+  'The barrier is fear: missing the second flight (50%) and first-leg delays (50%) top the list, not price.',
+  'AI is trusted to search & compare (67%) and suggest timing (50%), but 0% would let it complete a purchase.',
+  'Control: 50% want “just notify me, I decide.” Nobody chose full autopilot.',
+];
+---
+
+<section class="wf-section research">
+  <div class="wf-wrap">
+    <p class="wf-eyebrow">04 · User Research &amp; Method</p>
+    <h2 class="wf-h2">Listened before we designed.</h2>
+    <p class="wf-intro">
+      A structured survey, moderated interviews and a competitive teardown, all read through one lens:
+      what breaks or builds trust in an unconventional route.
+    </p>
+
+    <div class="stats">
+      {stats.map(([num, cap]) => (
+        <div class="stat">
+          <p class="stat-num">{num}</p>
+          <p class="stat-cap">{cap}</p>
+        </div>
+      ))}
+    </div>
+
+    <div class="methods">
+      {methods.map(([label, title, body]) => (
+        <article class="method">
+          <p class="method-label">{label}</p>
+          <h3 class="method-title">{title}</h3>
+          <p class="method-body">{body}</p>
+        </article>
+      ))}
+    </div>
+
+    <p class="wf-kicker itw-kicker">In their words · 5 interviews</p>
+    <div class="quotes">
+      {quotes.map(([quote, persona, takeaway, blue]) => (
+        <article class={blue ? 'quote quote-blue' : 'quote'}>
+          <span class="quote-mark" aria-hidden="true">&ldquo;</span>
+          <p class="quote-text">{quote}</p>
+          <p class="quote-persona">{persona}</p>
+          <p class="quote-take">{takeaway}</p>
+        </article>
+      ))}
+    </div>
+
+    <h3 class="survey-head">Straight from the survey</h3>
+    <p class="survey-intro">Actual Google Forms responses. The three questions that most shaped the design:</p>
+    <div class="findings">
+      {findings.map((f) => (
+        <article class="finding">
+          <p class="finding-text">{f}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  /* ---- stat cards (inverted, stay high-contrast in both themes) ---- */
+  .stats {
+    margin-top: clamp(2rem, 4vw, 3rem);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(0.9rem, 1.6vw, 1.25rem);
+  }
+  .stat {
+    background: var(--wf-text);
+    border-radius: 16px;
+    padding: clamp(1.4rem, 2vw, 1.9rem);
+  }
+  .stat-num {
+    margin: 0;
+    font-size: clamp(2rem, 3.4vw, 2.8rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    color: var(--wf-bg);
+  }
+  .stat-cap {
+    margin: 0.8rem 0 0;
+    font-size: 0.95rem;
+    line-height: 1.45;
+    color: var(--wf-text-muted);
+  }
+
+  /* ---- method cards ---- */
+  .methods {
+    margin-top: clamp(1.5rem, 3vw, 2.5rem);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(1rem, 2vw, 1.5rem);
+  }
+  .method {
+    border: 1px solid var(--wf-border);
+    border-radius: 16px;
+    background: var(--wf-surface-muted);
+    padding: clamp(1.4rem, 2vw, 1.75rem);
+  }
+  .method-label {
+    margin: 0 0 0.7rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--wf-primary-text);
+  }
+  .method-title {
+    margin: 0 0 0.6rem;
+    font-size: 1.25rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--wf-text);
+  }
+  .method-body {
+    margin: 0;
+    font-size: 0.96rem;
+    line-height: 1.6;
+    color: var(--wf-text-muted);
+  }
+
+  /* ---- quotes ---- */
+  .itw-kicker { margin-top: clamp(2.5rem, 5vw, 4rem); }
+  .quotes {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(1rem, 2vw, 1.5rem);
+    align-items: stretch;
+  }
+  .quote {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--wf-border);
+    border-radius: 16px;
+    background: var(--wf-surface);
+    padding: clamp(1.5rem, 2.2vw, 2rem);
+  }
+  .quote-blue {
+    background: var(--wf-primary);
+    border-color: var(--wf-primary);
+  }
+  .quote-mark {
+    font-size: 2.4rem;
+    line-height: 0.6;
+    font-weight: 800;
+    color: var(--wf-primary-text);
+  }
+  .quote-blue .quote-mark { color: var(--wf-on-primary); }
+  .quote-text {
+    margin: 1.5rem 0 auto;
+    font-size: 1.15rem;
+    font-weight: 700;
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+    color: var(--wf-text);
+  }
+  .quote-blue .quote-text { color: var(--wf-on-primary); }
+  .quote-persona {
+    margin: 1.5rem 0 0.5rem;
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--wf-success);
+  }
+  .quote-blue .quote-persona { color: var(--wf-on-primary); }
+  .quote-take {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: var(--wf-text-muted);
+  }
+  .quote-blue .quote-take { color: #eaf3fd; }
+
+  /* ---- survey findings ---- */
+  .survey-head {
+    margin: clamp(2.5rem, 5vw, 4rem) 0 0;
+    font-size: clamp(1.4rem, 2.4vw, 1.9rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--wf-text);
+  }
+  .survey-intro {
+    margin: 1rem 0 0;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--wf-text-muted);
+  }
+  .findings {
+    margin-top: 1.5rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(1rem, 2vw, 1.5rem);
+  }
+  .finding {
+    border: 1px solid var(--wf-border);
+    border-left: 3px solid var(--wf-primary);
+    border-radius: 12px;
+    background: var(--wf-surface-muted);
+    padding: clamp(1.25rem, 1.8vw, 1.6rem);
+  }
+  .finding-text {
+    margin: 0;
+    font-size: 0.98rem;
+    line-height: 1.6;
+    color: var(--wf-text);
+  }
+
+  @media (max-width: 900px) {
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .methods,
+    .quotes,
+    .findings { grid-template-columns: 1fr; }
+  }
+</style>
