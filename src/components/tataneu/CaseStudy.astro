@@ -1,0 +1,87 @@
+---
+// Tata NeuConnect — presented as the original slide deck (static images).
+// The 40 exported slides are shown as a responsive vertical stack, in order.
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+// Clean, human alt text per slide (order 01..40).
+const labels: Record<string, string> = {
+  '01': 'Landing page',
+  '02': "What's the Big Idea",
+  '03': 'Why did we need this',
+  '04': 'My role',
+  '05': 'Design process, Discover 1',
+  '06': 'Design process, Discover 2',
+  '07': 'Design process, Discover 3',
+  '08': 'Design process, Discover 4',
+  '09': 'Design process, Define 1',
+  '10': 'Design process, Define 2',
+  '11': 'Design process, Define 3',
+  '12': 'Design process, Define 4',
+  '13': 'Design process, Ideate 1',
+  '14': 'Design process, Ideate 2',
+  '15': 'Design process, Ideate 3',
+  '16': 'Ideate, user flow overview',
+  '17': 'User flow, create campaign scenario 1',
+  '18': 'User flow, create campaign scenario 2',
+  '19': 'User flow, create campaign scenario 3',
+  '20': 'Design process, Design 1',
+  '21': 'Design process, Design 2',
+  '22': 'Design process, Design 3',
+  '23': 'Design process, Design 4',
+  '24': 'Design process, Design 5',
+  '25': 'Introduction',
+  '26': 'SSO login',
+  '27': 'Campaign overview',
+  '28': 'Segment overview',
+  '29': 'Segment creation',
+  '30': 'Design detail',
+  '31': 'Campaign creation, one time',
+  '32': 'Campaign creation, recurring',
+  '33': 'Campaign creation, event hub',
+  '34': 'Overview, campaign created',
+  '35': 'Dashboard analytics',
+  '36': 'Test and deliver 1',
+  '37': 'Test and deliver 2',
+  '38': 'Test and deliver 3',
+  '39': 'Test and deliver 4',
+  '40': 'User needs',
+};
+const slides = Object.keys(labels).sort();
+---
+
+<div class="tn-deck">
+  {slides.map((n, i) => (
+    <figure class="tn-slide">
+      <img
+        src={`${base}/images/tataneu/slide-${n}.png`}
+        alt={`Tata NeuConnect, ${labels[n]}`}
+        loading={i === 0 ? 'eager' : 'lazy'}
+        decoding="async"
+      />
+    </figure>
+  ))}
+</div>
+
+<style>
+  .tn-deck {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    width: 100%;
+    max-width: 1200px;
+    margin-inline: auto;
+  }
+  .tn-slide {
+    margin: 0;
+    width: 100%;
+  }
+  .tn-slide img {
+    width: 100%;
+    height: auto;
+    display: block;
+    /* butt slides together, no gaps, so it reads as one continuous page */
+    margin: 0;
+    margin-bottom: -1px;
+  }
+</style>

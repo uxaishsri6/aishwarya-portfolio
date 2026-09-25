@@ -10,7 +10,7 @@ timeline: "~4 months"
 year: "2023"
 tools: ["Figma", "FigJam"]
 accent: "#b06f2b"
-draft: false
+draft: true
 ---
 
 ## Context

@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import WayfareCaseStudy from '../../components/wayfare/CaseStudy.astro';
+import TataNeuCaseStudy from '../../components/tataneu/CaseStudy.astro';
 
 export async function getStaticPaths() {
   const studies = (await getCollection('case-studies')).sort(
@@ -23,16 +24,18 @@ const d = entry.data;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const coverSrc = d.cover ? `${base}/images/${d.cover}` : undefined;
 const isWayfare = entry.slug === 'wayfare';
+const isTataNeu = entry.slug === 'tata-neu-connect';
+const isBespoke = isWayfare || isTataNeu;
 ---
 
 <BaseLayout title={`${d.title} — Aishwarya Srivastava`} description={d.lede}>
-  <article class="study" class:list={{ 'study-full': isWayfare }} style={`--accent:${d.accent}`}>
+  <article class="study" class:list={{ 'study-full': isBespoke }} style={`--accent:${d.accent}`}>
     <div class="wrap">
       <a href={`${base}/#work`} class="back">← All work</a>
     </div>
 
-    {isWayfare ? (
-      <WayfareCaseStudy />
+    {isBespoke ? (
+      isWayfare ? <WayfareCaseStudy /> : <TataNeuCaseStudy />
     ) : (
       <div class="wrap">
         <header class="study-head reveal">

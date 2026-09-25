@@ -1,15 +1,16 @@
 ---
 order: 2
-title: "Tata Neu Connect — one console for a super-app's marketing"
-cardTitle: "Tata Neu Connect, one console for a super-app."
+title: "Tata NeuConnect — a centralized campaign management platform"
+cardTitle: "Tata NeuConnect, one console for a super-app."
 tag: "Enterprise · Martech"
-lede: "An internal platform that unified campaign creation, audience segmentation, and performance reporting for one of India's largest consumer ecosystems."
-metric: "Consolidated marketing execution into a single enterprise-scale console"
+lede: "A centralized campaign management platform for the Tata ecosystem, so marketing teams break data silos, build smarter campaigns, and reach users at the right moment."
+metric: "Unified campaign creation, segmentation, and analytics into one console"
 role: "Lead Product Designer · Ollion"
 timeline: "~10 months"
 year: "2023"
 tools: ["Figma", "FigJam", "Miro"]
-accent: "#24386b"
+accent: "#6d28d9"
+cover: "tataneu/card-cover.png"
 draft: false
 ---
 
