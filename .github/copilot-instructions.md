@@ -77,7 +77,7 @@ npm run preview   # serve the production build
 ### Layout & global
 - `src/layouts/BaseLayout.astro` — `<head>`, fonts, **top nav** (brand, links,
   theme toggle, **Résumé button**, **mobile hamburger menu**), footer, the
-  **floating right dock**, and ALL client JS in one `<script>`:
+  **floating right dock** (home only), and ALL client JS in one `<script>`:
   `initTheme` (defaults dark), theme toggle, reveal-on-scroll (+ hidden-tab
   fallback), cursor blob, magnetic buttons, nav scroll backdrop + scroll-spy,
   mobile menu toggle. JS re-runs on `astro:page-load` / `astro:after-swap`.

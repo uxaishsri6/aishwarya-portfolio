@@ -5,11 +5,13 @@ import '../styles/global.css';
 interface Props {
   title: string;
   description?: string;
+  showSectionDock?: boolean;
 }
 
 const {
   title,
   description = "Aishwarya Srivastava is a Senior UX/UI & Product Designer in Bengaluru with 5+ years across enterprise SaaS, telecom, cloud, healthcare, logistics, and CRM.",
+  showSectionDock = true,
 } = Astro.props;
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
@@ -64,13 +66,14 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <a href={`${base}/Aishwarya-Srivastava-Resume.pdf`} target="_blank" rel="noopener">Résumé ↗</a>
     </div>
 
-    <!-- floating nav dock: appears after the banner, scroll-spies sections -->
-    <nav class="dock" id="dock" aria-label="Section navigation">
-      <a href={`${base}/#top`} data-target="top"><span class="dot"></span> Home</a>
-      <a href={`${base}/#about`} data-target="about"><span class="dot"></span> About</a>
-      <a href={`${base}/#work`} data-target="work"><span class="dot"></span> Work</a>
-      <a href={`${base}/#contact`} data-target="contact"><span class="dot"></span> Contact</a>
-    </nav>
+    {showSectionDock && (
+      <nav class="dock" id="dock" aria-label="Section navigation">
+        <a href={`${base}/#top`} data-target="top"><span class="dot"></span> Home</a>
+        <a href={`${base}/#about`} data-target="about"><span class="dot"></span> About</a>
+        <a href={`${base}/#work`} data-target="work"><span class="dot"></span> Work</a>
+        <a href={`${base}/#contact`} data-target="contact"><span class="dot"></span> Contact</a>
+      </nav>
+    )}
 
     <main>
       <slot />
