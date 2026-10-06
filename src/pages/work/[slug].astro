@@ -28,7 +28,7 @@ const isTataNeu = entry.slug === 'tata-neu-connect';
 const isBespoke = isWayfare || isTataNeu;
 ---
 
-<BaseLayout title={`${d.title} — Aishwarya Srivastava`} description={d.lede} showSectionDock={false}>
+<BaseLayout title={`${d.title} — Aishwarya Srivastava`} description={d.lede} showSectionDock={false} wideNav={isBespoke}>
   <article class="study" class:list={{ 'study-full': isBespoke }} style={`--accent:${d.accent}`}>
     <div class="wrap">
       <a href={`${base}/#work`} class="back">← All work</a>

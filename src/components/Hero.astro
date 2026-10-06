@@ -36,11 +36,6 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <span class="spark sp-2" aria-hidden="true">✦</span>
     </div>
   </div>
-
-  <a href={`${base}/#about`} class="scroll-cue" aria-label="Scroll to about">
-    <span>the professional side</span>
-    <span class="cue-arrow">↓</span>
-  </a>
 </section>
 
 <style>
@@ -163,32 +158,6 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   .sp-1 { top: 8%; left: 6%; }
   .sp-2 { top: 30%; right: 2%; font-size: 1rem; animation-delay: 1.1s; }
 
-  /* ---- scroll cue ---- */
-  .scroll-cue {
-    position: absolute;
-    z-index: 2;
-    left: 50%;
-    bottom: 1.75rem;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.4rem;
-    font-family: var(--font-serif);
-    font-style: italic;
-    font-size: 1rem;
-    color: #2b4d6e;
-  }
-  :global([data-theme='dark']) .scroll-cue { color: #b9cbe6; }
-  .cue-arrow {
-    font-style: normal;
-    animation: nudge 1.8s ease-in-out infinite;
-  }
-  @keyframes nudge {
-    0%, 100% { transform: translateY(0); opacity: 0.6; }
-    50% { transform: translateY(6px); opacity: 1; }
-  }
-
   @media (max-width: 860px) {
     .cover-inner {
       grid-template-columns: 1fr;
@@ -199,6 +168,5 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     .lede-col { order: 2; }
     .hero-figure { order: 1; width: min(80%, 340px); transform: none; }
     .cover-actions { justify-content: center; }
-    .scroll-cue { display: none; }
   }
 </style>

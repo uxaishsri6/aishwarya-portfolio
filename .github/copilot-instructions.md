@@ -24,7 +24,7 @@ rules below exactly.
    the build must report **0 errors**. `npm run build` = typecheck gate + static build.
 4. **Copy voice:** no em dashes (`—`). Use commas/colons/periods. Keep it warm,
    human, first-person, concise. Avoid AI-cliché phrasing.
-5. **Never fabricate facts** (metrics, titles, clients). Use the résumé
+5. **Never fabricate facts** (metrics, titles, clients). Use the resume
    (`public/Aishwarya-Srivastava-Resume.pdf`) as source of truth. Mark
    enterprise/NDA specifics as "available on request".
 6. **Theme parity:** every section must work in **light (day)** and **dark (night)**.
@@ -76,7 +76,7 @@ npm run preview   # serve the production build
 
 ### Layout & global
 - `src/layouts/BaseLayout.astro` — `<head>`, fonts, **top nav** (brand, links,
-  theme toggle, **Résumé button**, **mobile hamburger menu**), footer, the
+  theme toggle, **Resume button**, **mobile hamburger menu**), footer, the
   **floating right dock** (home only), and ALL client JS in one `<script>`:
   `initTheme` (defaults dark), theme toggle, reveal-on-scroll (+ hidden-tab
   fallback), cursor blob, magnetic buttons, nav scroll backdrop + scroll-spy,
@@ -96,11 +96,11 @@ npm run preview   # serve the production build
 - `src/components/Marquee.astro` — scrolling serif words band.
 - `src/components/About.astro` — night/day section: bio (theme-aware), **stats**
   (5+ yrs / ~40% faster / 🏆 3 awards), **"My journey" timeline** (data array from
-  résumé), and the **pointing sticker** on the right.
+  resume), and the **pointing sticker** on the right.
 - `src/components/Process.astro` — "How I approach Design": 6 principles
   (`tenets` array) + hand-lettered takeaways + **brainstorm sticker** on the left.
 - `src/components/Contact.astro` — full-bleed **garden/balcony footer** (day/night
-  bg images, versioned filenames), "Let's talk", email, socials, Résumé, meta.
+  bg images, versioned filenames), "Let's talk", email, socials, Resume, meta.
 - `src/components/ProjectCard.astro` — the **sticky stacking** case-study card used
   in the Work section (uses `--i` index for the deck offset; `position: sticky`).
 
