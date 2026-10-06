@@ -2,6 +2,7 @@
 // Wayfare — presented as the original case-study deck (static images).
 // The 16 exported section frames are shown as one continuous, responsive page.
 // (A dynamic, natively-rebuilt version is preserved on the `wayfare-dynamic` branch.)
+import CaseStudyDeck from '../CaseStudyDeck.astro';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 const labels: Record<string, string> = {
@@ -22,41 +23,10 @@ const labels: Record<string, string> = {
   '15': 'Validation & iteration',
   '16': 'Reflection',
 };
-const slides = Object.keys(labels).sort();
+const slides = Object.keys(labels).sort().map((n) => ({
+  src: `${base}/images/wayfare/slide-${n}.png`,
+  alt: `Wayfare, ${labels[n]}`,
+}));
 ---
 
-<div class="wf-deck">
-  {slides.map((n, i) => (
-    <figure class="wf-slide" class:list={{ 'project-cover': i === 0 }} transition:name={i === 0 ? 'cover-wayfare' : undefined}>
-      <img
-        src={`${base}/images/wayfare/slide-${n}.png`}
-        alt={`Wayfare, ${labels[n]}`}
-        loading={i === 0 ? 'eager' : 'lazy'}
-        decoding="async"
-      />
-    </figure>
-  ))}
-</div>
-
-<style>
-  .wf-deck {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0;
-    width: 100%;
-    max-width: 1200px;
-    margin-inline: auto;
-  }
-  .wf-slide {
-    margin: 0;
-    width: 100%;
-  }
-  .wf-slide img {
-    width: 100%;
-    height: auto;
-    display: block;
-    /* butt slides together so it reads as one continuous page */
-    margin: 0 0 -1px;
-  }
-</style>
+<CaseStudyDeck slug="wayfare" slides={slides} />

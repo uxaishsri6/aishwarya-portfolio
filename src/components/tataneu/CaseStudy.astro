@@ -1,6 +1,7 @@
 ---
 // Tata NeuConnect — presented as the original slide deck (static images).
 // The 40 exported slides are shown as a responsive vertical stack, in order.
+import CaseStudyDeck from '../CaseStudyDeck.astro';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 // Clean, human alt text per slide (order 01..40).
@@ -46,42 +47,10 @@ const labels: Record<string, string> = {
   '39': 'Test and deliver 4',
   '40': 'User needs',
 };
-const slides = Object.keys(labels).sort();
+const slides = Object.keys(labels).sort().map((n) => ({
+  src: `${base}/images/tataneu/slide-${n}.png`,
+  alt: `Tata NeuConnect, ${labels[n]}`,
+}));
 ---
 
-<div class="tn-deck">
-  {slides.map((n, i) => (
-    <figure class="tn-slide" class:list={{ 'project-cover': i === 0 }} transition:name={i === 0 ? 'cover-tata-neu-connect' : undefined}>
-      <img
-        src={`${base}/images/tataneu/slide-${n}.png`}
-        alt={`Tata NeuConnect, ${labels[n]}`}
-        loading={i === 0 ? 'eager' : 'lazy'}
-        decoding="async"
-      />
-    </figure>
-  ))}
-</div>
-
-<style>
-  .tn-deck {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0;
-    width: 100%;
-    max-width: 1200px;
-    margin-inline: auto;
-  }
-  .tn-slide {
-    margin: 0;
-    width: 100%;
-  }
-  .tn-slide img {
-    width: 100%;
-    height: auto;
-    display: block;
-    /* butt slides together, no gaps, so it reads as one continuous page */
-    margin: 0;
-    margin-bottom: -1px;
-  }
-</style>
+<CaseStudyDeck slug="tata-neu-connect" slides={slides} />

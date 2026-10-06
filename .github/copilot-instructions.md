@@ -72,8 +72,8 @@ npm run preview   # serve the production build
   Work in `.sky-world` (the shared continuous sky background). Contains the **Work**
   (case-study) section markup + styles and queries the content collection.
 - `src/pages/work/[slug].astro` — case-study detail template (one page per study);
-  renders Markdown body + prev/next nav. View-transition morph named `cover-<slug>`;
-  bespoke slide decks share that name on their opening frame.
+  renders Markdown or a bespoke slide deck + prev/next nav. View-transition morph
+  named `cover-<slug>`; slide decks share that name on their opening frame.
 
 ### Layout & global
 - `src/layouts/BaseLayout.astro` — `<head>`, fonts, **top nav** (brand, links,
@@ -90,7 +90,7 @@ npm run preview   # serve the production build
 
 ### Components
 - `src/components/Hero.astro` — cover (headline, subline, CTAs, jump sticker on a
-  cloud, scroll cue). Background comes from `.sky-world`.
+  cloud). Background comes from `.sky-world`.
 - `src/components/SkyFX.astro` — **shared sky layer** spanning `.sky-world`:
   drifting **clouds** (array, ~24), **swallow** birds (day), **twinkling stars** +
   **shooting stars** (night), and the **sun⇄moon** that arcs on a semicircle
@@ -105,22 +105,28 @@ npm run preview   # serve the production build
   bg images, versioned filenames), "Let's talk", email, socials, Resume, meta.
 - `src/components/ProjectCard.astro` — the **sticky stacking** case-study card used
   in the Work section (uses `--i` index for the deck offset; `position: sticky`).
-  Cover images retain their full aspect ratio, except Wayfare and Tata NeuConnect
-  cards, which frame their original PNGs to the same wide aspect ratio.
+  Cover images retain their full aspect ratio, except Wayfare, Tata NeuConnect,
+  and Termax cards, which frame their original PNGs to the same wide aspect ratio.
+- `src/components/CaseStudyDeck.astro` — shared responsive slide renderer for
+  Wayfare, Tata NeuConnect, and Termax; the first slide morphs from the Work card.
+- `src/components/termax/CaseStudy.astro` — ten Termax sections, with tall PNGs
+  split into consecutively numbered segments and sized to reserve layout space.
 
 ### Content (case studies)
 - `src/content/config.ts` — collection schema: `order, title, cardTitle, tag, lede,
   metric, role, timeline, year, tools[], accent, cover?, draft`.
 - `src/content/case-studies/*.md` — one file per study (real projects):
-  `bt-pni, tata-neu-connect, landing-zone, assaya-healthcare, goodpack-logistics,
-  enterprise-crm`. Add a file → new card + new `/work/<slug>` page automatically.
+  `wayfare, tata-neu-connect, termax, landing-zone, assaya-healthcare,
+  goodpack-logistics, enterprise-crm`. Published entries appear in the Work grid;
+  `draft: true` hides a card without deleting the detail route.
 
 ### Assets (`public/` — served from site root; reference with the base path)
 - `public/images/` — cut-out stickers (`sticker-jump`, `sticker-point-left`,
   `sticker-point-right`, `sticker-desk`, `sticker-think`, `product-designer`,
   `sticker-brainstorm-v2`), clouds (`cloud-1.png`, `cloud-2.png`), and the
   Contact footer images (`contact-day-vN.jpg`, `contact-night-vN.jpg`).
-  `public/images/README.md` explains cover images.
+  `public/images/termax/` holds the numbered slide PNGs, resized to 2400px wide
+  and split where needed. `public/images/README.md` explains cover images.
 - `public/Aishwarya-Srivastava-Resume.pdf` — linked from nav + Contact.
 - `public/favicon.svg`.
 

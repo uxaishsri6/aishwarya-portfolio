@@ -1,0 +1,27 @@
+---
+import CaseStudyDeck from '../CaseStudyDeck.astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const sections = [
+  { number: '01', label: 'CRM cover', heights: [2000] },
+  { number: '02', label: 'Overview and role', heights: [2817] },
+  { number: '03', label: 'Design process and research', heights: [2566, 2567] },
+  { number: '04', label: 'Information architecture', heights: [2017] },
+  { number: '05', label: 'Opportunity, quote and project workflow', heights: [1892] },
+  { number: '06', label: 'Opportunity management designs', heights: [3182, 3183, 3182] },
+  { number: '07', label: 'Quote management designs', heights: [2595, 2595] },
+  { number: '08', label: 'Project management designs', heights: [2510, 2510] },
+  { number: '09', label: 'Data warehouse designs', heights: [2742, 2741, 2742] },
+  { number: '10', label: 'User and customer management designs', heights: [2392, 2391] },
+];
+const slides = sections.flatMap(({ number, label, heights }) =>
+  heights.map((height, i) => ({
+    src: `${base}/images/termax/slide-${number}${heights.length > 1 ? `-${String(i + 1).padStart(2, '0')}` : ''}.png`,
+    alt: `Termax CRM, ${label}${heights.length > 1 ? `, part ${i + 1} of ${heights.length}` : ''}`,
+    width: 2400,
+    height,
+  }))
+);
+---
+
+<CaseStudyDeck slug="termax" slides={slides} />

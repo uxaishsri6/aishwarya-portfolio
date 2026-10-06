@@ -3,19 +3,25 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import WayfareCaseStudy from '../../components/wayfare/CaseStudy.astro';
 import TataNeuCaseStudy from '../../components/tataneu/CaseStudy.astro';
+import TermaxCaseStudy from '../../components/termax/CaseStudy.astro';
 
 export async function getStaticPaths() {
   const studies = (await getCollection('case-studies')).sort(
     (a, b) => a.data.order - b.data.order
   );
-  return studies.map((entry, i) => ({
-    params: { slug: entry.slug },
-    props: {
-      entry,
-      prev: studies[(i - 1 + studies.length) % studies.length],
-      next: studies[(i + 1) % studies.length],
-    },
-  }));
+  const published = studies.filter((entry) => !entry.data.draft);
+  return studies.map((entry) => {
+    const neighbors = entry.data.draft ? studies : published;
+    const i = neighbors.findIndex((study) => study.slug === entry.slug);
+    return {
+      params: { slug: entry.slug },
+      props: {
+        entry,
+        prev: neighbors[(i - 1 + neighbors.length) % neighbors.length],
+        next: neighbors[(i + 1) % neighbors.length],
+      },
+    };
+  });
 }
 
 const { entry, prev, next } = Astro.props;
@@ -25,7 +31,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const coverSrc = d.cover ? `${base}/images/${d.cover}` : undefined;
 const isWayfare = entry.slug === 'wayfare';
 const isTataNeu = entry.slug === 'tata-neu-connect';
-const isBespoke = isWayfare || isTataNeu;
+const isTermax = entry.slug === 'termax';
+const isBespoke = isWayfare || isTataNeu || isTermax;
 ---
 
 <BaseLayout title={`${d.title} — Aishwarya Srivastava`} description={d.lede} showSectionDock={false} wideNav={isBespoke}>
@@ -35,7 +42,7 @@ const isBespoke = isWayfare || isTataNeu;
     </div>
 
     {isBespoke ? (
-      isWayfare ? <WayfareCaseStudy /> : <TataNeuCaseStudy />
+      isWayfare ? <WayfareCaseStudy /> : isTataNeu ? <TataNeuCaseStudy /> : <TermaxCaseStudy />
     ) : (
       <div class="wrap">
         <header class="study-head reveal">

@@ -1,0 +1,51 @@
+---
+interface Slide {
+  src: string;
+  alt: string;
+  width?: number;
+  height?: number;
+}
+
+interface Props {
+  slug: string;
+  slides: Slide[];
+}
+
+const { slug, slides } = Astro.props;
+---
+
+<div class="case-deck">
+  {slides.map((slide, i) => (
+    <figure class="case-slide" class:list={{ 'project-cover': i === 0 }} transition:name={i === 0 ? `cover-${slug}` : undefined}>
+      <img
+        src={slide.src}
+        alt={slide.alt}
+        width={slide.width}
+        height={slide.height}
+        loading={i === 0 ? 'eager' : 'lazy'}
+        decoding="async"
+      />
+    </figure>
+  ))}
+</div>
+
+<style>
+  .case-deck {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    margin-inline: auto;
+  }
+  .case-slide {
+    margin: 0;
+    width: 100%;
+  }
+  .case-slide img {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: -1px;
+  }
+</style>
