@@ -44,7 +44,7 @@ const isBespoke = isWayfare || isTataNeu;
           <p class="s-lede">{d.lede}</p>
         </header>
 
-        <div class="s-cover" transition:name={`cover-${entry.slug}`}>
+        <div class="s-cover project-cover" class:list={{ 'has-cover': Boolean(coverSrc) }} transition:name={`cover-${entry.slug}`}>
           {coverSrc ? (
             <img src={coverSrc} alt={d.title} />
           ) : (
@@ -123,10 +123,10 @@ const isBespoke = isWayfare || isTataNeu;
     overflow: hidden;
     border: 1px solid var(--line);
   }
+  .s-cover.has-cover { aspect-ratio: auto; }
   .s-cover img {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    height: auto;
   }
   .s-pattern {
     width: 100%;

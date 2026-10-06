@@ -72,7 +72,8 @@ npm run preview   # serve the production build
   Work in `.sky-world` (the shared continuous sky background). Contains the **Work**
   (case-study) section markup + styles and queries the content collection.
 - `src/pages/work/[slug].astro` — case-study detail template (one page per study);
-  renders Markdown body + prev/next nav. View-transition morph named `cover-<slug>`.
+  renders Markdown body + prev/next nav. View-transition morph named `cover-<slug>`;
+  bespoke slide decks share that name on their opening frame.
 
 ### Layout & global
 - `src/layouts/BaseLayout.astro` — `<head>`, fonts, **top nav** (brand, links,
@@ -80,7 +81,8 @@ npm run preview   # serve the production build
   **floating right dock** (home only), and ALL client JS in one `<script>`:
   `initTheme` (defaults dark), theme toggle, reveal-on-scroll (+ hidden-tab
   fallback), cursor blob, magnetic buttons, nav scroll backdrop + scroll-spy,
-  mobile menu toggle. JS re-runs on `astro:page-load` / `astro:after-swap`.
+  mobile menu toggle, and instant return to the previous Work position.
+  JS re-runs on `astro:page-load` / `astro:after-swap`.
 - `src/styles/global.css` — **design tokens** (`:root` = light, `[data-theme="dark"]`
   = dark): palette (blue + cream), fonts (`--font-sans` Inter, `--font-serif`
   Instrument Serif, `--font-mono` JetBrains Mono, `--font-hand` Caveat), `--nav-h`,
@@ -103,6 +105,8 @@ npm run preview   # serve the production build
   bg images, versioned filenames), "Let's talk", email, socials, Resume, meta.
 - `src/components/ProjectCard.astro` — the **sticky stacking** case-study card used
   in the Work section (uses `--i` index for the deck offset; `position: sticky`).
+  Cover images retain their full aspect ratio, except Wayfare and Tata NeuConnect
+  cards, which frame their original PNGs to the same wide aspect ratio.
 
 ### Content (case studies)
 - `src/content/config.ts` — collection schema: `order, title, cardTitle, tag, lede,

@@ -51,7 +51,7 @@ const slides = Object.keys(labels).sort();
 
 <div class="tn-deck">
   {slides.map((n, i) => (
-    <figure class="tn-slide">
+    <figure class="tn-slide" class:list={{ 'project-cover': i === 0 }} transition:name={i === 0 ? 'cover-tata-neu-connect' : undefined}>
       <img
         src={`${base}/images/tataneu/slide-${n}.png`}
         alt={`Tata NeuConnect, ${labels[n]}`}

@@ -27,7 +27,7 @@ const slides = Object.keys(labels).sort();
 
 <div class="wf-deck">
   {slides.map((n, i) => (
-    <figure class="wf-slide">
+    <figure class="wf-slide" class:list={{ 'project-cover': i === 0 }} transition:name={i === 0 ? 'cover-wayfare' : undefined}>
       <img
         src={`${base}/images/wayfare/slide-${n}.png`}
         alt={`Wayfare, ${labels[n]}`}

@@ -412,6 +412,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     </style>
 
     <script>
+      let workHistoryIndex: number | null = null;
+      let returningToWork = false;
+      const isPlainClick = (event: MouseEvent) =>
+        event.button === 0 && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey;
+
       // Runs on first load and after every View Transition navigation.
       function initTheme() {
         // default to dark; respect the visitor's explicit choice once they toggle
@@ -455,6 +460,30 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
           );
           window.addEventListener('resize', () => {
             if (window.innerWidth > 720) setOpen(false);
+          });
+        }
+
+        document.querySelectorAll<HTMLAnchorElement>('.scard-link').forEach((card) => {
+          if (card.dataset.wired) return;
+          card.dataset.wired = '1';
+          card.addEventListener('click', (event) => {
+            if (isPlainClick(event) && !event.defaultPrevented) {
+              workHistoryIndex = typeof history.state?.index === 'number' ? history.state.index : null;
+            }
+          });
+        });
+
+        const allWork = document.querySelector<HTMLAnchorElement>('a.back');
+        if (allWork && !allWork.dataset.wired) {
+          allWork.dataset.wired = '1';
+          allWork.addEventListener('click', (event) => {
+            if (!isPlainClick(event) || event.defaultPrevented) return;
+            returningToWork = true;
+            const currentIndex = history.state?.index;
+            if (workHistoryIndex !== null && typeof currentIndex === 'number' && currentIndex > workHistoryIndex) {
+              event.preventDefault();
+              history.go(workHistoryIndex - currentIndex);
+            }
           });
         }
 
@@ -560,11 +589,21 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       }
 
       wireUp();
+      document.addEventListener('astro:before-swap', (event) => {
+        if (returningToWork && event.newDocument.getElementById('work')) {
+          event.newDocument.documentElement.classList.add('instant-work-return');
+        }
+      });
       document.addEventListener('astro:after-swap', () => {
+        returningToWork = false;
+        if (document.getElementById('work')) workHistoryIndex = null;
         initTheme();
         wireUp();
       });
-      document.addEventListener('astro:page-load', wireUp);
+      document.addEventListener('astro:page-load', () => {
+        document.documentElement.classList.remove('instant-work-return');
+        wireUp();
+      });
     </script>
   </body>
 </html>

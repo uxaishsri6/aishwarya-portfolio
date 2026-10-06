@@ -10,7 +10,7 @@ timeline: "~10 months"
 year: "2023"
 tools: ["Figma", "FigJam", "Miro"]
 accent: "#6d28d9"
-cover: "tataneu/card-cover.png"
+cover: "tataneu/slide-01.png"
 draft: false
 ---
 
