@@ -1,7 +1,14 @@
 ---
-const words = ["Considered.", "Human.", "Trusted.", "Honest.", "Playful."];
+const phrases = [
+  "Human-Centred",
+  "Functionality First",
+  "Intelligent Agent Integration",
+  "Systems Thinking",
+  "Complexity to Clarity",
+  "AI-Powered Workflows",
+];
 // duplicate enough times for a seamless loop
-const track = Array.from({ length: 4 }, () => words).flat();
+const track = Array.from({ length: 4 }, () => phrases).flat();
 ---
 
 <div class="serif-marquee" aria-hidden="true">
@@ -28,7 +35,7 @@ const track = Array.from({ length: 4 }, () => words).flat();
     display: flex;
     gap: 2rem;
     width: max-content;
-    animation: scroll 40s linear infinite;
+    animation: scroll 90s linear infinite;
     font-family: var(--font-serif);
     font-size: clamp(2rem, 5vw, 3.5rem);
     color: var(--ink);
