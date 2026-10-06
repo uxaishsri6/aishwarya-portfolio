@@ -128,7 +128,8 @@ npm run preview   # serve the production build
   `public/images/termax/` holds the numbered slide PNGs, resized to 2400px wide
   and split where needed. `public/images/README.md` explains cover images.
 - `public/Aishwarya-Srivastava-Resume.pdf` — linked from nav + Contact.
-- `public/favicon.svg`.
+- `public/favicon.png` — cropped from the icon at the left of the portfolio logo;
+  also displayed beside the name in the top nav.
 
 ---
 
