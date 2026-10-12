@@ -82,7 +82,8 @@ npm run preview   # serve the production build
   `initTheme` (defaults dark), theme toggle, reveal-on-scroll (+ hidden-tab
   fallback), cursor blob, magnetic buttons, nav scroll backdrop + scroll-spy,
   mobile menu toggle, and instant return to the previous Work position.
-  JS re-runs on `astro:page-load` / `astro:after-swap`.
+  JS re-wires once per swapped body and cleans up old listeners, observers, and
+  cursor frames. Only the selected Work cover participates in a page transition.
 - `src/styles/global.css` — **design tokens** (`:root` = light, `[data-theme="dark"]`
   = dark): palette (blue + cream), fonts (`--font-sans` Inter, `--font-serif`
   Instrument Serif, `--font-mono` JetBrains Mono, `--font-hand` Caveat), `--nav-h`,
@@ -108,8 +109,8 @@ npm run preview   # serve the production build
   Wayfare, Tata NeuConnect, Termax, and Landing Zone cards share a wide aspect
   ratio; Landing Zone crops the supplied desktop dashboard cover in the card.
 - `src/components/CaseStudyDeck.astro` — shared responsive slide renderer for
-  Wayfare, Tata NeuConnect, Termax, and Landing Zone; the first slide morphs
-  from the Work card.
+  Wayfare, Tata NeuConnect, Termax, and Landing Zone; only its first slide has
+  a named transition and morphs from the Work card.
 - `src/components/termax/CaseStudy.astro` — ten Termax sections, with tall PNGs
   split into consecutively numbered segments and sized to reserve layout space.
 - `src/components/landing-zone/CaseStudy.astro` — the matching dashboard cover,

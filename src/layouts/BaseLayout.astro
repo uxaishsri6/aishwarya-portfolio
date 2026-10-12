@@ -413,8 +413,20 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <script>
       let workHistoryIndex: number | null = null;
       let returningToWork = false;
+      let wiredBody: HTMLElement | null = null;
+      let pageCleanups: (() => void)[] = [];
+      let transitionCoverSlug: string | null = null;
       const isPlainClick = (event: MouseEvent) =>
         event.button === 0 && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey;
+      const homePath = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+      const projectPath = `${homePath}work/`;
+      const projectSlug = (path: string) =>
+        path.startsWith(projectPath) ? path.slice(projectPath.length).replace(/\/$/, '') : null;
+      const selectProjectCover = (page: Document, slug: string) => {
+        page.querySelectorAll<HTMLElement>('.scard .project-cover').forEach((cover) => {
+          cover.style.viewTransitionName = cover.dataset.projectSlug === slug ? '' : 'none';
+        });
+      };
 
       // Runs on first load and after every View Transition navigation.
       function initTheme() {
@@ -426,6 +438,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       initTheme();
 
       function wireUp() {
+        if (wiredBody === document.body) return;
+        pageCleanups.forEach((cleanup) => cleanup());
+        pageCleanups = [];
+        wiredBody = document.body;
+
         // year
         const y = document.getElementById('year');
         if (y) y.textContent = String(new Date().getFullYear());
@@ -457,9 +474,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
           mobileMenu.querySelectorAll('a').forEach((a) =>
             a.addEventListener('click', () => setOpen(false))
           );
-          window.addEventListener('resize', () => {
+          const onResize = () => {
             if (window.innerWidth > 720) setOpen(false);
-          });
+          };
+          window.addEventListener('resize', onResize);
+          pageCleanups.push(() => window.removeEventListener('resize', onResize));
         }
 
         document.querySelectorAll<HTMLAnchorElement>('.scard-link').forEach((card) => {
@@ -510,6 +529,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
             );
           };
           window.addEventListener('scroll', spy, { passive: true });
+          pageCleanups.push(() => window.removeEventListener('scroll', spy));
           spy();
         }
 
@@ -537,12 +557,18 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
           });
         };
         document.querySelectorAll('.reveal:not(.in)').forEach((el) => io.observe(el));
+        pageCleanups.push(() => io.disconnect());
         revealInView();
         // Re-check when the tab becomes visible (IO may have been dormant).
-        document.addEventListener('visibilitychange', () => {
+        const onVisibilityChange = () => {
           if (!document.hidden) revealInView();
-        });
-        window.addEventListener('load', revealInView, { once: true });
+        };
+        document.addEventListener('visibilitychange', onVisibilityChange);
+        pageCleanups.push(() => document.removeEventListener('visibilitychange', onVisibilityChange));
+        if (document.readyState !== 'complete') {
+          window.addEventListener('load', revealInView, { once: true });
+          pageCleanups.push(() => window.removeEventListener('load', revealInView));
+        }
 
         // cursor blob (pointer devices only)
         const blob = document.getElementById('blob');
@@ -551,23 +577,31 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
           let x = window.innerWidth / 2,
             y2 = window.innerHeight / 2,
             tx = x,
-            ty = y2;
-          window.addEventListener('mousemove', (e) => {
-            tx = e.clientX;
-            ty = e.clientY;
-            blob.style.opacity = '0.85';
-          });
+            ty = y2,
+            frame = 0;
           const loop = () => {
             x += (tx - x) * 0.15;
             y2 += (ty - y2) * 0.15;
             blob.style.transform = `translate(${x}px, ${y2}px) translate(-50%, -50%)`;
-            requestAnimationFrame(loop);
+            frame = Math.abs(tx - x) + Math.abs(ty - y2) > 0.5 ? requestAnimationFrame(loop) : 0;
           };
-          loop();
-          document.addEventListener('mouseover', (e) => {
+          const onMouseMove = (e: MouseEvent) => {
+            tx = e.clientX;
+            ty = e.clientY;
+            blob.style.opacity = '0.85';
+            if (!frame) frame = requestAnimationFrame(loop);
+          };
+          const onMouseOver = (e: MouseEvent) => {
             const t = e.target as HTMLElement;
             const hot = t.closest('a, button, .project-card');
             blob.classList.toggle('hot', !!hot);
+          };
+          window.addEventListener('mousemove', onMouseMove);
+          document.addEventListener('mouseover', onMouseOver);
+          pageCleanups.push(() => {
+            window.removeEventListener('mousemove', onMouseMove);
+            document.removeEventListener('mouseover', onMouseOver);
+            if (frame) cancelAnimationFrame(frame);
           });
         }
 
@@ -588,13 +622,27 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       }
 
       wireUp();
+      document.addEventListener('astro:before-preparation', (event) => {
+        transitionCoverSlug = event.from.pathname === homePath
+          ? projectSlug(event.to.pathname)
+          : event.to.pathname === homePath ? projectSlug(event.from.pathname) : null;
+      });
+      document.addEventListener('astro:after-preparation', () => {
+        if (transitionCoverSlug && document.getElementById('work')) {
+          selectProjectCover(document, transitionCoverSlug);
+        }
+      });
       document.addEventListener('astro:before-swap', (event) => {
+        if (transitionCoverSlug && event.newDocument.getElementById('work')) {
+          selectProjectCover(event.newDocument, transitionCoverSlug);
+        }
         if (returningToWork && event.newDocument.getElementById('work')) {
           event.newDocument.documentElement.classList.add('instant-work-return');
         }
       });
       document.addEventListener('astro:after-swap', () => {
         returningToWork = false;
+        transitionCoverSlug = null;
         if (document.getElementById('work')) workHistoryIndex = null;
         initTheme();
         wireUp();

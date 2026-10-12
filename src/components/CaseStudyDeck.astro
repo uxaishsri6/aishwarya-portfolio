@@ -12,17 +12,30 @@ interface Props {
 }
 
 const { slug, slides } = Astro.props;
+const [cover, ...remainingSlides] = slides;
 ---
 
 <div class="case-deck">
-  {slides.map((slide, i) => (
-    <figure class="case-slide" class:list={{ 'project-cover': i === 0 }} transition:name={i === 0 ? `cover-${slug}` : undefined}>
+  {cover && (
+    <figure class="case-slide project-cover" transition:name={`cover-${slug}`}>
+      <img
+        src={cover.src}
+        alt={cover.alt}
+        width={cover.width}
+        height={cover.height}
+        loading="eager"
+        decoding="async"
+      />
+    </figure>
+  )}
+  {remainingSlides.map((slide) => (
+    <figure class="case-slide">
       <img
         src={slide.src}
         alt={slide.alt}
         width={slide.width}
         height={slide.height}
-        loading={i === 0 ? 'eager' : 'lazy'}
+        loading="lazy"
         decoding="async"
       />
     </figure>

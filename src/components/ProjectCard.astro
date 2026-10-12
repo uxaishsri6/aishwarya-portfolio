@@ -18,7 +18,7 @@ const coverSrc = cover ? `${base}/images/${cover}` : undefined;
 
 <li class="scard" style={`--i:${index}; --accent:${accent}`}>
   <a href={href} class="scard-link" aria-label={`Read the ${title} case study`}>
-    <div class="s-visual project-cover" class:list={{ 'has-cover': Boolean(coverSrc), 'wayfare-cover': slug === 'wayfare', 'tataneu-cover': slug === 'tata-neu-connect', 'termax-cover': slug === 'termax', 'landing-zone-cover': slug === 'landing-zone' }} transition:name={`cover-${slug}`}>
+    <div class="s-visual project-cover" data-project-slug={slug} class:list={{ 'has-cover': Boolean(coverSrc), 'wayfare-cover': slug === 'wayfare', 'tataneu-cover': slug === 'tata-neu-connect', 'termax-cover': slug === 'termax', 'landing-zone-cover': slug === 'landing-zone' }} transition:name={`cover-${slug}`}>
       {coverSrc ? (
         <img src={coverSrc} alt="" loading="lazy" />
       ) : (
@@ -50,10 +50,9 @@ const coverSrc = cover ? `${base}/images/${cover}` : undefined;
     align-items: center;
     padding: clamp(1.25rem, 2.5vw, 2rem);
     border-radius: 26px;
-    background: color-mix(in srgb, var(--card) 96%, transparent);
+    background: var(--card);
     border: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
     box-shadow: 0 30px 60px -34px rgba(20, 40, 70, 0.5);
-    backdrop-filter: blur(6px);
     transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
   }
   .scard-link:hover {
