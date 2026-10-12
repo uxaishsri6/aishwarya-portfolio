@@ -30,8 +30,8 @@ rules below exactly.
 6. **Theme parity:** every section must work in **light (day)** and **dark (night)**.
    Default theme is **dark** (see `initTheme` in `BaseLayout.astro`).
 7. **Deploy is automatic on push** to `main` via GitHub Actions. Do not enable
-   auto-merge or change deploy settings unless asked. The site is a **GitHub Pages
-   project site**, so `base` = `/aishwarya-portfolio` (see gotchas).
+   auto-merge or change deploy settings unless asked. The Pages project uses
+   **www.uxwithaish.com** as its custom domain, so `base` = `/` (see gotchas).
 
 ---
 
@@ -40,7 +40,7 @@ rules below exactly.
 - **Stack:** [Astro](https://astro.build) v5 (static output), vanilla CSS (scoped
   per-component + `src/styles/global.css` tokens), a little vanilla JS in
   `BaseLayout.astro`. No UI framework.
-- **Hosting:** GitHub Pages at **https://uxaishsri6.github.io/aishwarya-portfolio/**
+- **Hosting:** GitHub Pages at **https://www.uxwithaish.com/**
   (repo `uxaishsri6/aishwarya-portfolio`, branch `main`).
 - **Content:** case studies are Markdown in an Astro **content collection**.
 - **Theme:** day/night. Cover, About, Work share one continuous animated sky
@@ -50,7 +50,7 @@ rules below exactly.
 
 ```bash
 npm install
-npm run dev       # http://localhost:4321/aishwarya-portfolio/  (note the base path)
+npm run dev       # http://localhost:4321/
 npm run check     # astro check (typecheck) only
 npm run build     # astro check + astro build  -> dist/   (must be 0 errors)
 npm run preview   # serve the production build
@@ -61,8 +61,8 @@ npm run preview   # serve the production build
 ## 3. File map (where to work)
 
 ### Config / infra
-- `astro.config.mjs` — `site: https://uxaishsri6.github.io`, `base: /aishwarya-portfolio`.
-  If a custom domain is added later, set `base: '/'` and `site` to the domain.
+- `astro.config.mjs` — `site: https://www.uxwithaish.com`, `base: /` for the
+  GitHub Pages custom domain. All site links and assets must resolve from `/`.
 - `.github/workflows/deploy.yml` — CI build + Pages deploy on push to `main`.
 - `.claude/launch.json` — local dev server config (name `aishwarya-portfolio`, port 4321).
 - `tsconfig.json`, `package.json`.
@@ -153,12 +153,11 @@ npm run preview   # serve the production build
   (`-vN`) and update the reference, otherwise users see the old asset.
 - **Global `img { max-width:100% }`** can beat component `max-width` due to scoping;
   if an image won't size, set it inline (`style="max-width:..."`).
-- **Local dev URL needs the base path:** `localhost:4321/aishwarya-portfolio/`
-  (root 404s).
+- **Local dev URL is at the root:** `localhost:4321/`.
 - **IntersectionObserver doesn't fire while the tab is hidden** — the reveal system
   has a bounding-box fallback; keep it.
-- **CSS `url()` for theme images** is hardcoded with the base
-  (`/aishwarya-portfolio/images/...`) because CSS can't read `import.meta.env`.
+- **CSS `url()` for theme images** uses root-relative `/images/...` paths
+  because CSS can't read `import.meta.env`.
 
 ---
 
@@ -199,4 +198,4 @@ npm run preview   # serve the production build
 1. `npm run build` → 0 errors.
 2. `git add -A && git commit` (authored as uxaishsri6) and `git push origin main`.
 3. GitHub Actions builds + deploys automatically; verify at
-   `https://uxaishsri6.github.io/aishwarya-portfolio/`.
+   `https://www.uxwithaish.com/`.
