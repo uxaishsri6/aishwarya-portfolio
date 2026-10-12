@@ -25,7 +25,7 @@ rules below exactly.
 4. **Copy voice:** no em dashes (`—`). Use commas/colons/periods. Keep it warm,
    human, first-person, concise. Avoid AI-cliché phrasing.
 5. **Never fabricate facts** (metrics, titles, clients). Use the resume
-   (`public/Aishwarya-Srivastava-Resume-Oct26.pdf`) as source of truth. Mark
+   (`public/Aishwarya_Srivastava_Resume.pdf`) as source of truth. Mark
    enterprise/NDA specifics as "available on request".
 6. **Theme parity:** every section must work in **light (day)** and **dark (night)**.
    Default theme is **dark** (see `initTheme` in `BaseLayout.astro`).
@@ -137,7 +137,7 @@ npm run preview   # serve the production build
   and split where needed. `public/images/landing-zone/` holds its supplied
   desktop dashboard cover, resized slide PNGs, demo video, and poster.
   `public/images/README.md` explains cover images.
-- `public/Aishwarya-Srivastava-Resume-Oct26.pdf` — linked from nav + Contact.
+- `public/Aishwarya_Srivastava_Resume.pdf` — linked from nav + Contact.
 - `public/favicon.png` — cropped from the icon at the left of the portfolio logo;
   also displayed beside the name in the top nav.
 
