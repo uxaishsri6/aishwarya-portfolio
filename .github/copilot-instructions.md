@@ -110,7 +110,10 @@ npm run preview   # serve the production build
   ratio; Landing Zone crops the supplied desktop dashboard cover in the card.
 - `src/components/CaseStudyDeck.astro` — shared responsive slide renderer for
   Wayfare, Tata NeuConnect, Termax, and Landing Zone; only its first slide has
-  a named transition and morphs from the Work card.
+  a named transition and morphs from the Work card. Optional percentage-based
+  link hotspots make controls printed in a slide image clickable. Wayfare's
+  prototype slide overlays a looping video derived from the supplied GIF,
+  played only while visible and replaced by the static slide in reduced motion.
 - `src/components/termax/CaseStudy.astro` — ten Termax sections, with tall PNGs
   split into consecutively numbered segments and sized to reserve layout space.
 - `src/components/landing-zone/CaseStudy.astro` — the matching dashboard cover,

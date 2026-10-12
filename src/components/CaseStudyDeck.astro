@@ -4,6 +4,22 @@ interface Slide {
   alt: string;
   width?: number;
   height?: number;
+  link?: {
+    href: string;
+    label: string;
+    left: number;
+    top: number;
+    width: number;
+    height: number;
+  };
+  motion?: {
+    src: string;
+    poster: string;
+    left: number;
+    top: number;
+    width: number;
+    height: number;
+  };
 }
 
 interface Props {
@@ -29,7 +45,7 @@ const [cover, ...remainingSlides] = slides;
     </figure>
   )}
   {remainingSlides.map((slide) => (
-    <figure class="case-slide">
+    <figure class="case-slide" style={slide.link || slide.motion ? 'position:relative' : undefined}>
       <img
         src={slide.src}
         alt={slide.alt}
@@ -38,6 +54,31 @@ const [cover, ...remainingSlides] = slides;
         loading="lazy"
         decoding="async"
       />
+      {slide.link && (
+        <a
+          class="slide-link"
+          href={slide.link.href}
+          aria-label={slide.link.label}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={`position:absolute;left:${slide.link.left}%;top:${slide.link.top}%;width:${slide.link.width}%;height:${slide.link.height}%`}
+        ></a>
+      )}
+      {slide.motion && (
+        <video
+          class="slide-motion"
+          data-play-in-view
+          aria-hidden="true"
+          muted
+          loop
+          playsinline
+          preload="none"
+          poster={slide.motion.poster}
+          style={`position:absolute;left:${slide.motion.left}%;top:${slide.motion.top}%;width:${slide.motion.width}%;height:${slide.motion.height}%`}
+        >
+          <source src={slide.motion.src} type="video/mp4" />
+        </video>
+      )}
     </figure>
   ))}
 </div>
@@ -52,8 +93,29 @@ const [cover, ...remainingSlides] = slides;
     margin-inline: auto;
   }
   .case-slide {
+    position: relative;
     margin: 0;
     width: 100%;
+  }
+  .slide-link {
+    position: absolute;
+    border-radius: 8px;
+  }
+  .slide-link:hover,
+  .slide-link:focus-visible {
+    background: color-mix(in srgb, var(--accent) 12%, transparent);
+  }
+  .slide-link:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 2px;
+  }
+  .slide-motion {
+    position: absolute;
+    display: block;
+    pointer-events: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .slide-motion { display: none; }
   }
   .case-slide img {
     width: 100%;

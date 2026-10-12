@@ -570,6 +570,38 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
           pageCleanups.push(() => window.removeEventListener('load', revealInView));
         }
 
+        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+        document.querySelectorAll<HTMLVideoElement>('video[data-play-in-view]').forEach((video) => {
+          let visible = false;
+          const updatePlayback = () => {
+            if (!visible || reducedMotion.matches || document.hidden) {
+              video.pause();
+            } else if (video.paused) {
+              void video.play().catch((error) => console.warn('Prototype preview could not play', error));
+            }
+          };
+          const observer = new IntersectionObserver(([entry]) => {
+            visible = entry.isIntersecting;
+            updatePlayback();
+          }, { threshold: 0.15, rootMargin: '120px 0px' });
+          const onVisibilityChange = () => {
+            if (!document.hidden) {
+              const rect = video.getBoundingClientRect();
+              visible = rect.top < window.innerHeight && rect.bottom > 0;
+            }
+            updatePlayback();
+          };
+          observer.observe(video);
+          reducedMotion.addEventListener('change', updatePlayback);
+          document.addEventListener('visibilitychange', onVisibilityChange);
+          pageCleanups.push(() => {
+            observer.disconnect();
+            reducedMotion.removeEventListener('change', updatePlayback);
+            document.removeEventListener('visibilitychange', onVisibilityChange);
+            video.pause();
+          });
+        });
+
         // cursor blob (pointer devices only)
         const blob = document.getElementById('blob');
         if (blob && window.matchMedia('(hover: hover)').matches && !blob.dataset.wired) {

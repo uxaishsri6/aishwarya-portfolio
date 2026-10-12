@@ -4,6 +4,7 @@
 // (A dynamic, natively-rebuilt version is preserved on the `wayfare-dynamic` branch.)
 import CaseStudyDeck from '../CaseStudyDeck.astro';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const prototypeUrl = 'https://www.figma.com/proto/yfD9uVayQgq6qAuWQIGJlU/IFP---Designs?node-id=186-28&t=6yVzDnGAz7Wnysl3-1&scaling=min-zoom&content-scaling=fixed&page-id=180%3A2&starting-point-node-id=181%3A2';
 
 const labels: Record<string, string> = {
   '01': 'Cover',
@@ -26,6 +27,22 @@ const labels: Record<string, string> = {
 const slides = Object.keys(labels).sort().map((n) => ({
   src: `${base}/images/wayfare/slide-${n}.png`,
   alt: `Wayfare, ${labels[n]}`,
+  link: n === '14' ? {
+    href: prototypeUrl,
+    label: 'Open the Wayfare live prototype in Figma',
+    left: 6.25,
+    top: 50.37,
+    width: 27,
+    height: 8.4,
+  } : undefined,
+  motion: n === '14' ? {
+    src: `${base}/images/wayfare/prototype-demo.mp4`,
+    poster: `${base}/images/wayfare/prototype-poster.png`,
+    left: 65.831,
+    top: 31.3659,
+    width: 19.7227,
+    height: 57.1326,
+  } : undefined,
 }));
 ---
 
