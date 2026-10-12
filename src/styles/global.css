@@ -23,7 +23,7 @@
   --font-hand: "Caveat", "Comic Sans MS", cursive;
 
   /* --- scale / rhythm --- */
-  --nav-h: 68px;
+  --nav-h: 76px;
   --maxw: 1160px;
   --gutter: clamp(1.25rem, 5vw, 4rem);
   --radius: 18px;
