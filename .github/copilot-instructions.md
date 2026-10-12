@@ -105,12 +105,16 @@ npm run preview   # serve the production build
   bg images, versioned filenames), "Let's talk", email, socials, Resume, meta.
 - `src/components/ProjectCard.astro` — the **sticky stacking** case-study card used
   in the Work section (uses `--i` index for the deck offset; `position: sticky`).
-  Cover images retain their full aspect ratio, except Wayfare, Tata NeuConnect,
-  and Termax cards, which frame their original PNGs to the same wide aspect ratio.
+  Wayfare, Tata NeuConnect, Termax, and Landing Zone cards share a wide aspect
+  ratio; Landing Zone crops the supplied desktop dashboard cover in the card.
 - `src/components/CaseStudyDeck.astro` — shared responsive slide renderer for
-  Wayfare, Tata NeuConnect, and Termax; the first slide morphs from the Work card.
+  Wayfare, Tata NeuConnect, Termax, and Landing Zone; the first slide morphs
+  from the Work card.
 - `src/components/termax/CaseStudy.astro` — ten Termax sections, with tall PNGs
   split into consecutively numbered segments and sized to reserve layout space.
+- `src/components/landing-zone/CaseStudy.astro` — the matching dashboard cover,
+  Landing Zone slides 01–11 (including both UI design panels numbered 10), and
+  video 12.
 
 ### Content (case studies)
 - `src/content/config.ts` — collection schema: `order, title, cardTitle, tag, lede,
@@ -126,7 +130,9 @@ npm run preview   # serve the production build
   `sticker-brainstorm-v2`), clouds (`cloud-1.png`, `cloud-2.png`), and the
   Contact footer images (`contact-day-vN.jpg`, `contact-night-vN.jpg`).
   `public/images/termax/` holds the numbered slide PNGs, resized to 2400px wide
-  and split where needed. `public/images/README.md` explains cover images.
+  and split where needed. `public/images/landing-zone/` holds its supplied
+  desktop dashboard cover, resized slide PNGs, demo video, and poster.
+  `public/images/README.md` explains cover images.
 - `public/Aishwarya-Srivastava-Resume-Oct26.pdf` — linked from nav + Contact.
 - `public/favicon.png` — cropped from the icon at the left of the portfolio logo;
   also displayed beside the name in the top nav.

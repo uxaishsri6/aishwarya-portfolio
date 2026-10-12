@@ -1,0 +1,73 @@
+---
+import CaseStudyDeck from '../CaseStudyDeck.astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const sections = [
+  { number: '01', label: 'Landing Zone cover', heights: [819] },
+  { number: '02', label: 'Project overview', heights: [1317] },
+  { number: '03', label: 'Problem statement', heights: [1333] },
+  { number: '04', label: 'Objectives', heights: [1533] },
+  { number: '05', label: 'My role', heights: [1867] },
+  { number: '06', label: 'Design process', heights: [1043] },
+  { number: '07', label: 'Research and stakeholder insights', heights: [2700] },
+  { number: '08', label: 'Questionnaire research and improvements', heights: [3000] },
+  { number: '09', label: 'Cloud setup UX flow', heights: [3173] },
+  { number: '10-01', label: 'Platform and prerequisite UI designs', heights: [3880] },
+  { number: '10-02', label: 'Configuration and summary UI designs', heights: [2334, 2334] },
+  { number: '11', label: 'Project learnings and outcomes', heights: [3167] },
+];
+const slides = [
+  {
+    src: `${base}/images/landing-zone/card-cover-v2.png`,
+    alt: 'Landing Zone dashboard shown on a desktop monitor',
+    width: 2000,
+    height: 1333,
+  },
+  ...sections.flatMap(({ number, label, heights }) =>
+    heights.map((height, i) => ({
+      src: `${base}/images/landing-zone/slide-${number}${heights.length > 1 ? `-${String(i + 1).padStart(2, '0')}` : ''}.png`,
+      alt: `Landing Zone, ${label}${heights.length > 1 ? `, part ${i + 1} of ${heights.length}` : ''}`,
+      width: 2400,
+      height,
+    }))
+  ),
+];
+---
+
+<CaseStudyDeck slug="landing-zone" slides={slides} />
+
+<figure class="demo">
+  <video
+    controls
+    playsinline
+    preload="metadata"
+    poster={`${base}/images/landing-zone/demo-poster.jpg`}
+    width="2624"
+    height="1714"
+    aria-label="Landing Zone cloud setup demo"
+  >
+    <source src={`${base}/images/landing-zone/demo.mp4`} type="video/mp4" />
+    Your browser does not support this video.
+  </video>
+  <figcaption>Landing Zone setup demo</figcaption>
+</figure>
+
+<style>
+  .demo {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .demo video {
+    display: block;
+    width: 100%;
+    height: auto;
+    background: #121824;
+  }
+  .demo figcaption {
+    padding: 0.75rem 1rem;
+    color: var(--ink-soft);
+    font-size: 0.9rem;
+    text-align: center;
+  }
+</style>

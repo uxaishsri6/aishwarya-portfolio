@@ -18,7 +18,7 @@ const coverSrc = cover ? `${base}/images/${cover}` : undefined;
 
 <li class="scard" style={`--i:${index}; --accent:${accent}`}>
   <a href={href} class="scard-link" aria-label={`Read the ${title} case study`}>
-    <div class="s-visual project-cover" class:list={{ 'has-cover': Boolean(coverSrc), 'wayfare-cover': slug === 'wayfare', 'tataneu-cover': slug === 'tata-neu-connect', 'termax-cover': slug === 'termax' }} transition:name={`cover-${slug}`}>
+    <div class="s-visual project-cover" class:list={{ 'has-cover': Boolean(coverSrc), 'wayfare-cover': slug === 'wayfare', 'tataneu-cover': slug === 'tata-neu-connect', 'termax-cover': slug === 'termax', 'landing-zone-cover': slug === 'landing-zone' }} transition:name={`cover-${slug}`}>
       {coverSrc ? (
         <img src={coverSrc} alt="" loading="lazy" />
       ) : (
@@ -91,6 +91,13 @@ const coverSrc = cover ? `${base}/images/${cover}` : undefined;
     height: 100%;
     object-fit: cover;
     object-position: center;
+  }
+  .s-visual.landing-zone-cover {
+    aspect-ratio: 1227 / 720;
+  }
+  .s-visual.landing-zone-cover img {
+    height: 100%;
+    object-fit: cover;
   }
   .s-pattern {
     width: 100%; height: 100%;
