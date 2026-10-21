@@ -95,8 +95,20 @@ const shooting = [
   <!-- celestial body: arcs left(moon)<->right(sun) and morphs on theme toggle -->
   <div class="celestial">
     <div class="orb">
-      <div class="fx-sun"></div>
-      <div class="fx-moon"></div>
+      <div class="orb-spin">
+        <div class="fx-sun"></div>
+        <div class="fx-moon"></div>
+        <!-- smiley that appears while the sun / moon spins after a click -->
+        <svg class="orb-face" viewBox="0 0 100 100" aria-hidden="true">
+          <g class="face-upright">
+            <circle class="cheek" cx="24" cy="60" r="7" />
+            <circle class="cheek" cx="76" cy="60" r="7" />
+            <ellipse class="eye" cx="36" cy="42" rx="5" ry="7.5" />
+            <ellipse class="eye" cx="64" cy="42" rx="5" ry="7.5" />
+            <path class="smile" d="M30 60 Q50 84 70 60" />
+          </g>
+        </svg>
+      </div>
     </div>
   </div>
 </div>
@@ -260,6 +272,53 @@ const shooting = [
   }
   :global([data-theme='dark']) .orb {
     offset-distance: 0%;             /* dark: moon rests on the left */
+  }
+  .orb-spin {
+    position: absolute;
+    inset: 0;
+  }
+  /* click the sun / moon: twist and turn in place and show a smiley */
+  .orb.playing .orb-spin { animation: orb-twist 1.9s cubic-bezier(0.4, 0, 0.2, 1); }
+  @keyframes orb-twist {
+    0%   { transform: rotate(0deg) scale(1); }
+    18%  { transform: rotate(-28deg) scale(1.12); }
+    45%  { transform: rotate(200deg) scale(0.94); }
+    70%  { transform: rotate(330deg) scale(1.1); }
+    100% { transform: rotate(360deg) scale(1); }
+  }
+  .orb-face {
+    position: absolute;
+    inset: 12%;
+    width: 76%;
+    height: 76%;
+    color: #8a4b0f;
+    opacity: 0;
+    pointer-events: none;
+  }
+  :global([data-theme='dark']) .orb-face { color: #6a6250; }
+  .orb-face .eye { fill: currentColor; transform-box: fill-box; transform-origin: center; }
+  .orb-face .cheek { fill: #ff7a8a; opacity: 0.4; }
+  .orb-face .smile { fill: none; stroke: currentColor; stroke-width: 6; stroke-linecap: round; }
+  .orb.playing .orb-face { animation: orb-face-show 1.9s ease; }
+  .orb.playing .orb-face .eye { animation: orb-blink 1.9s ease; }
+  /* the face counter-rotates with the same timing as the twist, so it stays upright and smiling */
+  .face-upright { transform-box: view-box; transform-origin: 50% 50%; }
+  .orb.playing .face-upright { animation: orb-upright 1.9s cubic-bezier(0.4, 0, 0.2, 1); }
+  @keyframes orb-upright {
+    0%   { transform: rotate(0deg); }
+    18%  { transform: rotate(28deg); }
+    45%  { transform: rotate(-200deg); }
+    70%  { transform: rotate(-330deg); }
+    100% { transform: rotate(-360deg); }
+  }
+  @keyframes orb-face-show {
+    0%   { opacity: 0; transform: scale(0.6); }
+    14%, 84% { opacity: 1; transform: scale(1); }
+    100% { opacity: 0; transform: scale(0.9); }
+  }
+  @keyframes orb-blink {
+    0%, 40%, 52%, 100% { transform: scaleY(1); }
+    46% { transform: scaleY(0.1); }
   }
   .fx-sun,
   .fx-moon {

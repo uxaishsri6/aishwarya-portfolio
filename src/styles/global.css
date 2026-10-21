@@ -9,17 +9,17 @@
   --paper: #f4efe3;      /* warm torn-paper cream */
   --ink: #1e2c4f;        /* deep navy ink */
   --ink-soft: #465270;
-  --ink-faint: #8b91a3;
+  --ink-faint: #4f5a70;
   --line: #e4ddcc;
   --card: #fbf8f0;
-  --accent: #3f63a6;     /* cornflower / denim blue */
+  --accent: #34589a;     /* cornflower / denim blue (darkened for AA contrast) */
   --accent-2: #24386b;   /* deep navy */
   --accent-3: #86add9;   /* powder / sky blue */
 
   /* --- typography --- */
-  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-serif: "Instrument Serif", ui-serif, Georgia, serif;
-  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", monospace;
+  --font-sans: "Manrope", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-serif: "Cormorant Garamond", ui-serif, Georgia, serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", monospace;
   --font-hand: "Caveat", "Comic Sans MS", cursive;
 
   /* --- scale / rhythm --- */
@@ -42,7 +42,7 @@
   --paper: #101728;      /* deep navy night */
   --ink: #eef1f7;
   --ink-soft: #c3cbde;
-  --ink-faint: #7c8296;
+  --ink-faint: #a0a7bd;
   --line: #29314c;
   --card: #18213a;
   --accent: #6d92d6;     /* brighter cornflower for dark bg */
@@ -221,3 +221,31 @@ em {
     transform: none;
   }
 }
+
+/* --- keyboard focus + skip link (accessibility) --- */
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 10000;
+  padding: 0.6rem 1rem;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--paper);
+  font-weight: 600;
+  transform: translateY(-200%);
+  transition: transform 0.2s var(--ease);
+}
+.skip-link:focus-visible {
+  transform: translateY(0);
+}
+main:focus { outline: none; }
+
+/* sun / moon are clickable (easter egg) */
+html.orb-hover,
+html.orb-hover * { cursor: pointer; }
